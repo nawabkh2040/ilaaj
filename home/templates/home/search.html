@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>ilaaj</title>
+     <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
+     <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
+     <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+     <link rel="stylesheet" href="{% static "Home/css/department.css" %}">
+     <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
+     <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
+ </head>
+
+<body>
+    <div class="logo">
+        <a href="{% url "home" %}">
+            <img src="{% static "Home/images/logo.png" %}" alt="logo">
+            <div class="webNameBar">
+                <div class="webName">ilaaj</div>
+                <div class="nearMe">
+                    <span class="icon"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </div>
+        </a>
+    </div>
+    </div>
+    <nav class="flex navbar " style="background-color: rgba(0, 0, 0, 0.345); display: flex;">
+        <ul class="flex" style="display: flex;">
+            <li><a class="departPageCss" href="{% url "home" %}"><i class="fa-solid fa-arrow-rotate-left"></i>Back to
+                    Home</a></li>
+        </ul>
+    </nav>
+
+    <section id="depart" style="padding: 34px;">
+     {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        {% if nearby_services %}
+        <div class="departHead">
+            <h1 class="departHeading">Hospitals with {{ search }}</h1>
+            <p class="departPara">Our department pioneers seamless healthcare access through intuitive technology and
+                strategic partnerships</p>
+        </div>
+        <hr class="departLine">
+     
+        <div class="departmentRow">
+            <div class="blog-slider">
+               {% for service, hospital_name, distance in nearby_services %}
+                <div class="blog-slider__wrp swiper-wrapper">
+                    <div class="blog-slider__item swiper-slide">
+                        <div class="blog-slider__img">
+                            <img src="{{ service.image.url }}"
+                                alt="">
+                        </div>
+                        <div class="blog-slider__content">
+                            <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM</span>
+                            <div class="blog-slider__title">{{ hospital_name }}</div>
+                            <div class="blog-slider__title">{{ service.name }}</div>
+                            <div class="blog-slider__text">{{ service.description }}
+                            </div>
+                            <div class="blog-slider__text">{{ hospital_name.address }}
+                         </div>
+                            <div class="blog-slider__title" id="price">
+                                <div class="discountPrice">
+                                   {{service.price}}
+                                </div>
+                                <div class="originalPrice" style="display: flex;">
+                                    <div class="actualPrice">
+                                        ₹ 1800
+                                    </div>
+                                    <div class="discount">
+                                        33% Off
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#"  class="blog-slider__button">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="error-message">No nearby services found matching your search.</p>
+        {% endif %}
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="departRow footerRow">
+            <div class="box">
+                <div class="details footerReachAt">
+                    <h3 style=" padding: 0px 12px;">Reach At..</h3>
+                    <ul class="contact-list">
+                        <li class="list-item"><i class="fa fa-map-marker"><span class="contact-text place"><a
+                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
+
+                        <li class="list-item"><i class="fa fa-phone"><span class="contact-text phone"><a
+                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
+                        </li>
+
+                        <li class="list-item"><i class="fa fa-envelope"><span class="contact-text gmail"><a
+                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+                    </ul>
+                    <div class="footerSocial">
+                        <a href="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3 style="padding: 0px 6px;">About</h3>
+                    <p> we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
+                        Committed to simplifying the patient journey.</p>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details" id="quickLinks">
+                    <h3>Links</h3>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">LogIn</a></li>
+                    <li><a href="#">SignUp</a></li>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3>Newsletter</h3>
+                    <div class=" form-group " style="text-align: center;">
+                        <input type="text" id="footerEmail" class="form-control" id="email" placeholder="Enter Email"
+                            value="" required>
+                        <button class="btn send-button" id="footerBtn" type="submit" value="SEND">SUSCRIBE</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+        </div>
+        <div class="rights">
+            <p style="margin: 0px;">© 2024 All Rights Reserved </p>
+            <br>
+            <p>© Distributed By sawan </p>
+        </div>
+
+        </div>
+    </footer>
+    <script src="{% static "Home/javascript/home.js" %}"></script>
+    <script src="{% static "Home/javascript/responsive.js" %}"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static "Home/javascript/map.js" %}"></script>
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,474 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@300&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#loading {
+    height: 100vh;
+    background: url('https://cdn.svgator.com/images/2023/06/hearthbeat-svg-loader-animation.svg') no-repeat center;
+    align-items: center;
+    display: grid;
+    background-size: 400%;
+}
+
+/* Navbar designing  */
+.hamburger {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    display: none;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+.heroSection {
+    height: 100vh;
+}
+
+.flex i {
+    margin: 0px 6px;
+}
+
+.navbar {
+    justify-content: space-around;
+    position: sticky;
+    top: 0;
+    left: 0;
+    font-family: Open Sans;
+    transition: all 0.3s ease;
+}
+
+.navbar * {
+    box-sizing: border-box;
+    transition: all .35s ease;
+}
+
+.logo img {
+    width: 72px;
+    border-radius: 50%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    margin: 0px 40px;
+    transition: all 0.3s ease;
+}
+
+.webNameBar {
+    cursor: pointer;
+}
+
+.webNameBar:hover {
+    font-size: 1.1rem;
+}
+
+.logo .webName {
+    margin: 0px 10px;
+    font-weight: 600;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.navbar li {
+    display: inline-block;
+    list-style: outside none none;
+    margin: .5em 1em;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li a {
+    padding: .5em .8em;
+    color: rgba(0, 0, 0, 0.88);
+    position: relative;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.navbar a::before,
+.navbar a::after {
+    content: '';
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    transition: all .35s ease;
+    opacity: 0;
+}
+
+.navbar a::before {
+    content: '';
+    right: 0;
+    top: 0;
+    border-top: 3px solid #3E8914;
+    border-right: 3px solid #2E640F;
+    transform: translate(-100%, 50%);
+}
+
+.navbar a:after {
+    content: '';
+    left: 0;
+    bottom: 0;
+    border-bottom: 3px solid #2E640F;
+    border-left: 3px solid #3E8914;
+    transform: translate(100%, -50%)
+}
+
+.navbar a:hover:before,
+.navbar a:hover:after {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+
+.navbar a:hover {
+    color: #07f853;
+}
+
+
+
+
+.heroBox img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.mainBox {
+    padding: 155px;
+}
+
+.heroText {
+    font-size: 3rem;
+    line-height: 3.8rem;
+    color: white;
+    font-family: Kanit;
+    margin-bottom: 15px;
+}
+
+/* Styling search bar  */
+.doctorSearchBar {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #9ecec7;
+    width: 100%;
+}
+
+.doctorSearchBar form {
+    width: 100%;
+    display: flex;
+}
+
+.inputCondition,
+.inputLocation {
+    width: 45%;
+    display: flex;
+    padding: 0px;
+}
+
+.mapSection .inputLocation input,
+.doctorSearchBar input[type="text"] {
+    width: 100%;
+    outline: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px;
+    border: none;
+}
+
+/* Near me styling here */
+.nearMe {
+    justify-content: center;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.searchButton {
+    width: 12%;
+}
+
+/* .searchButton styling */
+.searchButton button {
+    border-radius: 4px;
+    background: #1ab64f;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 14px 0;
+    width: 100%;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.searchButton button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.searchButton button:after {
+    content: '🔎︎';
+    position: absolute;
+    opacity: 0;
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.searchButton button:hover {
+    padding-right: 24px;
+    padding-left: 8px;
+}
+
+.searchButton button:hover:after {
+    opacity: 1;
+    right: 10px;
+}
+
+/* Department styling  goes here */
+.department {
+    text-align: center;
+    padding: 90px 0px;
+}
+
+.departHead {
+    text-align: center;
+}
+
+.departHeading {
+    font-size: 2.3rem;
+    margin: 0;
+    font-family: Kanit;
+}
+
+.departRow {
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.box {
+    width: 21%;
+    height: 270px;
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.departRow .box .imgBox {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 15px;
+    background-color: #62d2a2;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.details h3 {
+    margin: 0;
+    font-family: Kanit;
+}
+
+.details p {
+    padding: 5px;
+    margin-top: 0;
+}
+
+.btn {
+    padding: 12px 20px;
+    background: #62d2a2;
+    cursor: pointer;
+    border-radius: 8px;
+    outline: none;
+    border: 2px solid #62d2a2;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn:hover {
+    color: #62d2a2;
+    background-color: white;
+}
+
+/* Department Styling ends here */
+
+/* About us Styling goes here */
+.aboutUs {
+    padding: 60px;
+}
+
+.aboutUs h2 {
+    font-size: 3rem;
+    text-align: center;
+    font-family: Kanit;
+    margin: 0px;
+}
+
+.aboutUsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+}
+
+.aboutUsRow .leftBox {
+    width: 38%;
+}
+
+.aboutUsRow .leftBox img {
+    width: 100%;
+    border-radius: 25px;
+}
+
+.aboutUsRow .rightBox {
+    width: 55%;
+}
+
+/* foorter section styling goes here */
+.footer {
+    background: #178066;
+    color: #ffffff;
+}
+
+.footerRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0px;
+    padding: 30px;
+}
+
+.footerRow h3 {
+    font-family: Open Sans;
+    font-size: 1.6rem;
+}
+
+.footerReachAt .contact-text a {
+    color: #fff;
+    transition-duration: 0.2s;
+    font-size: 1rem;
+}
+
+.footerReachAt .list-item {
+    line-height: 0;
+}
+
+.footerSocial {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footerSocial i {
+    color: white;
+    font-size: 1.6rem;
+}
+
+.footerSocial i:hover {
+    color: aqua;
+    font-size: 1.7rem;
+}
+
+.footerRow #quickLinks li {
+    list-style: none;
+    margin: 9px 0px;
+}
+
+.footerRow #quickLinks li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.footerRow #quickLinks li a:hover {
+    color: rgb(198, 193, 193);
+    font-size: 1.1rem;
+}
+
+#footerEmail {
+    width: 67%;
+    margin: 35px 0px 19px 0px;
+    background: white;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+#footerBtn {
+    margin-top: 10px;
+    width: 77%;
+    background: #07c886;
+    border: 2px solid #06ba7d;
+}
+
+#footerBtn:hover {
+    background: white;
+}
+
+.footer .rights {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5rem;
+}
+
+
+.rights :nth-last-child(1) {
+    margin: 0px;
+    padding: 0px;
+    font-size: 0.8rem;
+}
+
+.footerBoxLine {
+    display: none;
+}
+
+.departLine {
+    display: none;
+}
+
+/* utility classes */
+.flex {
+    display: flex;
+}
+
+p {
+    font-family: 'Poppins';
+}
+
+.bgForAboutContact {
+    width: 100%;
+    height: auto;
+    background: url('../images/contact.png') no-repeat center center/cover;
+}
+
+.department {
+    width: 100%;
+    height: auto;
+    background: url('../images/hj.png') no-repeat center center/cover;
+}

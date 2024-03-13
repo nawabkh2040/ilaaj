@@ -1,0 +1,389 @@
+.resNav {
+     display: flex !important;
+     height: 70vh !important;
+ }
+ 
+ .blackBg {
+     background: #000000a1 !important;
+     position: absolute;
+     top: 0px;
+     width: 100%;
+     z-index: 444;
+     backdrop-filter: blur(3.4px);
+ }
+ 
+ #cross {
+     display: none;
+ }
+ 
+ @media only screen and (max-width: 1000px) {
+     .hamburger {
+         display: block;
+     }
+ 
+     .flex {
+         flex-direction: column;
+         align-items: center;
+         display: none;
+     }
+ 
+     .mainBox {
+         padding: 155px 30px 155px 30px;
+     }
+ 
+     .heroText {
+         font-size: 2.8rem;
+         line-height: 3.4rem;
+     }
+ 
+     .searchButton {
+         width: 18%;
+     }
+ 
+     .doctorSearchBar form {
+         flex-direction: column;
+     }
+ 
+     .inputCondition,
+     .inputLocation {
+         width: 100%;
+         margin-bottom: 8px;
+ 
+     }
+ 
+     .searchButton {
+         width: 40%;
+         margin: auto;
+     }
+ 
+     .departRow {
+         width: 100%;
+     }
+ 
+     .aboutUs {
+         padding: 15px;
+     }
+ 
+     .aboutUsRow .leftBox {
+         width: 41%;
+     }
+ 
+     .footerRow {
+         padding: 10px;
+     }
+ 
+     #btn-1 {
+         padding: 0.5em .8em;
+     }
+ 
+     #btn-2 {
+         padding: 0.5em .8em;
+     }
+ 
+     .flex button {
+         color: white !important;
+     }
+ 
+     ul li a {
+         color: white;
+     }
+ 
+     .doctorSearchBar {
+         border: none;
+     }
+ 
+     .resNav ul {
+         margin: 100px auto;
+         line-height: 2;
+ 
+     }
+ 
+     .hamburger #cross {
+         color: white
+     }
+ 
+     .heroBox img {
+         height: 64%;
+     }
+ 
+     .heroSection {
+         height: 65vh;
+     }
+ 
+     .locationBtn {
+         margin: 10px 0px 5px 0px !important;
+     }
+ 
+     .mapSection .mapContainer {
+         width: 70% !important;
+     }
+ 
+     #map {
+         height: 350px !important;
+     }
+ }
+ 
+ @media only screen and (max-width: 888px) {
+     .heroText {
+         font-size: 2.2rem;
+     }
+ 
+     .details p {
+         padding: 0px;
+         font-size: 0.9rem;
+         text-align: center;
+     }
+ 
+     .aboutUsRow {
+         flex-direction: column;
+     }
+ 
+     .aboutUsRow .leftBox {
+         width: 56%;
+     }
+ 
+     .aboutBtn {
+         text-align: center;
+     }
+ 
+     .footerRow {
+         flex-direction: column;
+     }
+ 
+     .details h3 {
+         text-align: center;
+     }
+ 
+     .box {
+         width: 42%;
+         height: auto;
+     }
+ 
+     #footerEmail {
+         margin: 4px 0px;
+     }
+ 
+     .contact-wrapper {
+         max-width: none;
+     }
+ 
+ }
+ 
+ @media only screen and (max-width: 770px) {
+ 
+     .departRow {
+         width: 100%;
+         flex-direction: column;
+     }
+ 
+     .heroBox img {
+         width: 100%;
+     }
+ }
+ 
+ @media only screen and (max-width: 570px) {
+     .footerBoxLine {
+         display: block;
+         background: white;
+         width: 300px;
+     }
+ 
+     .departLine {
+         display: block;
+         background: black;
+         width: 300px;
+     }
+ 
+     .searchButton button {
+         padding: 10px 0px;
+     }
+ 
+     .searchButton {
+         width: 46%;
+     }
+ 
+     .aboutUsRow .leftBox {
+         width: 95%;
+     }
+ 
+     .aboutUsRow .rightBox {
+         width: 95%;
+     }
+ 
+     .mapSection .mapContainer {
+         width: 90% !important;
+     }
+ }
+ 
+ @media only screen and (max-width: 460px) {
+     #contact-form {
+         text-align: center;
+     }
+ 
+     .form-control,
+     textarea {
+         max-width: 74%;
+     }
+ 
+     .send-button {
+         margin-top: 15px;
+         width: 73%;
+     }
+ 
+     .mainBox {
+         padding: 70px 6px 70px 25px;
+     }
+ 
+     .aboutUsRow .rightBox {
+         width: 100%;
+     }
+ 
+     .aboutUsRow .leftBox {
+         width: 100%;
+     }
+ 
+     .footer .rights {
+         padding: 10px;
+     }
+ 
+     .logo {
+         margin: 0;
+     }
+ 
+     .wraper {
+         width: 300px !important;
+     }
+ 
+     .department {
+         background-size: 170%;
+         background-position: top;
+     }
+ }
+ 
+ @media only screen and (max-width: 400px) {
+ 
+     .doctorSearchBar input[type="text"] {
+ 
+         font-size: 14px;
+         font-weight: 600;
+         padding: 8px;
+     }
+ 
+     .heroText {
+         font-size: 1.2rem;
+         line-height: 2.4rem;
+     }
+ 
+     .contact-text a {
+         font-size: 1.2rem;
+     }
+ 
+     .box {
+         width: 90%;
+     }
+ 
+     .heroBox img {
+         height: 50%;
+     }
+ 
+     .section-header {
+         font-size: 3rem;
+     }
+ 
+     .contact-wrapper {
+         padding: 0px;
+     }
+ 
+     .heroSection {
+         height: 50vh;
+     }
+ 
+     .department {
+         padding: 20px 0px;
+     }
+ 
+     .resNav {
+         height: 51vh !important;
+     }
+ 
+     .locationContainer {
+         margin: 0px auto !important;
+     }
+ 
+     .mapContainer i {
+         font-size: 2.3rem;
+     }
+ 
+     #map {
+         width: 100% !important;
+         height: 202px !important;
+     }
+ 
+     .locationContainer {
+         width: 100% !important;
+     }
+ }
+ 
+ @media only screen and (max-width: 360px) {
+     .section-header {
+         font-size: 2.1rem;
+         padding: 0px;
+     }
+ 
+     .departHead {
+         padding: 0px 20px;
+     }
+ 
+     .heroText {
+         line-height: 1.4rem;
+     }
+ 
+     .mainBox {
+         padding: 90px 6px 0px 25px !important;
+     }
+ 
+     .department {
+         padding: 0px 5px;
+     }
+ 
+     .direct-contact-container {
+         margin-top: 0px;
+     }
+ 
+     .footerBoxLine {
+         width: 230px;
+     }
+ 
+     .footer .rights {
+         font-size: 1rem;
+     }
+ 
+     .departHeading {
+         font-size: 1.8rem;
+     }
+ 
+     .locationBtn {
+         margin: 5px 0px 1px 0px !important;
+         padding: 8px 20px !important;
+     }
+ 
+     .mapSection .mapContainer {
+         width: 97% !important;
+     }
+ }
+ 
+ @media only screen and (max-height: 460px) {
+     .mainBox {
+         padding: 20px 6px 0px 25px !important;
+     }
+ 
+     .resNav {
+         height: 100vh !important;
+     }
+ 
+     .wraper {
+         top: 10px !important;
+         height: 390px !important;
+     }
+ 
+ }

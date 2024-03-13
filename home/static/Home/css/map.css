@@ -1,0 +1,64 @@
+#mapOpenButton {
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    color: black;
+    padding: 0;
+}
+
+#mapOpenButton:hover {
+    font-size: 1.2rem;
+}
+
+#map {
+    width: 90%;
+    height: 450px;
+    margin: auto;
+}
+
+.mapSection {
+    display: flex;
+    justify-content: center;
+    text-align: end;
+}
+
+.mapContainer i {
+    display: block !important;
+    margin: 5px 15px !important;
+    cursor: pointer;
+}
+
+.mapSection .mapContainer {
+    border: 2px solid;
+    width: 70%;
+    backdrop-filter: blur(10px);
+    display: none;
+    transition: all 0.3s ease-in;
+    height: auto;
+}
+
+.locationContainer {
+    display: flex;
+    width: 90%;
+    margin: 5px auto;
+}
+
+.locationContainer .inputLocation {
+    width: 90%;
+}
+
+.locationContainer .searchButton {
+    width: 40%;
+}
+
+.locationBtn {
+    width: 50%;
+    margin: 25px 0px 5px 0px;
+}
+
+#locationForm {
+    text-align: center;
+}

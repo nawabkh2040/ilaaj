@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Hospitals and Services</title>
+    <link rel="stylesheet" href="{% static "Home/css/hospitals.css" %}">
+</head>
+<body>
+    <header class="header" style="background-color: #5db7a9;">
+        <h1 class="logo">Nearby Hospitals & Services</h1>
+    </header>
+
+    <main class="content">
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+        {% if nearby_services %}
+            <section class="services">
+                <h2>Hospitals with {{ search }} Services (Within 15 KM)</h2>
+                <ul class="service-list">
+                    {% for service, hospital_name, distance in nearby_services %}
+                        <li class="service-card">
+                            <div class="service-info">
+                                <h3>{{ service.name }} at {{ hospital_name }} ({{ distance|floatformat:"1" }} KM)</h3>
+                                <p>Address: {{ hospital_name.address }}</p>
+                                <p>Description: {{ service.description }}</p>
+                                <p>Cost: {{ service.price }}</p>
+                                <button class="btn">Book Appointment</button>
+                            </div>
+                            <div class="service-image">
+                                <img src="{{ service.image.url }}" alt="Service Image">
+                            </div>
+                            
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% else %}
+            <p class="error-message">No nearby services found matching your search.</p>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        <a href="/" class="back-btn">Back</a>
+    </footer>
+</body>
+</html>

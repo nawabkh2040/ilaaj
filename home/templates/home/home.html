@@ -1,0 +1,392 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ilaaj</title>
+    <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/login.css" %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
+    <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
+</head>
+
+<body onload="myfunction()">
+    <div id="loading"></div>
+    <div class="heroSection">
+        <div class="heroBox">
+            <img src=" {% static "Home/images/hero-bg.png" %} " alt="hero-bg">
+        </div>
+        <div class="hamburger">
+            <i id="ham" class="fa-solid fa-bars fa-3x"></i>
+            <i id="cross" class="fa-solid fa-x fa-3x"></i>
+        </div>
+        <div class="logo">
+            <img src="{% static "Home/images/logo.png" %}" alt="logo">
+            <div class="webNameBar">
+                <div class="webName">ilaaj</div>
+                <div class="nearMe">
+                    <button id="mapOpenButton" class="btn">
+                        <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span> Near Me
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="flex navbar ">
+            <ul class="flex">
+                <li><a href="/"><i class="fa-solid fa-house"></i>Home</a></li>
+                <li><a href="#abou">About</a></li>
+                <li><a href="#depart">Departments</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <button class="loginNav" id="btn-1" action="/login" method="post">Login</button>
+                <button class="loginNav" id="btn-2">Register</button>
+            </ul>
+        </nav>
+        <section class="mapSection">
+            <div class="mapContainer">
+                <i id="mapClose" class="fa-solid fa-x fa-3x"></i>
+                <div class="locationContainer">
+                    <div class="inputLocation">
+                        <input type="text" id="searchInput" name="city" placeholder="Your location...">
+                    </div>
+                    <span style="width: 1px;"></span>
+                    <div class="searchButton">
+                        <button id="search" onclick="searchLocation()">
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div id="map"></div>
+                <form id="locationForm" action="/near-me/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <button type="submit" class="btn locationBtn">Submit</button>
+                </form>
+            </div>
+        </section>
+        <section class="flexCenter login-page">
+            <div class="wraper">
+                <div class="form-login">
+                    <h2>login</h2>
+                    <span class="off"><i class="fa-solid fa-x"></i></span>
+                    <form action="/login" method="post" >
+                        {% csrf_token %}
+                        <div class="input-box">
+                            <span class="icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" name="email" required>
+                            <label>E-mail</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" required>
+                            <label>Password</label>
+                        </div>
+                        <div class="remember-forget">
+                            <label id="rem"> <input type="checkbox">Remerber me?</label>
+                            <a href="#">Forget password</a>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="flexCenter register-page">
+            <div class=" wraper wraper-register">
+                <div class="form-login">
+                    <h2>Register</h2>
+                    <span class="close"><i class="fa-solid fa-x"></i></span>
+                    <form action="/sign-up" method="post">
+                        {% csrf_token %}
+                        <div class="input-box">
+                            <span class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="username" name="username" required>
+                            <label>Username</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" name="email" required>
+                            <label>E-mail</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                        </div>
+
+                        <div class="remember-forget">
+                            <label id="rem"> <input type="checkbox">I agree to the terms and condition</label>
+
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <main class="mainBox">
+            <div class="heroText">
+                Book your local doctor's appointment in
+                <br>
+                just a few steps!
+            </div>
+            <div class="doctorSearchBar">
+                <form action="{% url 'home' %}" method="post">
+                    {% csrf_token %}
+                    <div class="inputCondition">
+                        <input type="text" name="search" placeholder="Enter condition or symptom...">
+                    </div>
+                    <span style="width: 1px;"></span>
+                    <div class="inputLocation">
+                        <input type="text" name="city" placeholder="Your location...">
+                    </div>
+                    <span style="width: 1px;"></span>
+                    <div class="searchButton">
+                        <button id="search">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <hr class="departLine">
+    <!-- hero section ends here -->
+
+    <!-- Departments section start here -->
+    <section id="depart" class="department">
+        <div class="departHead">
+            <h1 class="departHeading">OUR DEPARTMENTS</h1>
+            <p class="departPara">Our department pioneers seamless healthcare access through intuitive technology and
+                strategic partnerships</p>
+        </div>
+        <hr class="departLine">
+        <div class="departRow">
+            <div class="box">
+                <div class="imgBox"><i class="fa-solid fa-heart-pulse fa-3x"></i></div>
+                <div class="details">
+                    <h3>Cardiology</h3>
+                    <p>Heart disease diagnosis, treatment, prevention, cardiovascular health promotion.</p>
+                </div>
+            </div>
+            <hr class="departLine">
+            <div class="box">
+                <div class="imgBox"><i class="fa-solid fa-tooth fa-3x"></i></div>
+                <div class="details">
+                    <h3>Dentist</h3>
+                    <p>Involves oral health, mouth-related issues, and promoting preventive care practices</p>
+                </div>
+            </div>
+            <hr class="departLine">
+            <div class="box">
+                <div class="imgBox"><i class="fa-solid fa-x-ray fa-3x"></i></div>
+                <div class="details">
+                    <h3>Sonography</h3>
+                    <p> It uses high-frequency sound waves to create images of internal body structures.</p>
+                </div>
+            </div>
+            <hr class="departLine">
+            <div class="box">
+                <div class="imgBox"><i class="fa-solid fa-notes-medical fa-3x"></i></div>
+                <div class="details">
+                    <h3>Diagnosis</h3>
+                    <p>Identifying health issues through signs, symptoms,medical tests for accurate treatment</p>
+                </div>
+            </div>
+        </div>
+        <div class="departBtn">
+            <a href="/departments"><button class="btn">View All Departments</button></a>
+        </div>
+    </section>
+    <!-- Departments section end here -->
+
+    <hr>
+    <section class="bgForAboutContact">
+
+        <!-- About us section start here -->
+        <section class="aboutUs" id="abou">
+            <h2>ABOUT US</h2>
+            <div class="aboutUsRow">
+                <div class="leftBox">
+                    <div class="img">
+                        <img src="{% static "Home/images/aboutUs.jpg" %}" alt="Doctor">
+                    </div>
+                </div>
+                <div class="rightBox">
+                    <p>we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
+                        Committed
+                        to simplifying the patient journey, we leverage cutting-edge technology and strategic
+                        partnerships
+                        to redefine the way individuals access medical care. Our mission is to empower users with
+                        convenient
+                        tools for booking appointments, connecting with trusted healthcare providers, and promoting
+                        proactive wellness management. With a focus on user-centric design and a dedication to
+                        excellence,
+                        we aim to revolutionize healthcare access and elevate the standard of patient experience.</p>
+                    <div class="aboutBtn">
+                        <button class="btn">
+                            Read More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About us section end here -->
+
+        <hr>
+
+        <!-- contact form section -->
+        <section id="contact">
+            <h1 class="section-header">Contact Us</h1>
+            <div class="contact-wrapper">
+                <!-- Left contact page -->
+                <form id="contact-form" class="form-horizontal" action="contact/" method="post" role="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value=""
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value=""
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="phone" placeholder="PHONE NO." name="number" value=""
+                            required>
+                    </div>
+                    <textarea class="form-control" rows="8" placeholder="MESSAGE" name="message" required></textarea>
+                    <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">SEND</button>
+                </form>
+                <!-- Right contact page -->
+                <div class="direct-contact-container">
+                    <ul class="contact-list">
+                        <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place"><a
+                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
+
+                        <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a
+                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
+                        </li>
+
+                        <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a
+                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+                    </ul>
+                    <hr>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank" class="contact-icon">
+                                <i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="#" target="_blank" class="contact-icon">
+                                <i class="fa fa-codepen" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="#" target="_blank" class="contact-icon">
+                                <i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="#" target="_blank" class="contact-icon">
+                                <i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+                </div>
+            </div>
+        </section>
+        <!-- contact form section ends here-->
+
+    </section>
+
+    <!-- foorter section start here -->
+    <footer class="footer">
+        <div class="departRow footerRow">
+            <div class="box">
+                <div class="details footerReachAt">
+                    <h3 style=" padding: 0px 12px;">Reach At..</h3>
+                    <ul class="contact-list">
+                        <li class="list-item"><i class="fa fa-map-marker"><span class="contact-text place"><a
+                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
+
+                        <li class="list-item"><i class="fa fa-phone"><span class="contact-text phone"><a
+                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
+                        </li>
+
+                        <li class="list-item"><i class="fa fa-envelope"><span class="contact-text gmail"><a
+                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+                    </ul>
+                    <div class="footerSocial">
+                        <a href="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3 style="padding: 0px 6px;">About</h3>
+                    <p> we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
+                        Committed to simplifying the patient journey.</p>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details" id="quickLinks">
+                    <h3>Links</h3>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Departments</a></li>
+                    <li><a href="#">LogIn</a></li>
+                    <li><a href="#">SignUp</a></li>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3>Newsletter</h3>
+                    <div class=" form-group " style="text-align: center;">
+                        <input type="text" id="footerEmail" class="form-control" id="email" placeholder="Enter Email"
+                            value="" required>
+                        <button class="btn send-button" id="footerBtn" type="submit" value="SEND">SUSCRIBE</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+        </div>
+        <div class="rights">
+            <p style="margin: 0px;">© 2024 All Rights Reserved </p>
+            <br>
+        </div>
+
+        </div>
+    </footer>
+    <!-- foorter section end here -->
+
+    <script src="{% static "Home/javascript/home.js" %}"></script>
+    <script src="{% static "Home/javascript/responsive.js" %}"></script>
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static "Home/javascript/map.js" %}"></script>
+</body>
+
+</html>
