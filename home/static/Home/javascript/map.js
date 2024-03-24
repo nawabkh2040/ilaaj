@@ -2,55 +2,79 @@ let map;
 let marker;
 
 function initMap() {
-    map = L.map('map').setView([20.5937, 78.9629], 8); // Set default view to India
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        maxZoom: 19,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoibmF3YWJraDIwNDAiLCJhIjoiY2x0aWwydmY2MGRhYzJxbzBnb3ZkZGFwYyJ9.pOki1d8O8P4SW9xX9BrPXA'
-    }).addTo(map);
+    mapboxgl.accessToken = 'pk.eyJ1IjoibmF3YWJraDIwNDAiLCJhIjoiY2x0aWwydmY2MGRhYzJxbzBnb3ZkZGFwYyJ9.pOki1d8O8P4SW9xX9BrPXA'; // Replace with your Mapbox access token
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [75.86471723208145, 22.722357081788935],
+        zoom: 9
+    });
 
-    marker = L.marker([20.5937, 78.9629], { draggable: true }).addTo(map); // Default marker position in India
+    map.addControl(new mapboxgl.NavigationControl());
 
-    marker.on('dragend', function () {
-        document.getElementById("latitude").value = marker.getLatLng().lat;
-        document.getElementById("longitude").value = marker.getLatLng().lng;
+    map.on('load', function() {
+        marker = new mapboxgl.Marker({
+            draggable: true
+        })
+            .setLngLat([75.86471723208145, 22.722357081788935])
+            .addTo(map);
+
+        marker.on('dragend', function () {
+            const lngLat = marker.getLngLat();
+            document.getElementById("latitude").value = lngLat.lat;
+            document.getElementById("longitude").value = lngLat.lng;
+        });
     });
 }
 
 function searchLocation() {
     const address = document.getElementById("searchInput").value;
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`)
+
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?country=in&access_token=pk.eyJ1IjoibmF3YWJraDIwNDAiLCJhIjoiY2x0aWwydmY2MGRhYzJxbzBnb3ZkZGFwYyJ9.pOki1d8O8P4SW9xX9BrPXA`)
         .then(response => response.json())
         .then(data => {
-            if (data && data.length > 0) {
-                const { lat, lon } = data[0];
-                map.setView([lat, lon], 13);
-                marker.setLatLng([lat, lon]);
-            } else {
-                console.log("No results found for the given address.");
-            }
+            const coordinates = data.features[0].center;
+            const lat = coordinates[1];
+            const lon = coordinates[0];
+
+            // Update latitude and longitude input fields
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lon;
+
+            // Update map focus
+            map.flyTo({
+                center: [lon, lat],
+                zoom: 12
+            });
+
+            // Update marker position
+            marker.setLngLat([lon, lat]);
         })
-        .catch(error => console.log('Error:', error));
+        .catch(error => console.error('Error:', error));
 }
-// Initialize the map
-initMap();
+document.addEventListener("DOMContentLoaded", function () {
+    // Event listeners for opening and closing the map container
+    let mapOpenButton = document.getElementById("mapOpenButton");
+    let mapOpenButton1 = document.getElementById("mapOpenButton1");
+    let mapCloseButton = document.getElementById("mapClose");
+    let mapContainer = document.getElementsByClassName("mapContainer");
+    let mainBox = document.getElementsByClassName("mainBox");
 
+    mapOpenButton1.addEventListener('click', () => {
+        mapContainer.item(0).style.display = "block";
+        mainBox.item(0).style.display = "none";
+    });
 
-//opening and closing of map 
-let mapOpenButton = document.getElementById("mapOpenButton");
-let mapCloseButton = document.getElementById("mapClose");
-let mapContainer = document.getElementsByClassName("mapContainer");
-let mainBox = document.getElementsByClassName("mainBox");
-console.log(mapContainer);
+    mapOpenButton.addEventListener('click', () => {
+        mapContainer.item(0).style.display = "block";
+        mainBox.item(0).style.display = "none";
+    });
 
-mapOpenButton.addEventListener('click', () => {
-    mapContainer.item(0).style.display = "block";
-    mainBox.item(0).style.display = "none";
-})
-mapCloseButton.addEventListener('click', () => {
-    mapContainer.item(0).style.display = "none";
-    mainBox.item(0).style.display = "block";
+    mapCloseButton.addEventListener('click', () => {
+        mapContainer.item(0).style.display = "none";
+        mainBox.item(0).style.display = "block";
+    });
 
-})
+    // Initialize the map when the page loads
+    initMap();
+});

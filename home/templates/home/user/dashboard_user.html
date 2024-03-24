@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, 
+				initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static "Home/css/user/dashboard.css" %}">
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+
+        <div class="logosec">
+            <div class="logo">Ilaag</div>
+            <i class="fa-solid fa-bars fa-2x" id="menuicnUser" class="menuicnUser icn" style="cursor: pointer;"></i>
+
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <i class="fa-solid fa-bell fa-2x"></i>
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+
+        <!-- navbar section  is here -->
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="option2 nav-option">
+                        <i class="fa-solid fa-notes-medical fa-2x"></i>
+                        <h3><a href="{% url "User-Dashboard" %}" style="text-decoration: none;" >Dashboard</a></h3>
+                    </div>
+                    <div class="nav-option option1 active">
+                        <i class="fa-solid fa-user fa-2x"></i>
+                        <h3> Profile</h3>
+                    </div>
+
+                    <div class="option2 nav-option">
+                        <i class="fa-solid fa-notes-medical fa-2x"></i>
+                        <h3 onclick> Appointment</h3>
+                    </div>
+
+                    <div class="nav-option option3">
+                        <i class="fa-solid fa-newspaper fa-2x"></i>
+                        <h3> Report</h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <i class="fa-solid fa-right-from-bracket fa-flip-horizontal fa-2x"></i>
+                        <h3 onclick="logout()">Logout</h3>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <!-- navbar section  is end here -->
+
+        <main class="main">
+
+
+            <!-- Profile section is start here -->
+            <div class="report-container  profile">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Profile</h1>
+                    <p>Hello , <span id="userName">Sawan</span></p>
+                </div>
+
+                <div class="report-body">
+                    <div class="editProfile">
+                        <h3 class="t-op" style="display: inline; font-size: 22px;">Edit Profile</h3>
+                        <i class="fa-solid fa-pen" style="cursor: pointer;" id="editPen"></i>
+                    </div>
+                    <form action="" class="userChanges" id="userEditForm">
+                        <h3 class="t-op">Full Name</h3>
+                        <input id="user_name" type="text" class="profileUserName userDetails" disabled=""
+                            value="Joe Doe">
+                        <h3 class="t-op">Phone Number</h3>
+                        <input id="user_phone_number" type="tel" class="profileUserPhone userDetails" disabled=""
+                            value="457-985674">
+                        <h3 class="t-op">Email Address</h3>
+                        <input id="user_email_address" type="email" class="profileUserEmail userDetails" disabled=""
+                            value="user@gmail.com">
+                    </form>
+                    <button class="btn defaultNone" type="submit" id="userDetailsSaveBtn">Save Changes</button>
+                </div>
+            </div>
+            <!-- Profile section is end here -->
+
+            <!-- appointment section start here -->
+            <div class="report-container appointment defaultNone">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Appointments || Booking</h1>
+                    <button class="view">View All</button>
+                </div>
+
+                <div class="report-body">
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Name</h3>
+                        <h3 class="t-op">Number</h3>
+                        <h3 class="t-op">Date</h3>
+                        <h3 class="t-op">Test</h3>
+                        <h3 class="t-op">Status</h3>
+                    </div>
+
+                    <div class="items">
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Joe</h3>
+                            <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                            <h3 class="t-op-nextlvl">2 march 2024</h3>
+                            <h3 class="t-op-nextlvl">X-Ray</h3>
+                            <h3 class="t-op-nextlvl label-tag">Accepted</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Joe</h3>
+                            <h3 class="t-op-nextlvl">65466445</h3>
+                            <h3 class="t-op-nextlvl">4 April 2024</h3>
+                            <h3 class="t-op-nextlvl">Blood-test</h3>
+                            <h3 class="t-op-nextlvl">pending... </h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Joe</h3>
+                            <h3 class="t-op-nextlvl">456486445</h3>
+                            <h3 class="t-op-nextlvl">4 May 2024</h3>
+                            <h3 class="t-op-nextlvl">Sonography</h3>
+                            <h3 class="t-op-nextlvl">pending... </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- appointment section end here -->
+
+            <!-- report section start here -->
+            <div class="report-container report defaultNone">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Report</h1>
+                </div>
+
+                <div class="report-body">
+                    <div class="t-op">Your Report</div>
+                    <div class="items reportDetails">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et ipsum praesentium totam cum, optio
+                        similique. Ad dignissimos, neque aspernatur quos tempora deleniti sint ab veniam, ex ipsum
+                        voluptates nisi quasi iure earum. Dolor iste cumque aut a accusamus rem esse quis deleniti sit
+                        vitae.
+                    </div>
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Name</h3>
+                        <h3 class="t-op">Number</h3>
+                        <h3 class="t-op">Date</h3>
+                        <h3 class="t-op">Test</h3>
+                        <h3 class="t-op">Print Report</h3>
+                    </div>
+                    <div class="items">
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">joe</h3>
+                            <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                            <h3 class="t-op-nextlvl">2 march 2024</h3>
+                            <h3 class="t-op-nextlvl">X-Ray</h3>
+                            <h3 class="t-op-nextlvl label-tag">View</h3>
+                        </div>
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">joe</h3>
+                            <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                            <h3 class="t-op-nextlvl">12 march 2024</h3>
+                            <h3 class="t-op-nextlvl">Blood-test</h3>
+                            <h3 class="t-op-nextlvl">Soon</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- report section end here -->
+
+
+        </main>
+
+    </div>
+
+    <script src="{% static "Home/javascript/user/dashboard.js" %}"></script>
+
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

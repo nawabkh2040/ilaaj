@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-^a@7-t@147shi&pucvxnq7&%28x4#whk!y7ps*#h2ope7da763
 DEBUG = True
 
 
-CSRF_TRUSTED_ORIGINS = ['https://2956-2401-4900-55c9-12e7-4442-b819-efe3-dc7a.ngrok-free.app','http://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://3754-2401-4900-55a7-dd80-255f-31f7-cae0-532c.ngrok-free.app','http://localhost','http://192.168.111.194','http://127.0.0.1']
 
-ALLOWED_HOSTS = ['127.0.0.1','2956-2401-4900-55c9-12e7-4442-b819-efe3-dc7a.ngrok-free.app']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','3754-2401-4900-55a7-dd80-255f-31f7-cae0-532c.ngrok-free.app','192.168.111.194']
 
 
 # Application definition
@@ -131,6 +131,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'home.CustomUser'
+from token_values.token import *
 
+RAZORPAY_KEY_ID = RAZORPAY_id
+RAZORPAY_KEY_SECRET = RAZORPAY_KEY
 
 

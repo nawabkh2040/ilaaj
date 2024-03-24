@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Appointment</title>
+    <style>
+        .booking-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            position: relative; /* Positioning for absolute elements */
+        }
+        
+        .message-container {
+            background-color: #dff0d8;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .message-container p {
+            margin: 0;
+            font-weight: bold;
+            color: #3c763d;
+        }
+        
+        .details-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .details-left {
+            width: 30%;
+            margin-right: 2%;
+            padding-right: 20px;
+            border-right: 1px solid #ddd;
+        }
+        
+        .details-left p {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+        
+        .details-right {
+            width: 68%;
+        }
+        
+        .details-right p {
+            margin: 0;
+            margin-bottom: 5px;
+            text-align: right; /* Align all right-aligned text */
+        }
+        
+        .details-right p:first-child {
+            font-weight: bold;
+        }
+        
+        .service-image {
+            max-width: 150px; /* Adjust the maximum width */
+            height: auto;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+        }
+        
+        .booking-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .book-now-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Additional styling for form elements */
+        input[type="date"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        #textarea{
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-image">
+        <div class="message-container">
+            <p>Appointment Booking!</p>
+        </div>
+        <div class="details-container">
+            <div class="details-left">
+                <p>Full Name</p>
+                <p>{{ user.name }}</p>
+                <p>Mobile Number</p>
+                <p>+91 {{ user.number }} Verified</p>
+                <p>Email Address</p>
+                <p>{{ user.email }}</p>
+                <!-- {{ user.pk }} -->
+            </div>
+            <div class="details-right">
+                <p>{{ service.name }}</p>
+                <p>{{ service.description }}</p>
+                {% if service.hospitals.exists %}
+                    <p>{{ service.hospitals.first.Hospitals_name }}</p>
+                    <p>{{ service.hospitals.first.address }}</p>
+                {% elif service.pathology_labs.exists %}
+                    <p>{{ service.pathology_labs.first.Pathology_name }}</p>
+                    <p>{{ service.pathology_labs.first.address }}</p>
+                {% endif %}
+                <p>₹{{ service.price }}</p>
+                <p>Instant discount - ₹{{ instant_discount }}</p>
+                <p>₹{{ service.discounted_price }}</p>
+            </div>
+        </div>
+        <form id="booking-form" method="post" action="{% url "Appointment" %}">
+            {% csrf_token %}
+            {% comment %} <input type="hidden" name="patient" value="{{ user }}"> {% endcomment %}
+            {% if service.hospitals.exists %}
+               <input type="hidden" name="hospital" value="{{ service.hospitals.first.Hospitals_name }}">
+               <input type="hidden" name="doctor" value="{{ service.hospitals.first.doctor }}">
+            {% endif %}
+            {% if service.pathology_labs.exists %}
+               <input type="hidden" name="pathology_lab" value="{{ service.pathology_labs.first.Pathology_name }}">
+            {% endif %}
+            <input type="hidden" name="service" value="{{ service }}">
+            <label for="date">Appointment Date:</label><br>
+            <input type="date" name="Appointment_date" >
+            <input type="hidden" name="status" value="Pending">
+            <input type="text" id="textarea" name="note" placeholder="Note Here" >
+            <div class="booking-form">
+               <button id="book-now-btn" type="submit" class="book-now-btn">Book Now</button>
+           </div>
+        </form>
+
+    </div>
+</body>
+</html>

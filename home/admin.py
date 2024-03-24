@@ -8,9 +8,9 @@ class CustomUserAdmin_by(admin.ModelAdmin):
 admin.site.register(CustomUser,CustomUserAdmin_by)
 
 admin.site.register(Hospital)
+admin.site.register(PathologyLab)
 admin.site.register(Service)
 admin.site.register(Doctor)
-admin.site.register(Appointment)
 admin.site.register(Payment)
 
 
@@ -18,5 +18,7 @@ class Contact_Admin(admin.ModelAdmin):
     list_display = ('name','id', 'number','email','message','date_time')
 admin.site.register(Contact,Contact_Admin)
 
-
+class  Appointment_admin(admin.ModelAdmin):
+    list_display= ('id','patient','service','date_time','Appointment_date','status','hospital','pathology_lab','doctor','note')
+admin.site.register(Appointment,Appointment_admin)
 

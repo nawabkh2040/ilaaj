@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %} | Treat Now</title>
+    <link rel="stylesheet" href="{% static "Home/css/user/dashboard.css" %}">
+</head>
+
+<body>
+    <header>
+
+        <div class="logosec">
+            <div class="logo">Treat Now</div>
+            <i class="fa-solid fa-bars fa-2x" id="menuicnUser" class="menuicnUser icn" style="cursor: pointer;"></i>
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <i class="fa-solid fa-bell fa-2x"></i>
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+
+        <!-- navbar section  is here -->
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="option2 nav-option">
+                         <i class="fa-solid fa-notes-medical fa-2x"></i>
+                         <a href="{% url "User-Dashboard" %}"><h3>Dashboard</h3></a>
+                     </div> 
+
+                    <div class="nav-option option1 active">
+                        <i class="fa-solid fa-user fa-2x"></i>
+                        <h3><a href="{% url "user-profile" %}" style="text-decoration: none;">Profile</a></h3>
+                    </div>
+
+                    <div class="option2 nav-option">
+                        <i class="fa-solid fa-notes-medical fa-2x"></i>
+                        <h3><a href="{% url "user-appointment" %}" style="text-decoration: none;" >Appointment</a></h3>
+                    </div>
+
+                    <div class="nav-option option3">
+                        <i class="fa-solid fa-newspaper fa-2x"></i>
+                        <h3><a href="{% url "user-report" %}" style="text-decoration: none;" >Reports</a></h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <i class="fa-solid fa-right-from-bracket fa-flip-horizontal fa-2x"></i>
+                        <h3><a href="{% url "logout" %}" style="text-decoration: none;" >Logout</a></h3>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <!-- navbar section  is end here -->
+        {% block body %}{% endblock body %}
+
+    {% comment %} <script src="{% static "Home/javascript/user/dashboard.js" %}"></script> {% endcomment %}
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

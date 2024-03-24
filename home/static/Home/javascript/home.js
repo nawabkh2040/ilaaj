@@ -11,6 +11,7 @@ cross.addEventListener('click', () => {
    wraper.classList.remove('active-popup');
 })
 
+// register page
 const btnregister = document.querySelector('#btn-2');
 const wraperRes = document.querySelector('.wraper-register');
 let close = document.querySelector('.close');
@@ -24,10 +25,19 @@ close.addEventListener('click', () => {
    wraperRes.classList.remove('active-pop');
 })
 
+//booking page
+const bookNowBtn = document.querySelector("#bookNow");
+const wraperBooking = document.querySelector('.wraperBooking');
+let off = document.querySelector('.band');
+
+bookNowBtn.addEventListener('click', () => {
+   wraperBooking.classList.add('active-pop');
+})
+off.addEventListener('click', () => {
+   wraperBooking.classList.remove('active-pop');
+})
 
 //PreLoder
-var preloder = document.getElementById("loading");
-
 function myfunction() {
-   preloder.style.display = "none";
+   document.getElementById("loading").style.display = "none"
 }

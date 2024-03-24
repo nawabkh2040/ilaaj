@@ -9,11 +9,31 @@ urlpatterns = [
      path('', views.home, name='home'),
      path('contact/', views.contact, name='contact'),
      path('near-me/', views.near_me, name='near-me'),
-     
+     path('login/', views.login_user, name='login'),
+     path('logout/', views.logout_user, name='logout'),
+     path('sign-up/', views.sign_up, name='sign-up'),
+     path('Book-Appointment/', views.book_appointment, name='Book-Appointment'),
+     path('Appointment/', views.appointment, name='Appointment'),
+
      path('Hospital-login/', views.Hospital_login, name='Hospital-login'),
      path('Pathology-login/', views.Pathology_login, name='Pathology-login'),
      path('Hospital-sign-up/', views.Hospital_sign_up, name='Hospital-sign-up'),
      path('Pathology-sign-up/', views.Pathology_sign_up, name='Pathology-sign-up'),
+
+     path('User-Dashboard/', views.user_dashboard, name='User-Dashboard'),
+     path('user-profile/', views.user_profile, name='user-profile'),
+     path('user-appointment/', views.user_appointment, name='user-appointment'),
+     path('user-report/', views.user_report, name='user-report'),
+
+# For adding the data to the
+     path('payment/<int:appointment_id>/',views.payment, name='payment'),
+     path('payment/success/', views.razorpay_success, name='payment_success'),
+     path('payment-process/', views.payment_process, name='payment-process'),
+     path('initiate-payment/', views.initiate_payment, name='initiate_payment'),
+     path('capture-payment/', views.capture_payment, name='capture_payment'),
+
+
+
 
 
 

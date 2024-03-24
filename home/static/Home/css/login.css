@@ -1,184 +1,106 @@
-.flex button {
-     padding: 0px .8em;
-     background: transparent;
-     border: 2px solid #62d2a200;
-     font-size: 22px;
-     transition: all 0.3s ease;
-     color: black;
-     font-family: Open Sans;
-     cursor: pointer;
- }
- 
- .flex button:hover {
-     color: #07f853 !important;
- }
- 
- .flexCenter {
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
- 
- .wraper {
-     background-color: white;
-     position: absolute;
-     height: 440px;
-     width: 400px;
-     border: 2px solid rgba(255, 255, 255, 0.3);
-     border-radius: 5px;
-     backdrop-filter: blur(20px);
-     background: transparent;
-     box-shadow: 0 0 30 rgb(0, 0, 0.3);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     top: 150px;
-     transform: scale(0);
-     transition: transform 0.3s ease-in;
-     z-index: 999;
- }
- 
- .active-popup {
-     transform: scale(1);
- }
- 
- .form-login h2 {
-     font-size: 2.5rem;
-     text-align: center;
-     margin: 0;
- }
- 
- .form-login .off {
-     font-size: 2.6rem;
-     position: absolute;
-     right: 8px;
-     top: 6px;
-     cursor: pointer;
- }
- 
- .form-login .off:hover {
-     font-size: 2.8rem;
- }
- 
- .form-login input {
-     width: 100%;
-     height: 100%;
-     border: none;
-     outline: none;
-     background: none;
-     font-size: 1rem;
-     font-weight: 400;
-     padding: 0 10px;
- }
- 
- .form-login .input-box {
-     width: 100%;
-     height: 50px;
-     position: relative;
-     border-bottom: 2px solid #162938;
-     margin: 20px 0;
- }
- 
- .form-login .input-box label {
-     position: absolute;
-     top: 50%;
-     left: 5px;
-     font-size: 1rem;
-     transition: 0.5s;
-     display: flex;
- }
- 
- .form-login button {
-     width: 250px;
-     padding: 9px 69px;
-     background-color: rgb(26, 182, 79);
-     border: 2px solid black;
-     position: relative;
-     display: flex;
-     justify-content: center;
-     font-size: 1rem;
-     font-weight: bold;
-     margin-top: 40px;
- 
- }
- 
- .form-login button:hover {
-     background-color: rgb(48, 232, 109);
-     color: rgb(228, 224, 224);
-     font-weight: bold;
- }
- 
- .icon {
-     font-size: 1.5rem;
-     position: absolute;
-     right: 0px;
-     line-height: 55px;
- }
- 
- .input-box input:focus~label,
- .input-box input:valid~label:hover {
-     top: -5px;
- }
- 
- .remember-forget input {
-     width: 14px;
- }
- 
- .remember-forget {
-     display: flex;
-     justify-content: space-between;
-     margin: 15px auto;
-     font-weight: 400;
-     color: #000000;
- }
- 
- .remember-forget a {
-     color: #090909;
-     text-decoration: none;
-     position: relative;
-     top: 2px;
-     text-decoration: none;
- }
- 
- .remember-forget a:hover {
-     text-decoration: underline;
- }
- 
- .regester-login {
-     display: flex;
-     font-size: 0.9rem;
-     justify-content: space-between;
-     margin-top: 40px;
-     width: 100%;
-     color: #a5abb3;
- }
- 
- .regester-login a {
-     color: #162938;
-     text-decoration: none;
-     font-size: 1rem;
- }
- 
- .regester-login a:hover {
-     text-decoration: underline;
- }
- 
- .active-pop {
-     transform: scale(1);
- }
- 
- .wraper-register button {
-     margin-top: 20px;
- }
- 
- .form-login .close {
-     font-size: 2.6rem;
-     position: absolute;
-     right: 8px;
-     top: 6px;
-     cursor: pointer;
- }
- 
- .form-login .close:hover {
-     font-size: 2.8rem;
- }
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #009579;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.container .registration {
+    display: none;
+}
+
+#check:checked~.registration {
+    display: block;
+}
+
+#check:checked~.login {
+    display: none;
+}
+
+#check {
+    display: none;
+}
+
+.container .form {
+    padding: 2rem;
+}
+
+.form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form input {
+    height: 60px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 17px;
+    margin-bottom: 1.3rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form a {
+    font-size: 16px;
+    color: #009579;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form input.button {
+    color: #fff;
+    background: #009579;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.form input.button:hover {
+    background: #006653;
+}
+
+.signup {
+    font-size: 17px;
+    text-align: center;
+}
+
+.signup label {
+    color: #009579;
+    cursor: pointer;
+}
+
+.signup label:hover {
+    text-decoration: underline;
+}

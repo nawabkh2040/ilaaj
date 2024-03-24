@@ -92,13 +92,18 @@ class PathologyLab(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='services/%Y/%m/%d/',blank=True)
+    image = models.ImageField(upload_to='services/%Y/%m/%d/', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Add price field
-    hospitals = models.ManyToManyField(Hospital, related_name='services',blank=True)
-    pathology_labs = models.ManyToManyField(PathologyLab, related_name='services',blank=True)  # Add for pathology labs
+    off_percentage  = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+    actual_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    hospitals = models.ManyToManyField(Hospital, related_name='services', blank=True)
+    pathology_labs = models.ManyToManyField(PathologyLab, related_name='services', blank=True)  
 
     def __str__(self):
         return self.name
+
 
 
 
@@ -111,15 +116,20 @@ class Doctor(models.Model):
         return self.name + " (" + self.specialization + ")"
 
 class Appointment(models.Model):
+    
+
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Link to logged-in user
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)  # Optional for pathology labs
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, blank=True, null=True)  # Optional for pathology labs
     pathology_lab = models.ForeignKey(PathologyLab, on_delete=models.CASCADE, blank=True, null=True)  # Optional for hospitals
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    date_time = models.DateTimeField(default=datetime.now)  # Appointment date and time
+    date_time = models.DateTimeField(default=datetime.now) 
+    Appointment_date = models.DateTimeField(default=datetime.now) # Appointment date and time
+    status = models.CharField(max_length=100,  default="PENDING")  # Status of appointment: Pending, Cancelled, Accepted
+    note = models.TextField(blank=True)  # Optional note for the appointment
 
     def __str__(self):
-        return f"Appointment for {self.patient.username} with Dr. {self.doctor} at {self.hospital.Hospitals_name if self.hospital else self.pathology_lab.Pathology_name} on {self.date_time}"
+        return f"Appointment for {self.patient.username}"
 
 
 class Payment(models.Model):

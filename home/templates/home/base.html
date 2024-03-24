@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %} | Treat Now</title>
+    <link rel="stylesheet" href="{% static "Home/css/navbar2.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
+
+    {% comment %} <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/footer.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/department.css" %}">
+    {% comment %} <link rel="stylesheet" href="{% static "Home/css/login.css" %}"> {% endcomment %}
+    <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo logoHideOnResponsive">
+            
+            <div class="webNameBar">
+                <img src="{% static "Home/images/logo.png" %}" style="border-radius: 25px;" alt="logo">
+                <div class="webName">Treat Now</div>
+            </div>
+        </div>
+        <div class="menu-toggle">
+            <i class="fa fa-bars"></i> <!-- Font Awesome icon for the toggle button -->
+        </div>
+        <ul class="menu">
+            <!-- Your Navbar items -->
+            <li><a href="{% url "home" %}">Home</a></li>
+            <li><a href="{% url "home" %}#about">About</a></li>
+            <li><a href="{% url "home" %}#departments">Departments</a></li>
+            <li><a href="{% url "home" %}#contact">Contact</a></li>
+            <!-- Dropdown menu example -->
+            <li class="dropdown">
+                <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url "home" %}#departments">Departments</a>
+                    <a href="{% url "login" %}">Login/signUp</a>
+                    <a href="#/html/addDoctor.html">Add Doctor</a>
+                    <a href="#/html/doctorAppointment.html">Get Appointment</a>
+                </div>
+            </li>
+        </ul>
+    </nav>    
+<br>
+    <main>
+        
+        {% block body %}{% endblock body %}
+        
+    </main>
+<br>
+    <footer class="footer">
+        <div class="departRow footerRow">
+            <div class="box">
+                <div class="details footerReachAt">
+                    <h3 style=" padding: 0px 12px;">Reach At..</h3>
+                    <ul class="contact-list">
+                        <li class="list-item"><i class="fa fa-map-marker"><span class="contact-text place"><a
+                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
+                                        <br>
+
+                        <li class="list-item"><i class="fa fa-phone"><span class="contact-text phone"><a
+                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
+                                        
+                        </li>
+                        <br>
+                        <li class="list-item"><i class="fa fa-envelope"><span class="contact-text gmail"><a
+                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+                                        <br>
+                                        
+                    </ul>
+                    <div class="footerSocial">
+                        <a href="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3 style="padding: 0px 6px;">About</h3>
+                    <p> we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
+                        Committed to simplifying the patient journey.</p>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details" id="quickLinks">
+                    <h3>Links</h3>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">LogIn</a></li>
+                    <li><a href="#">SignUp</a></li>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+            <div class="box">
+                <div class="details">
+                    <h3>Newsletter</h3>
+                    <div class=" form-group " style="text-align: center;">
+                        <input type="text" id="footerEmail" class="form-control" id="email" placeholder="Enter Email"
+                            value="" required>
+                        <button class="btn send-button" id="footerBtn" type="submit" value="SEND">SUSCRIBE</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="footerBoxLine">
+        </div>
+        <div class="rights">
+            <p style="margin: 0px;">© 2024 All Rights Reserved </p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var menuToggle = document.querySelector('.menu-toggle');
+            var menuList = document.querySelector('.menu');
+    
+            // Add event listener to toggle button
+            menuToggle.addEventListener('click', function() {
+                menuList.classList.toggle('show-menu');
+            });
+        });
+    </script>
+    <script src="{% static "Home/javascript/home.js" %}"></script>
+    <script src="{% static "Home/javascript/responsive.js" %}"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static "Home/javascript/map.js" %}"></script>
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -13,7 +13,12 @@
     font-size: 1.2rem;
 }
 
-#map {
+#map{
+    border: solid 1px black;
+}
+
+#map,
+#doctorMap {
     width: 90%;
     height: 450px;
     margin: auto;
@@ -34,12 +39,19 @@
 .mapSection .mapContainer {
     border: 2px solid;
     width: 70%;
-    backdrop-filter: blur(10px);
     display: none;
+    backdrop-filter: blur(10px);
     transition: all 0.3s ease-in;
     height: auto;
 }
 
+.mapContainer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; /* Ensure the map appears above other elements */
+    display: none; /* Initially hide the map container */
+}
 .locationContainer {
     display: flex;
     width: 90%;
@@ -60,5 +72,74 @@
 }
 
 #locationForm {
+    text-align: center;
+}
+
+.mapSection .inputLocation input {
+    width: 100%;
+    outline: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px;
+    border: none;
+}
+
+/* .searchButton styling */
+.searchButton button {
+    border-radius: 4px;
+    background: #1ab64f;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 14px 0;
+    width: 100%;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.searchButton button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.searchButton button:after {
+    content: '🔎︎';
+    position: absolute;
+    opacity: 0;
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.searchButton button:hover {
+    padding-right: 24px;
+    padding-left: 8px;
+}
+
+.searchButton button:hover:after {
+    opacity: 1;
+    right: 10px;
+}
+
+.doctorMap .searchButton button {
+    padding: 10px 0px;
+}
+
+.doctorMap .locationBtn {
+    margin: 25px auto;
+}
+
+.doctorMap {
+    width: 100% !important;
+    border: 2px solid gray !important;
+    margin-top: 30px;
+    display: block !important;
+}
+
+.doctorMap h1 {
+    font-size: 2.2rem;
     text-align: center;
 }

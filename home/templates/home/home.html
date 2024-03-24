@@ -3,34 +3,33 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ilaaj</title>
     <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
     <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
-    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
-    <link rel="stylesheet" href="{% static "Home/css/login.css" %}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    {% comment %} <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" /> {% endcomment %}
     <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
-    <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
-</head>
+    <link rel="stylesheet" href="{% static "Home/css/footer1.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
+    <link rel="icon" type="image/png" href="{% static "Home/images/logo.png" %}">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
 
+</head>
 <body onload="myfunction()">
     <div id="loading"></div>
     <div class="heroSection">
         <div class="heroBox">
-            <img src=" {% static "Home/images/hero-bg.png" %} " alt="hero-bg">
+            <img src="{% static "Home/images/hero-bg.png" %}" alt="hero-bg">
         </div>
         <div class="hamburger">
             <i id="ham" class="fa-solid fa-bars fa-3x"></i>
             <i id="cross" class="fa-solid fa-x fa-3x"></i>
         </div>
-        <div class="logo">
+        <div class="logo logoShowOnResponsive">
             <img src="{% static "Home/images/logo.png" %}" alt="logo">
             <div class="webNameBar">
-                <div class="webName">ilaaj</div>
+                <div class="webName">Ilaag</div>
                 <div class="nearMe">
-                    <button id="mapOpenButton" class="btn">
+                    <button id="mapOpenButton1" class="btn">
                         <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
                         </span> Near Me
                     </button>
@@ -38,13 +37,34 @@
             </div>
         </div>
         <nav class="flex navbar ">
+            <div class="logo  logoHideOnResponsive">
+                <img src="{% static "Home/images/logo.png" %}" alt="logo">
+                <div class="webNameBar">
+                    <div class="webName">Treat Now</div>
+                    <div class="nearMe">
+                        <button id="mapOpenButton" class="btn">
+                            <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                            </span> Near Me
+                        </button>
+                    </div>
+                </div>
+            </div>
             <ul class="flex">
-                <li><a href="/"><i class="fa-solid fa-house"></i>Home</a></li>
+                <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
                 <li><a href="#abou">About</a></li>
                 <li><a href="#depart">Departments</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <button class="loginNav" id="btn-1" action="/login" method="post">Login</button>
-                <button class="loginNav" id="btn-2">Register</button>
+                <div class="dropdown">
+                    <button class="dropbtn">Pages
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#./html/department.html">Department</a>
+                        <a href="{% url "login" %}">Login/signUp</a>
+                        <a href="#./html/doctorAppointment.html">Get Appointment</a>
+                        <a href="#./html/about.html">About Us(Admin)</a>
+                    </div>
+                </div>
             </ul>
         </nav>
         <section class="mapSection">
@@ -61,8 +81,8 @@
                         </button>
                     </div>
                 </div>
-                <div id="map"></div>
-                <form id="locationForm" action="/near-me/" method="post">
+                <div id="map" ></div>
+                <form id="locationForm" action="{% url "near-me" %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" id="latitude" name="latitude">
                     <input type="hidden" id="longitude" name="longitude">
@@ -70,74 +90,7 @@
                 </form>
             </div>
         </section>
-        <section class="flexCenter login-page">
-            <div class="wraper">
-                <div class="form-login">
-                    <h2>login</h2>
-                    <span class="off"><i class="fa-solid fa-x"></i></span>
-                    <form action="/login" method="post" >
-                        {% csrf_token %}
-                        <div class="input-box">
-                            <span class="icon">
-                                <i class="fa-solid fa-envelope"></i>
-                            </span>
-                            <input type="email" name="email" required>
-                            <label>E-mail</label>
-                        </div>
-                        <div class="input-box">
-                            <span class="icon">
-                                <i class="fa-solid fa-lock"></i>
-                            </span>
-                            <input type="password" required>
-                            <label>Password</label>
-                        </div>
-                        <div class="remember-forget">
-                            <label id="rem"> <input type="checkbox">Remerber me?</label>
-                            <a href="#">Forget password</a>
-                        </div>
-                        <button type="submit" class="btn">Login</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <section class="flexCenter register-page">
-            <div class=" wraper wraper-register">
-                <div class="form-login">
-                    <h2>Register</h2>
-                    <span class="close"><i class="fa-solid fa-x"></i></span>
-                    <form action="/sign-up" method="post">
-                        {% csrf_token %}
-                        <div class="input-box">
-                            <span class="icon">
-                                <i class="fa-solid fa-user"></i>
-                            </span>
-                            <input type="username" name="username" required>
-                            <label>Username</label>
-                        </div>
-                        <div class="input-box">
-                            <span class="icon">
-                                <i class="fa-solid fa-envelope"></i>
-                            </span>
-                            <input type="email" name="email" required>
-                            <label>E-mail</label>
-                        </div>
-                        <div class="input-box">
-                            <span class="icon">
-                                <i class="fa-solid fa-lock"></i>
-                            </span>
-                            <input type="password" name="password" required>
-                            <label>Password</label>
-                        </div>
-
-                        <div class="remember-forget">
-                            <label id="rem"> <input type="checkbox">I agree to the terms and condition</label>
-
-                        </div>
-                        <button type="submit" class="btn">Register</button>
-                    </form>
-                </div>
-            </div>
-        </section>
+        
         <main class="mainBox">
             <div class="heroText">
                 Book your local doctor's appointment in
@@ -156,7 +109,7 @@
                     </div>
                     <span style="width: 1px;"></span>
                     <div class="searchButton">
-                        <button id="search">
+                        <button id="search-doc" type="submit">
                             Search
                         </button>
                     </div>
@@ -209,7 +162,7 @@
             </div>
         </div>
         <div class="departBtn">
-            <a href="/departments"><button class="btn">View All Departments</button></a>
+            <a href="#html/department.html"><button class="btn">View All Departments</button></a>
         </div>
     </section>
     <!-- Departments section end here -->
@@ -223,7 +176,7 @@
             <div class="aboutUsRow">
                 <div class="leftBox">
                     <div class="img">
-                        <img src="{% static "Home/images/aboutUs.jpg" %}" alt="Doctor">
+                        <img src="{% static "Home/images/doctor.jpg" %}" alt="Doctor">
                     </div>
                 </div>
                 <div class="rightBox">
@@ -238,9 +191,11 @@
                         excellence,
                         we aim to revolutionize healthcare access and elevate the standard of patient experience.</p>
                     <div class="aboutBtn">
+                        <a href="./html/about.html">
                         <button class="btn">
-                            Read More
-                        </button>
+                                Read More
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -254,8 +209,7 @@
             <h1 class="section-header">Contact Us</h1>
             <div class="contact-wrapper">
                 <!-- Left contact page -->
-                <form id="contact-form" class="form-horizontal" action="contact/" method="post" role="form">
-                    {% csrf_token %}
+                <form id="contact-form" class="form-horizontal" role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value=""
                             required>
@@ -265,7 +219,7 @@
                             required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" id="phone" placeholder="PHONE NO." name="number" value=""
+                        <input type="tel" class="form-control" id="phone" placeholder="PHONE NO." name="phone" value=""
                             required>
                     </div>
                     <textarea class="form-control" rows="8" placeholder="MESSAGE" name="message" required></textarea>
@@ -375,7 +329,6 @@
         </div>
         <div class="rights">
             <p style="margin: 0px;">© 2024 All Rights Reserved </p>
-            <br>
         </div>
 
         </div>
@@ -384,9 +337,13 @@
 
     <script src="{% static "Home/javascript/home.js" %}"></script>
     <script src="{% static "Home/javascript/responsive.js" %}"></script>
+    {% comment %} <script src="javascript/login.js"></script> {% endcomment %}
+    {% comment %} <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script> {% endcomment %}
     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{% static "Home/javascript/map.js" %}"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+
 </body>
 
 </html>

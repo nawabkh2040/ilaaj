@@ -13,7 +13,11 @@
      <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
      <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
  </head>
-
+<style>
+    a{
+        text-decoration:None;
+    }
+</style>
 <body>
     <div class="logo">
         <a href="{% url "home" %}">
@@ -40,12 +44,9 @@
         {% endif %}
         {% if nearby_services %}
         <div class="departHead">
-            <h1 class="departHeading">Hospitals with {{ search }}</h1>
-            <p class="departPara">Our department pioneers seamless healthcare access through intuitive technology and
-                strategic partnerships</p>
+            <h1 class="departHeading">{{ search }} Services Near You </h1>
         </div>
         <hr class="departLine">
-     
         <div class="departmentRow">
             <div class="blog-slider">
                {% for service, hospital_name, distance in nearby_services %}
@@ -76,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#"  class="blog-slider__button">Book Now</a>
+                            <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -84,6 +85,49 @@
             </div>
             {% else %}
             <p class="error-message">No nearby services found matching your search.</p>
+        {% endif %}
+        </div>
+    </section>
+    {% if nearby_services_pathology %}
+        <hr class="departLine">
+        <div class="departmentRow">
+            <div class="blog-slider">
+               {% for service, PathologyLab, distance in nearby_services_pathology %}
+                <div class="blog-slider__wrp swiper-wrapper">
+                    <div class="blog-slider__item swiper-slide">
+                        <div class="blog-slider__img">
+                            <img src="{{ service.image.url }}"
+                                alt="">
+                        </div>
+                        <div class="blog-slider__content">
+                            <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM</span>
+                            <div class="blog-slider__title">{{ PathologyLab }}</div>
+                            <div class="blog-slider__title">{{ service.name }}</div>
+                            <div class="blog-slider__text">{{ service.description }}
+                            </div>
+                            <div class="blog-slider__text">{{ PathologyLab.address }}
+                         </div>
+                            <div class="blog-slider__title" id="price">
+                                <div class="discountPrice">
+                                   {{service.price}}
+                                </div>
+                                <div class="originalPrice" style="display: flex;">
+                                    <div class="actualPrice">
+                                        ₹ 1800
+                                    </div>
+                                    <div class="discount">
+                                        33% Off
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            {% comment %} <p class="error-message">No nearby services found matching your search.</p> {% endcomment %}
         {% endif %}
         </div>
     </section>
@@ -151,8 +195,6 @@
         </div>
         <div class="rights">
             <p style="margin: 0px;">© 2024 All Rights Reserved </p>
-            <br>
-            <p>© Distributed By sawan </p>
         </div>
 
         </div>

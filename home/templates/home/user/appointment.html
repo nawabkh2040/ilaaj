@@ -1,0 +1,48 @@
+{% extends "Home/user/base.html" %}
+{% block title %}Reports{% endblock title %}
+{% block body %}
+<main class="main">
+     <div class="report-container appointment defaultNone">
+          <div class="report-header">
+              <h1 class="recent-Articles">Appointments || Booking</h1>
+              <button class="view">View All</button>
+          </div>
+
+          <div class="report-body">
+              <div class="report-topic-heading">
+                  <h3 class="t-op">Name</h3>
+                  <h3 class="t-op">Number</h3>
+                  <h3 class="t-op">Date</h3>
+                  <h3 class="t-op">Test</h3>
+                  <h3 class="t-op">Status</h3>
+              </div>
+
+              <div class="items">
+                  <div class="item1">
+                      <h3 class="t-op-nextlvl">Joe</h3>
+                      <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                      <h3 class="t-op-nextlvl">2 march 2024</h3>
+                      <h3 class="t-op-nextlvl">X-Ray</h3>
+                      <h3 class="t-op-nextlvl label-tag">Accepted</h3>
+                  </div>
+
+                  <div class="item1">
+                      <h3 class="t-op-nextlvl">Joe</h3>
+                      <h3 class="t-op-nextlvl">65466445</h3>
+                      <h3 class="t-op-nextlvl">4 April 2024</h3>
+                      <h3 class="t-op-nextlvl">Blood-test</h3>
+                      <h3 class="t-op-nextlvl">pending... </h3>
+                  </div>
+
+                  <div class="item1">
+                      <h3 class="t-op-nextlvl">Joe</h3>
+                      <h3 class="t-op-nextlvl">456486445</h3>
+                      <h3 class="t-op-nextlvl">4 May 2024</h3>
+                      <h3 class="t-op-nextlvl">Sonography</h3>
+                      <h3 class="t-op-nextlvl">pending... </h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+</main>
+{% endblock body %}

@@ -1,0 +1,33 @@
+{% extends "Home/user/base.html" %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+<main class="main">
+     {% if user %}
+     <div class="report-container  profile">
+          <div class="report-header">
+          <h1 class="recent-Articles">Profile</h1>
+          <p>Hello , <span id="userName">{{user.name}}</span></p>
+          </div>
+
+          <div class="report-body">
+          <div class="editProfile">
+               <h3 class="t-op" style="display: inline; font-size: 22px;">Edit Profile</h3>
+               <i class="fa-solid fa-pen" style="cursor: pointer;" id="editPen"></i>
+          </div>
+          <form action="" class="userChanges" id="userEditForm">
+               <h3 class="t-op">Full Name</h3>
+               <input id="user_name" type="text" class="profileUserName userDetails" disabled=""
+                    value="{{user.name}}">
+               <h3 class="t-op">Phone Number</h3>
+               <input id="user_phone_number" type="tel" class="profileUserPhone userDetails" disabled=""
+                    value="{{user.number}}">
+               <h3 class="t-op">Email Address</h3>
+               <input id="user_email_address" type="email" class="profileUserEmail userDetails" disabled=""
+                    value="{{user.email}}">
+          </form>
+          <button class="btn defaultNone" type="submit" id="userDetailsSaveBtn">Save Changes</button>
+          </div>
+          {% endif %}
+     </div>
+</main>
+{% endblock body %}

@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
-</head>
-<body>
+{% extends "home/base.html" %}
+{% block title %}Contact{% endblock title %}
+{% block body %}
+<style>
+     h2{
+          text-align:center;
+     }
+</style>
+<div class="container">
      
-</body>
-</html>
+     {% if error_message %}
+            <h2 class="error-message">{{ error_message }}</h2>
+     {% endif %}
+     {% if success_message %}
+            <h2 style="color:green;"  class="success_message">{{ success_message }}</h2>
+     {% endif %}
+</div>
+{% endblock body %}
