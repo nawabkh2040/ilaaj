@@ -12,9 +12,7 @@ html {
 
 
 /* Styling search bar  */
-.logoShowOnResponsive {
-    display: none !important;
-}
+
 
 .heroBox img {
     width: 100%;
@@ -136,31 +134,6 @@ html {
 /* Department Styling ends here */
 
 /* About us Styling goes here */
-#search-doc{
-    border-radius: 4px;
-    background: #1ab64f;
-    border: none;
-    color: #fff;
-    text-align: center;
-    font-size: 18px;
-    padding: 14px 0;
-    width: 100%;
-    transition: all 0.5s;
-    cursor: pointer;
-   
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-#search-doc:after {
-    content: '🔎︎';
-    position: absolute;
-    opacity: 0;
-    top: 14px;
-    right: -20px;
-    transition: 0.5s;
-}
-
 .aboutUs {
     padding: 60px;
 }
@@ -192,4 +165,3 @@ html {
     width: 55%;
 }
 
-/* foorter section styling goes here */

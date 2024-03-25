@@ -73,6 +73,8 @@ class Hospital(models.Model):
      location = models.CharField(max_length=255, blank=True)  
      latitude = models.FloatField(blank=True, null=True)  
      longitude = models.FloatField(blank=True, null=True)
+     image1 = models.ImageField(upload_to='hospital_images/', blank=True, null=True)
+     image2 = models.ImageField(upload_to='hospital_images/', blank=True, null=True)
      def __str__(self):
         return self.Hospitals_name
 
@@ -84,6 +86,8 @@ class PathologyLab(models.Model):
     location = models.CharField(max_length=255, blank=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    image1 = models.ImageField(upload_to='pathology_images/', blank=True, null=True)
+    image2 = models.ImageField(upload_to='pathology_images/', blank=True, null=True)
 
     def __str__(self):
         return self.Pathology_name
@@ -126,6 +130,7 @@ class Appointment(models.Model):
     date_time = models.DateTimeField(default=datetime.now) 
     Appointment_date = models.DateTimeField(default=datetime.now) # Appointment date and time
     status = models.CharField(max_length=100,  default="PENDING")  # Status of appointment: Pending, Cancelled, Accepted
+    done = models.BooleanField(default=False)
     note = models.TextField(blank=True)  # Optional note for the appointment
 
     def __str__(self):

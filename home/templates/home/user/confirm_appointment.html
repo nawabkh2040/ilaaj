@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking || Treat now</title>
+    <link rel="stylesheet" href="{% static "Home/css/appointment.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+</head>
+
+<body>
+
+    <div class="hamburger">
+        <i id="ham" class="fa-solid fa-bars fa-3x"></i>
+        <i id="cross" class="fa-solid fa-x fa-3x"></i>
+    </div>
+    <div class="logo logoShowOnResponsive">
+        <img src="{% static "Home/images/logo.png" %}" alt="logo">
+        <div class="webNameBar">
+            <div class="webName">Treat Now</div>
+            <div class="nearMe">
+                <button id="mapOpenButton1" class="btn">
+                    <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <section class="booking">
+        <div class="booking-details">
+            <div class="confirmation-message">
+                <span><span class="discount-emoji" role="img" aria-label="discount">🎉</span> <span>You just saved ₹{{ instant_discount }} on this booking!</span></span>
+            </div>
+            <div class="booking-form">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-description">Your details</div>
+                </div>
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input id="name" type="text" placeholder="{{ user.name }}"  maxlength="50">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" type="email" placeholder="{{ user.email }}"  maxlength="75">
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Mobile Number</label>
+                        <input id="phone" type="tel" placeholder="{{ user.number }}"  minlength="8" maxlength="12"
+                            pattern="[0-9]*">
+                    </div>
+                    <form id="booking-form" method="post" action="{% url "Appointment" %}">
+                         {% csrf_token %}
+                         {% if service.hospitals.exists %}
+                              <input type="hidden" name="hospital" value="{{ service.hospitals.first.Hospitals_name }}">
+                              <input type="hidden" name="doctor" value="{{ service.hospitals.first.doctor }}">
+                         {% endif %}
+                         {% if service.pathology_labs.exists %}
+                              <input type="hidden" name="pathology_lab" value="{{ service.pathology_labs.first.Pathology_name }}">
+                         {% endif %}
+                         <input type="hidden" name="service" value="{{ service }}">
+                         <input type="hidden" name="status" value="Pending">
+                         <div class="input-group">
+                         <label for="date">Date and Time</label>
+                         <input id="date" name="Appointment_date" type="datetime-local">
+                         </div>
+                         <div class="input-group note-area">
+                         <label for="date">Note</label>
+                         <textarea name="note" id="Note" cols="30" rows="2"></textarea>
+                         </div>
+                </div>
+                <div class="continue-button">
+                    <button type="submit">Continue</button>
+                </div>
+               </form>
+               <button type="button" onclick="window.history.back()" style="padding: 10px 20px; margin-top: 20px; background-color: #dc3545; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 16px;">Back</button>
+
+            </div>
+        </div>
+
+        <div class="hospital-details">
+            <div class="hospital-info">
+               {% if service.hospitals.exists %}
+                    <div class="hospital-name">{{ service.hospitals.first.Hospitals_name }}</div>
+               {% elif service.pathology_labs.exists %}
+                    <div class="hospital-name">{{ service.pathology_labs.first.Pathology_name }}</div>
+               {% endif %}
+                <div class="hospital-rating">
+                    <div class="rating">4.0 ★</div>
+                    <div class="rating-count">(630 Ratings)</div>
+                    <div class="rating-description">Very Good</div>
+                </div>
+            </div>
+            <div class="hospital-image">
+                <img src="{{ service.image.url }}" alt="{{ service.name }}">
+            </div>
+            <div class="booking-options">
+                <div class="pricing-details">
+                    <div class="price-details">
+                        <div class="detail">Test or Servce</div>
+                        <div class="value">{{ service.name }}</div>
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Address</div>
+                        {% if service.hospitals.exists %}
+                              <div class="value">{{ service.hospitals.first.address }}</div>
+                        {% elif service.pathology_labs.exists %}
+                              <div class="value">{{ service.pathology_labs.first.address }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Test Price</div>
+                        <div class="value">₹{{ service.price }}</div>
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Instant discount</div>
+                        <div class="value">-₹{{ instant_discount }}</div>
+                    </div>
+                    <div class="total-amount price-details">
+                        <div class="detail">Payable Amount</div>
+                        <div class="value">₹{{ service.discounted_price }}</div>
+                    </div>
+                </div>
+                <div class="booking-action">
+                    <div class="booking-count">15 people booked this hospital today</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{% static "Home/javascript/responsive.js" %}"></script>
+    <script src="{% static "Home/javascript/home.js" %}"></script>
+</body>
+
+</html>

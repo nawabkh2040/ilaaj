@@ -142,25 +142,10 @@ body {
                 <input type="submit" class="button" value="Login">
             </form>
             <div class="signup">
-                <span>Don't have an account?
-                    <label for="check">Signup</label>
-                </span>
-            </div>
-        </div>
-        <div class="registration form">
-            <header>Signup</header>
-            <form action="{% url 'sign-up' %}" method="post" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
-                {% csrf_token %}
-                <input type="text" name="name" placeholder="Enter your Full Name">
-                <input type="number" name="number" placeholder="Enter your Phone Number">
-                <input type="text" name="email" placeholder="Enter your email">
-                <input type="password" id="password" name="password" placeholder="Create a password">
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
-                <input type="submit" class="button" value="Signup">
-            </form>
-            <div class="signup">
-                <span>Already have an account?
-                    <label for="check">Login</label>
+                <span class="signup">Don't have an account?
+                    <a href="{% url "sign-up" %}" style="text-decoration: none;"><label>Signup</label></a>
+                    <br>
+                    <a href="{% url "doctor-login" %}">Are you a Doctor?</a>
                 </span>
             </div>
         </div>

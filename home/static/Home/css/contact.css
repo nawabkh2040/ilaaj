@@ -45,7 +45,7 @@
 
 .form-control,
 textarea {
-    max-width: 400px;
+    max-width: 349px;
     background-color: #000;
     color: #fff;
     letter-spacing: 1px;
@@ -62,7 +62,7 @@ textarea {
 
 .send-button {
     margin-top: 15px;
-    width: 430px;
+    width: 349px;
     transition: all .3s ease;
     background: #046242;
     border: 2px solid #046242;

@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-^a@7-t@147shi&pucvxnq7&%28x4#whk!y7ps*#h2ope7da763
 DEBUG = True
 
 
-CSRF_TRUSTED_ORIGINS = ['https://3754-2401-4900-55a7-dd80-255f-31f7-cae0-532c.ngrok-free.app','http://localhost','http://192.168.111.194','http://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','http://localhost','http://192.168.111.194','http://127.0.0.1']
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','3754-2401-4900-55a7-dd80-255f-31f7-cae0-532c.ngrok-free.app','192.168.111.194']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','192.168.111.194']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'doctor',
 ]
 
 MIDDLEWARE = [

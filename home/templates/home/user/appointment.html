@@ -1,48 +1,80 @@
 {% extends "Home/user/base.html" %}
-{% block title %}Reports{% endblock title %}
+{% block title %}Appointments {% endblock title %}
 {% block body %}
 <main class="main">
-     <div class="report-container appointment defaultNone">
-          <div class="report-header">
-              <h1 class="recent-Articles">Appointments || Booking</h1>
-              <button class="view">View All</button>
-          </div>
-
-          <div class="report-body">
-              <div class="report-topic-heading">
-                  <h3 class="t-op">Name</h3>
-                  <h3 class="t-op">Number</h3>
-                  <h3 class="t-op">Date</h3>
-                  <h3 class="t-op">Test</h3>
-                  <h3 class="t-op">Status</h3>
-              </div>
-
-              <div class="items">
-                  <div class="item1">
-                      <h3 class="t-op-nextlvl">Joe</h3>
-                      <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
-                      <h3 class="t-op-nextlvl">2 march 2024</h3>
-                      <h3 class="t-op-nextlvl">X-Ray</h3>
-                      <h3 class="t-op-nextlvl label-tag">Accepted</h3>
-                  </div>
-
-                  <div class="item1">
-                      <h3 class="t-op-nextlvl">Joe</h3>
-                      <h3 class="t-op-nextlvl">65466445</h3>
-                      <h3 class="t-op-nextlvl">4 April 2024</h3>
-                      <h3 class="t-op-nextlvl">Blood-test</h3>
-                      <h3 class="t-op-nextlvl">pending... </h3>
-                  </div>
-
-                  <div class="item1">
-                      <h3 class="t-op-nextlvl">Joe</h3>
-                      <h3 class="t-op-nextlvl">456486445</h3>
-                      <h3 class="t-op-nextlvl">4 May 2024</h3>
-                      <h3 class="t-op-nextlvl">Sonography</h3>
-                      <h3 class="t-op-nextlvl">pending... </h3>
-                  </div>
-              </div>
-          </div>
-      </div>
+    <style>
+        .report-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        .report-table th,
+        .report-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd; /* Add border to bottom of each row */
+        }
+    
+        .report-table th {
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+    
+        .report-body .t-op-nextlvl {
+            border-right: 1px solid #ddd; /* Add border to right of each cell */
+        }
+    </style>
+    
+    <div class="report-container appointment">
+        <div class="report-header">
+            <h1 class="recent-Articles">Appointments || Booking</h1>
+            <button class="view">View All</button>
+        </div>
+        {% if appointments %}
+        <div class="report-body">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th class="t-op">Appointment ID</th>
+                        <th class="t-op">Patient Name</th>
+                        <th class="t-op">Hospital or Pathology Lab</th>
+                        <th class="t-op">Date of Appointment</th>
+                        <th class="t-op">Test or Service</th>
+                        <th class="t-op">Appointment Done</th>
+                        <th class="t-op">Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td class="t-op-nextlvl">AP-{{ appointment.id }}</td>
+                        <td class="t-op-nextlvl">{{ appointment.patient.name }}</td>
+                        <td class="t-op-nextlvl">
+                            {% if appointment.hospital %}
+                            {{ appointment.hospital }}
+                            {% elif appointment.pathology_lab %}
+                            {{ appointment.pathology_lab }}
+                            {% endif %}
+                        </td>
+                        <td class="t-op-nextlvl">{{ appointment.Appointment_date }}</td>
+                        <td class="t-op-nextlvl">{{ appointment.service }}</td>
+                        <td class="t-op-nextlvl">
+                            {% if appointment.done %}
+                                <span style="color: green;">&#10004;</span> <!-- Green right mark -->
+                            {% else %}
+                                <span style="color: red;">&#10008;</span> <!-- Red cross mark -->
+                            {% endif %}
+                        </td>
+                        <td class="t-op-nextlvl label-tag" style="{% if appointment.status == 'Pending' %} background-color: orange; {% elif appointment.status == 'PAID' %} background-color: green; {% elif appointment.status == 'CANCELLED' %} background-color: red; {% elif appointment.status == 'Cancelled' %} background-color: red;{% elif appointment.status == 'Pay at Place' %} background-color: yellow; color: red;{% endif %}">
+                            {{ appointment.status }}
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    
 </main>
 {% endblock body %}

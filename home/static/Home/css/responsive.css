@@ -52,7 +52,7 @@
     }
 
     .departRow {
-        width: 100%;
+        width: 88%;
     }
 
     .aboutUs {
@@ -167,7 +167,7 @@
 @media only screen and (max-width: 770px) {
 
     .departRow {
-        width: 100%;
+        width: auto;
         flex-direction: column;
     }
 
@@ -399,4 +399,24 @@
 
 #cross {
     display: none;
+}
+@media only screen and (max-width: 1000px) {
+    .booking-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .items {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 300px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .t-op-nextlvl {
+        margin-bottom: 5px;
+    }
 }

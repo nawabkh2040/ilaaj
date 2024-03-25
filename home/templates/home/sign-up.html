@@ -1,112 +1,123 @@
 {% extends "Home/base.html" %}
 {% block title %}Sign Up{% endblock title %}
-
 {% block body %}
 <style>
-    /* Base styles */
-.signup-container {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 350px; /* Increased width */
-    max-width: 90%;
-    text-align: center;
-    margin: auto;
-    margin-top: 50px;
-}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
 
-.signup-container h2 {
-    margin-bottom: 20px;
-    color: #333; /* Change the text color */
-}
+       body {
+           font-family: Arial, sans-serif;
+           background-color: #009579;
+       }
 
-.signup-container .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
+       .container {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+       }
 
-.signup-container label {
-    font-weight: bold;
-    color: #333; /* Change the text color */
-}
+       .registration {
+           background-color: #fff;
+           border-radius: 10px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           padding: 20px;
+           max-width: 400px;
+           width: 100%;
+       }
 
-.signup-container input[type="text"],
-.signup-container input[type="email"],
-.signup-container input[type="password"],
-.signup-container input[type="number"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+       .registration header {
+           font-size: 24px;
+           font-weight: bold;
+           text-align: center;
+           margin-bottom: 20px;
+       }
 
-.signup-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+       .registration form {
+           display: flex;
+           flex-direction: column;
+       }
 
-.signup-container button:hover {
-    background-color: #0056b3;
-}
+       .registration input[type="text"],
+       .registration input[type="number"],
+       .registration input[type="email"],
+       .registration input[type="password"],
+       .registration input[type="radio"] {
+           margin-bottom: 15px;
+           padding: 10px;
+           border-radius: 5px;
+           border: 1px solid #ccc;
+           font-size: 16px;
+           outline: none;
+       }
 
-.login-link {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #007bff; /* Change the link color */
-}
+       .registration input[type="radio"] {
+           margin-right: 10px;
+       }
 
-.login-link a {
-    color: #007bff; /* Change the link color */
-}
+       .registration .button {
+           background-color: #009688;
+           color: #fff;
+           font-size: 18px;
+           padding: 12px 0;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
+       }
 
-.login-link a:hover {
-    text-decoration: underline;
-}
+       .registration .button:hover {
+           background-color: #00796b;
+       }
 
-</style>
+       .registration .signup {
+           text-align: center;
+           margin-top: 15px;
+       }
 
-<div class="signup-container">
-    <h2>Sign Up</h2>
-    <form action="{% url 'sign-up' %}" method="post" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
-        {% csrf_token %}
-        {% if error_message %}
-            <p style="color: rgb(216, 65, 65);">{{ error_message }}</p>
-        {% endif %}
-        {% if success_message %}
-            <p style="color: rgb(10, 205, 75);">{{ success_message }}</p>
-        {% endif %}
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="number">Phone Number</label>
-            <input type="number" id="number" name="number" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-        </div>
-        <button type="submit">Sign Up</button>
-    </form>
-    <div class="login-link">
-        Already have an account? <a href="{% url 'login' %}">Login</a>
-    </div>
-</div>
+       .registration .signup label {
+           color: #009688;
+           cursor: pointer;
+       }
+
+       @media (max-width: 600px) {
+           .registration {
+               max-width: 300px;
+           }
+       }
+   </style>
+   <div class="container">
+       <div class="registration">
+           <header>User Registration</header>
+           {% if success_message %}
+           <p style="color:green; font-size: 14px;margin: 10px;">{{success_message}}</p>
+           {% endif %}
+           {% if error %}
+              <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error}}</p>
+           {% endif %}
+           <form action="{% url 'sign-up' %}" method="post"
+               oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
+               {% csrf_token %}
+               <input type="text" name="name" placeholder="Enter your Full Name">
+               <input type="number" name="number" placeholder="Enter your Phone Number">
+               <input type="email" name="email" placeholder="Enter your email">
+               <input type="password" id="password" name="password" placeholder="Create a password">
+               <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+               <input type="submit" class="button" value="Signup">
+           </form>
+           <br>
+           <div class="login" style="text-align: center;">
+               <span class="signup">Already have an account?
+                   <a href="{% url "login" %}" style="text-decoration: none;"><label for="check">Login</label></a>
+                   <br>
+               </span>
+               <br>
+               <a style="color: #00796b; text-decoration: none;" href="{% url "doctor-sign-up" %}">Are you a Doctor?</a>
+           </div>
+       </div>
+   </div>
 {% endblock body %}

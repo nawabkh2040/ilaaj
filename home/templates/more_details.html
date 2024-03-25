@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details | Treat Now</title>
+    <link rel="stylesheet" href="{% static "Home/css/more_details.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+
+</head>
+
+<body>
+    <div class="hamburger">
+        <i id="ham" class="fa-solid fa-bars fa-3x"></i>
+        <i id="cross" class="fa-solid fa-x fa-3x"></i>
+    </div>
+    <div class="logo logoShowOnResponsive">
+        <img src="{% static "Home/images/logo.png" %}" alt="logo">
+        <div class="webNameBar">
+            <div class="webName">Treat Now</div>
+            <div class="nearMe">
+                <button id="mapOpenButton1" class="btn">
+                    <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="flex navbar ">
+        <div class="logo  logoHideOnResponsive">
+            <img src="{% static "Home/images/logo.png" %}" alt="logo">
+            <div class="webNameBar">
+                <div class="webName">Treat Now</div>
+                <div class="nearMe">
+                    <button id="mapOpenButton" class="btn">
+                        <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span> Near Me
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ul class="flex">
+            <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
+            <li><a href="#../html/about.html">About</a></li>
+            <li><a href="#../html/department.html">Departments</a></li>
+            <li><a href="#../index.html">Contact</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Pages
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#../html/department.html">Department</a>
+                    <a href="{% url "login" %}">Login/signUp</a>
+                    <a href="#../html/doctorAppointment.html">Get Appointment</a>
+                    <a href="#../html/about.html">About Us(Admin)</a>
+                </div>
+            </div>
+
+
+        </ul>
+    </nav>
+    <section>
+        <div class="carousel">
+            <ul class="slides">
+                <input type="radio" name="radio-buttons" id="img-1" checked />
+                <li class="slide-container">
+                    <div class="slide-image">
+                        {% if service.hospitals.exists %}
+                            {% if service.hospitals.first.image1 %}
+                                <img src="{{ service.hospitals.first.image1.url }}" alt="Hospital Image Not Present">
+                            {% else %}
+                                 "No image available." | markdown 
+                            {% endif %}
+                        {% elif service.pathology_labs.exists %}
+                            {% if service.pathology_labs.first.image1 %}
+                                <img src="{{ service.pathology_labs.first.image1.url }}" alt="Hospital Image Not Present">
+                            {% else %}
+                                 "No image available." | markdown
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="carousel-controls">
+                        <label for="img-3" class="prev-slide">
+                            <span>&lsaquo;</span>
+                        </label>
+                        <label for="img-2" class="next-slide">
+                            <span>&rsaquo;</span>
+                        </label>
+                    </div>
+                </li>
+                <input type="radio" name="radio-buttons" id="img-2" />
+                <li class="slide-container">
+                    <div class="slide-image">
+                        <img src="{{ service.image.url }}">
+                    </div>
+                    <div class="carousel-controls">
+                        <label for="img-1" class="prev-slide">
+                            <span>&lsaquo;</span>
+                        </label>
+                        <label for="img-3" class="next-slide">
+                            <span>&rsaquo;</span>
+                        </label>
+                    </div>
+                </li>
+                <input type="radio" name="radio-buttons" id="img-3" />
+                <li class="slide-container">
+                    <div class="slide-image">
+                        {% if service.hospitals.exists %}
+                            {% if service.hospitals.first.image2 %}
+                                <img src="{{ service.hospitals.first.image2.url }}" alt="Hospital Image Not Present">
+                            {% else %}
+                                 "No image available." | markdown 
+                            {% endif %}
+                        {% elif service.pathology_labs.exists %}
+                            {% if service.pathology_labs.first.image2 %}
+                                <img src="{{ service.pathology_labs.first.image2.url }}" alt="Hospital Image Not Present">
+                            {% else %}
+                                 "No image available." | markdown 
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="carousel-controls">
+                        <label for="img-2" class="prev-slide">
+                            <span>&lsaquo;</span>
+                        </label>
+                        <label for="img-1" class="next-slide">
+                            <span>&rsaquo;</span>
+                        </label>
+                    </div>
+                </li>
+                <div class="carousel-dots">
+                    <label for="img-1" class="carousel-dot" id="img-dot-1"></label>
+                    <label for="img-2" class="carousel-dot" id="img-dot-2"></label>
+                    <label for="img-3" class="carousel-dot" id="img-dot-3"></label>
+                </div>
+            </ul>
+        </div>
+    </section>
+
+
+
+    <section class="hospitalDetails">
+        <div class="hospital-main-details">
+            {% if service.hospitals.exists %}
+                <div class="hospital-main-name" itemprop="name">{{service.hospitals.first.Hospitals_name}} </div>
+            {% elif service.pathology_labs.exists %}
+                <div class="hospital-main-name" itemprop="name">{{service.pathology_labs.first.Pathology_name}} </div>
+            {% endif %}
+            <div class="hospital-main-address">
+                <span itemprop="streetAddress">{{service.description}}</span>
+                <meta itemprop="@id" content="">
+                <meta itemprop="addressCountry" content="India">
+                <meta itemprop="addressLocality" content="Indore">
+            </div>
+            <br>
+            <hr>
+            <div class="hospital-contact margin-top-bottom">
+                <div class="heading">Contact Information</div>
+                <div class="hospital-contact-details">
+                    <div class="contact-details">
+                        <div class="detail">Address : </div>
+                        {% if service.hospitals.exists %}
+                            <div class="value">{{service.hospitals.first.address}} </div>
+                        {% elif service.pathology_labs.exists %}
+                            <div class="value">{{service.pathology_labs.first.address}} </div>
+                        {% endif %}
+                    </div>
+                    <div class="contact-details">
+                        <div class="detail">Phone : </div>
+                        {% if service.hospitals.exists %}
+                            <div class="value">{{service.hospitals.first.user.number}} </div>
+                        {% elif service.pathology_labs.exists %}
+                            <div class="value">{{service.pathology_labs.first.user.number}} </div>
+                        {% endif %}
+                    </div>
+                    <div class="contact-details">
+                        <div class="detail">Email : </div>
+                        {% if service.hospitals.exists %}
+                            <div class="value">{{service.hospitals.first.user.email}} </div>
+                        {% elif service.pathology_labs.exists %}
+                            <div class="value">{{service.pathology_labs.first.user.email}} </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+         <hr>
+            <div class="hospital-services margin-top-bottom">
+                <div class="heading">Hospital Services</div>
+                <div class="services-list">
+                    <div>{{service}}</div>
+                </div>
+            </div>
+            <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Book Now</a>
+                    
+            <a href="#" onclick="history.back();" style="display: inline-block; padding: 10px 20px; background-color: #6c757d; color: #fff; text-decoration: none; border-radius: 5px;">Back</a> 
+            <br>
+            <br>
+            <hr> 
+        </div>
+        
+        <br>
+        <div class="hospital-details">
+            <div class="hospital-info">
+                {% if service.hospitals.exists %}
+                    <div class="value" style="margin: 5px;" >{{service.hospitals.first.address}} </div>
+                {% elif service.pathology_labs.exists %}
+                    <div class="value" style="margin: 5px;">{{service.pathology_labs.first.address}} </div>
+                {% endif %}
+                <div class="hospital-rating">
+                    <div class="rating">4.0 ★</div>
+                    <div class="rating-count">(630 Ratings)</div>
+                    <div class="rating-description">Very Good</div>
+                </div>
+            </div>
+            <div class="hospital-image">
+                <img src="{{ service.image.url }}" alt="">
+            </div>
+            <div class="booking-options">
+                <div class="pricing-details">
+                    <div class="price-details">
+                        <div class="detail">Test | Service</div>
+                        <div style="color: black;" class="value">{{service}}</div>
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Address</div>
+                        {% if service.hospitals.exists %}
+                            <div style="color: black;" class="value">{{service.hospitals.first.address}} </div>
+                        {% elif service.pathology_labs.exists %}
+                            <div style="color: black;" class="value">{{service.pathology_labs.first.address}} </div>
+                        {% endif %}
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Test Price</div>
+                        <div  class="value">₹{{service.price}}</div>
+                    </div>
+                    <div class="price-details">
+                        <div class="detail">Instant discount</div>
+                        <div style="color: red;" class="value">-₹{{instant_discount}}</div>
+                    </div>
+                    <div class="total-amount price-details">
+                        <div class="detail">Payable Amount</div>
+                        <div class="value">₹{{service.discounted_price}}</div>
+                    </div>
+                    <br>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <script src="{% static "Home/javascript/home.js" %}"></script>
+    <script src="{% static "Home/javascript/responsive.js" %}"></script>
+</body>
+
+</html>

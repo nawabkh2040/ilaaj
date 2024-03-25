@@ -139,14 +139,6 @@ header {
     overflow: hidden;
     padding: 30px 0 20px 10px;
 }
-a {
-     text-decoration: none;
-     color: #012314;
- }
- 
-a:active {
-     color: #ecefed; /* Change color on hover */
- }
 
 .navcontainer {
     height: calc(100vh - 70px);
@@ -337,6 +329,22 @@ a:active {
     width: 100%;
 }
 
+.nav-option:hover {
+    border-left: 5px solid #010058af;
+    background-color: var(--Border-color);
+}
+
+.nav-upper-options a:hover {
+    color: white;
+}
+
+.nav-option:hover {
+    color: white;
+}
+.nav-upper-options a {
+    color: black;
+    text-decoration: none;
+}
 /* Responsive CSS Here */
 @media screen and (max-width: 950px) {
     .nav-img {

@@ -16,57 +16,58 @@
 </head>
 <body onload="myfunction()">
     <div id="loading"></div>
-    <div class="heroSection">
-        <div class="heroBox">
-            <img src="{% static "Home/images/hero-bg.png" %}" alt="hero-bg">
+    <div class="hamburger">
+        <i id="ham" class="fa-solid fa-bars fa-3x"></i>
+        <i id="cross" class="fa-solid fa-x fa-3x"></i>
+    </div>
+    <div class="logo logoShowOnResponsive">
+        <img src="{% static "Home/images/logo.png" %}" alt="logo">
+        <div class="webNameBar">
+            <div class="webName">Treat Now</div>
+            <div class="nearMe">
+                <button id="mapOpenButton1" class="btn">
+                    <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </button>
+            </div>
         </div>
-        <div class="hamburger">
-            <i id="ham" class="fa-solid fa-bars fa-3x"></i>
-            <i id="cross" class="fa-solid fa-x fa-3x"></i>
-        </div>
-        <div class="logo logoShowOnResponsive">
+    </div>
+    <nav class="flex navbar ">
+        <div class="logo  logoHideOnResponsive">
             <img src="{% static "Home/images/logo.png" %}" alt="logo">
             <div class="webNameBar">
-                <div class="webName">Ilaag</div>
+                <div class="webName">Treat Now</div>
                 <div class="nearMe">
-                    <button id="mapOpenButton1" class="btn">
+                    <button id="mapOpenButton" class="btn">
                         <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
                         </span> Near Me
                     </button>
                 </div>
             </div>
         </div>
-        <nav class="flex navbar ">
-            <div class="logo  logoHideOnResponsive">
-                <img src="{% static "Home/images/logo.png" %}" alt="logo">
-                <div class="webNameBar">
-                    <div class="webName">Treat Now</div>
-                    <div class="nearMe">
-                        <button id="mapOpenButton" class="btn">
-                            <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                            </span> Near Me
-                        </button>
-                    </div>
+        <ul class="flex">
+            <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
+            <li><a href="#abou">About</a></li>
+            <li><a href="#depart">Departments</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Pages
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#./html/department.html">Department</a>
+                    <a href="{% url "login" %}">Login/signUp</a>
+                    <a href="#./html/department.html">Get Appointment</a>
+                    <a href="#./html/about.html">About Us(Admin)</a>
                 </div>
             </div>
-            <ul class="flex">
-                <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
-                <li><a href="#abou">About</a></li>
-                <li><a href="#depart">Departments</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <div class="dropdown">
-                    <button class="dropbtn">Pages
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="#./html/department.html">Department</a>
-                        <a href="{% url "login" %}">Login/signUp</a>
-                        <a href="#./html/doctorAppointment.html">Get Appointment</a>
-                        <a href="#./html/about.html">About Us(Admin)</a>
-                    </div>
-                </div>
-            </ul>
-        </nav>
+        </ul>
+    </nav>
+    <div class="heroSection">
+        <div class="heroBox">
+            {% comment %} <img src="{% static "Home/images/hero-bg.png" %}" alt="hero-bg"> {% endcomment %}
+            <img src="https://advinhealthcare.com/wp-content/uploads/2022/12/Types-of-Hospitals-2.jpg" alt="hero-bg">
+        </div>
         <section class="mapSection">
             <div class="mapContainer">
                 <i id="mapClose" class="fa-solid fa-x fa-3x"></i>
@@ -81,16 +82,14 @@
                         </button>
                     </div>
                 </div>
-                <div id="map" ></div>
-                <form id="locationForm" action="{% url "near-me" %}" method="POST">
-                    {% csrf_token %}
+                <div id="map"></div>
+                <form id="locationForm" action="/submit_location" method="POST">
                     <input type="hidden" id="latitude" name="latitude">
                     <input type="hidden" id="longitude" name="longitude">
                     <button type="submit" class="btn locationBtn">Submit</button>
                 </form>
             </div>
         </section>
-        
         <main class="mainBox">
             <div class="heroText">
                 Book your local doctor's appointment in
@@ -109,7 +108,7 @@
                     </div>
                     <span style="width: 1px;"></span>
                     <div class="searchButton">
-                        <button id="search-doc" type="submit">
+                        <button id="search">
                             Search
                         </button>
                     </div>
@@ -191,7 +190,7 @@
                         excellence,
                         we aim to revolutionize healthcare access and elevate the standard of patient experience.</p>
                     <div class="aboutBtn">
-                        <a href="./html/about.html">
+                        <a href="#./html/about.html">
                         <button class="btn">
                                 Read More
                             </button>
@@ -209,7 +208,8 @@
             <h1 class="section-header">Contact Us</h1>
             <div class="contact-wrapper">
                 <!-- Left contact page -->
-                <form id="contact-form" class="form-horizontal" role="form">
+                <form id="contact-form" class="form-horizontal" action="{% url "contact" %}" method="POST" role="form">
+                    {% csrf_token %}
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value=""
                             required>
@@ -337,8 +337,6 @@
 
     <script src="{% static "Home/javascript/home.js" %}"></script>
     <script src="{% static "Home/javascript/responsive.js" %}"></script>
-    {% comment %} <script src="javascript/login.js"></script> {% endcomment %}
-    {% comment %} <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script> {% endcomment %}
     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{% static "Home/javascript/map.js" %}"></script>

@@ -100,7 +100,24 @@ def home(request):
 
     return render(request, "home/home.html")
 
-
+def more_details(request):
+    if request.method =="GET":
+ 
+        service_id = request.GET.get('service_id')
+        try:
+            service = Service.objects.get(id=service_id)
+            instant_discount=service.price-service.discounted_price
+            context={
+                'service' : service,
+                'instant_discount':instant_discount,
+            }
+            return render(request, 'more_details.html',context)
+        except Service.DoesNotExist:
+            return HttpResponse("Invalid Service Id :-)")
+    # Add your logic here to fetch more details
+    else:
+        return HttpResponse("Invalid Service Id. Access Denied")
+        
 
 def book_appointment(request):
     service_id = request.GET.get('service_id')
@@ -117,7 +134,7 @@ def book_appointment(request):
                         'user':user,
                         'instant_discount': instant_discount,
                     }
-                    return render(request, 'Home/user/booking_appointment.html', context)
+                    return render(request, 'Home/user/confirm_appointment.html', context)
                     # return HttpResponse("Booking Page")
                 except Service.DoesNotExist:
                     return render(request, 'error_page.html', {'error_message': 'Service not found'})
@@ -203,9 +220,9 @@ def payment_process(request):
             # Handle payment at place option
             # You can update the appointment status or perform any other action as needed
             appointment = Appointment.objects.get(id=appointment_id)
-            appointment.status = 'Paid at Place'
+            appointment.status = 'Pay at Place'
             appointment.save()
-            return redirect('user-report')
+            return redirect('user-appointment')
 
         elif payment_option == 'pay_now':
             appointment = Appointment.objects.get(id=appointment_id)
@@ -364,7 +381,7 @@ def sign_up(request):
         context={
             'success_message':"Please Verify Your Email. Go to You mail and Click the link Blow And Verify yourself",
         }
-        return render(request,"Home/login.html",context)
+        return render(request,"Home/sign-up.html",context)
     return render(request,"Home/sign-up.html")
 
 
@@ -429,8 +446,10 @@ def user_appointment(request):
         user=request.user
         if user.is_patient:
             print(f"{request.user}")
+            appointments = Appointment.objects.filter(patient=user).order_by('Appointment_date')
             context={
                 'user':user,
+                'appointments':appointments,
             }
             return render(request,"Home/user/appointment.html",context)
         else:
@@ -452,72 +471,6 @@ def user_report(request):
             return HttpResponse("You Are Not User ")
     else:
         return redirect('/login/')
-
-
-
-def Hospital_login(request):
-    if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request,email=email,password=password)
-        if user is not None:
-            if user.is_active:
-               login(request,user)
-               return redirect('Dashboard')
-            else:
-                 context={
-                      'error_message':"You are not a Author"
-                 }
-                 return HttpResponse("Login page")
-        else:
-            context = {'error_message': 'Invalid email or password'}
-            return HttpResponse("Login page")
-    else:
-        return HttpResponse("Hospital Login page")
-
-def Hospital_sign_up(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        number = request.POST.get('number')
-        password = request.POST.get('password')
-        Hospital_name = request.POST.get( 'Hospital_name' )
-        address = request.POST.get('address')
-        zipcode = request.POST.get('zipcode')
-        new_hospital = CustomUser.objects.create_user(
-            name=name,
-            email=email,
-            number=number,
-            password=password,
-        )
-        new_hospital.is_hospital=True
-        new_hospital.save()
-        return HttpResponse("Sign up success")
-    return HttpResponse("Hospital_sign_up")
-
-
-def Pathology_login(request):
-    return HttpResponse("Pathology_login")
-
-def Pathology_sign_up(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        number = request.POST.get('number')
-        password = request.POST.get('password')
-        Hospital_name = request.POST.get( 'Hospital_name' )
-        address = request.POST.get('address')
-        zipcode = request.POST.get('zipcode')
-        new_hospital = CustomUser.objects.create_user(
-            name=name,
-            email=email,
-            number=number,
-            password=password,
-        )
-        new_hospital.is_pathology=True
-        new_hospital.save()
-        return HttpResponse("Pathology_sign_up success")
-    return HttpResponse("Pathology_sign_up")
 
 def contact(request):
     if request.method =="POST":

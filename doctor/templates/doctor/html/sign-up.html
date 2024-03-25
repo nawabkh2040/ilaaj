@@ -1,0 +1,126 @@
+{% extends "doctor/html/base.html" %}
+{% block title %}Doctor Registration {% endblock title %}
+{% block body %}
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #009579;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .registration header {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .registration form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .registration input[type="text"],
+        .registration input[type="number"],
+        .registration input[type="email"],
+        .registration input[type="password"],
+        .registration input[type="radio"] {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .registration input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .registration .button {
+            background-color: #009688;
+            color: #fff;
+            font-size: 18px;
+            padding: 12px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .registration .button:hover {
+            background-color: #00796b;
+        }
+
+        .registration .signup {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .registration .signup label {
+            color: #009688;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .registration {
+                max-width: 300px;
+            }
+        }
+    </style>
+    <div class="container1"></div>
+    <div class="container">
+        <div class="registration">
+            <header>Doctor Registration</header>
+            {% if success_message %}
+            <p style="color:green; font-size: 14px;margin: 10px;">{{success_message}}</p>
+            {% endif %}
+            {% if error %}
+               <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error}}</p>
+            {% endif %}
+            <form action="{% url 'doctor-sign-up' %}" method="post"
+                oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Enter your Full Name">
+                <input type="number" name="number" placeholder="Enter your Phone Number">
+                <input type="email" name="email" placeholder="Enter your email">
+                <input type="password" id="password" name="password" placeholder="Create a password">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+                <label><input type="radio" name="is_hospital" value="hospital"> Hospital</label>
+                <label><input type="radio" name="is_pathology" value="pathology"> Pathology</label>
+
+                <input type="submit" class="button" value="Signup">
+            </form>
+            <br>
+            <div class="login" style="text-align: center;">
+                <span class="signup">Already have an account?
+                    <a href="{% url "doctor-login" %}" style="text-decoration: none;"><label for="check">Login</label></a>
+                    <br>
+                </span>
+                <br>
+                <a style="color: #00796b; text-decoration: none;" href="{% url "sign-up" %}">Are you a User?</a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

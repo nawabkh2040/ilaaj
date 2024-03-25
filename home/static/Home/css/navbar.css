@@ -1,3 +1,4 @@
+/* Loading section */
 #loading {
     height: 100vh;
     background: url('https://cdn.svgator.com/images/2023/06/hearthbeat-svg-loader-animation.svg') no-repeat center;
@@ -6,7 +7,11 @@
     background-size: 400%;
 }
 
-/* Navbar designing  */
+/* Navbar designing */
+.logoShowOnResponsive {
+    display: none !important;
+}
+
 .hamburger {
     cursor: pointer;
     position: absolute;
@@ -26,12 +31,16 @@
 }
 
 .navbar {
+    transition: all 0.3s ease;
     justify-content: space-around;
+    align-items: center;
     position: sticky;
     top: 0;
     left: 0;
-    font-family: Open Sans;
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 19px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    background: #ffffff;
+    backdrop-filter: blur(10px);
 }
 
 .navbar * {
@@ -111,7 +120,7 @@ ul li a {
     bottom: 0;
     border-bottom: 3px solid #2E640F;
     border-left: 3px solid #3E8914;
-    transform: translate(100%, -50%)
+    transform: translate(100%, -50%);
 }
 
 .navbar a:hover:before,
@@ -124,7 +133,7 @@ ul li a {
     color: #07f853;
 }
 
-
+/* Hero text */
 .heroText {
     font-size: 3rem;
     line-height: 3.8rem;
@@ -133,7 +142,7 @@ ul li a {
     margin-bottom: 15px;
 }
 
-/* Near me styling here */
+/* Near me styling */
 .nearMe {
     justify-content: center;
     background: transparent;
@@ -163,10 +172,7 @@ ul li a {
     padding: .5em .8em;
     cursor: pointer;
     font-family: Open Sans;
-
 }
-
-
 
 .dropdown-content {
     display: none;
@@ -187,27 +193,12 @@ ul li a {
     text-align: left;
 }
 
-
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-#mapOpenButton {
-    background: transparent;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    color: black;
-    padding: 0;
-}
-
-#mapOpenButton:hover {
-    font-size: 1.2rem;
-}
-
+/* Map open button */
+#mapOpenButton,
 #mapOpenButton1 {
     background: transparent;
     cursor: pointer;
@@ -219,10 +210,12 @@ ul li a {
     padding: 0;
 }
 
+#mapOpenButton:hover,
 #mapOpenButton1:hover {
     font-size: 1.2rem;
 }
 
+/* User image */
 .userImage {
     width: 50px;
     height: 50px;
@@ -235,6 +228,42 @@ ul li a {
     cursor: pointer;
 }
 
+/* User profile */
 .userProfile {
     display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .logoShowOnResponsive {
+        display: block !important;
+    }
+
+    .logo {
+        margin: 0;
+    }
+
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar li {
+        display: block;
+        margin: 0;
+        padding: 10px 0;
+    }
+
+    .navbar a::before,
+    .navbar a::after {
+        display: none; /* Hide the pseudo elements on small screens */
+    }
+
+    .hamburger {
+        display: block; /* Show hamburger icon on small screens */
+    }
 }

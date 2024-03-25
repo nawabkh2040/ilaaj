@@ -14,11 +14,7 @@ urlpatterns = [
      path('sign-up/', views.sign_up, name='sign-up'),
      path('Book-Appointment/', views.book_appointment, name='Book-Appointment'),
      path('Appointment/', views.appointment, name='Appointment'),
-
-     path('Hospital-login/', views.Hospital_login, name='Hospital-login'),
-     path('Pathology-login/', views.Pathology_login, name='Pathology-login'),
-     path('Hospital-sign-up/', views.Hospital_sign_up, name='Hospital-sign-up'),
-     path('Pathology-sign-up/', views.Pathology_sign_up, name='Pathology-sign-up'),
+     path('more-details/', views.more_details, name='More-Details'),
 
      path('User-Dashboard/', views.user_dashboard, name='User-Dashboard'),
      path('user-profile/', views.user_profile, name='user-profile'),

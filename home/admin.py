@@ -19,6 +19,6 @@ class Contact_Admin(admin.ModelAdmin):
 admin.site.register(Contact,Contact_Admin)
 
 class  Appointment_admin(admin.ModelAdmin):
-    list_display= ('id','patient','service','date_time','Appointment_date','status','hospital','pathology_lab','doctor','note')
+    list_display= ('id','patient','service','date_time','Appointment_date','status','hospital','pathology_lab','done','doctor','note')
 admin.site.register(Appointment,Appointment_admin)
 

@@ -2,45 +2,43 @@
 {% block title %}Reports{% endblock title %}
 {% block body %}
 <main class="main">
-     <div class="report-container report defaultNone">
-          <div class="report-header">
-              <h1 class="recent-Articles">Report</h1>
-          </div>
-          {% comment %} {% if user %} {% endcomment %}
-          <div class="report-body">
-              <div class="t-op">Your Report</div>
-              <div class="items reportDetails">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et ipsum praesentium totam cum, optio
-                  similique. Ad dignissimos, neque aspernatur quos tempora deleniti sint ab veniam, ex ipsum
-                  voluptates nisi quasi iure earum. Dolor iste cumque aut a accusamus rem esse quis deleniti sit
-                  vitae.
-              </div>
-            
-              <div class="report-topic-heading">
-                  <h3 class="t-op">Name</h3>
-                  <h3 class="t-op">Number</h3>
-                  <h3 class="t-op">Date</h3>
-                  <h3 class="t-op">Test</h3>
-                  <h3 class="t-op">Print Report</h3>
-              </div>
-              <div class="items">
-                  <div class="item1">
-                      <h3 class="t-op-nextlvl">{{user.name}}</h3>
-                      <h3 class="t-op-nextlvl" style="text-align: center;">{{user.number}}</h3>
-                      <h3 class="t-op-nextlvl">2 march 2024</h3>
-                      <h3 class="t-op-nextlvl">X-Ray</h3>
-                      <h3 class="t-op-nextlvl label-tag">View</h3>
-                  </div>
-                  <div class="item1">
-                      <h3 class="t-op-nextlvl">joe</h3>
-                      <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
-                      <h3 class="t-op-nextlvl">12 march 2024</h3>
-                      <h3 class="t-op-nextlvl">Blood-test</h3>
-                      <h3 class="t-op-nextlvl">Soon</h3>
-                  </div>
-              </div>
-              {% comment %} {% endif %} {% endcomment %}
-          </div>
-      </div>
+    <div class="report-container report">
+        <div class="report-header">
+            <h1 class="recent-Articles">Report</h1>
+        </div>
+
+        <div class="report-body">
+            <div class="t-op">Your Report</div>
+            <div class="items reportDetails">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et ipsum praesentium totam cum, optio
+                similique. Ad dignissimos, neque aspernatur quos tempora deleniti sint ab veniam, ex ipsum
+                voluptates nisi quasi iure earum. Dolor iste cumque aut a accusamus rem esse quis deleniti sit
+                vitae.
+            </div>
+            <div class="report-topic-heading">
+                <h3 class="t-op">Name</h3>
+                <h3 class="t-op">Number</h3>
+                <h3 class="t-op">Date</h3>
+                <h3 class="t-op">Test</h3>
+                <h3 class="t-op">Print Report</h3>
+            </div>
+            <div class="items">
+                <div class="item1">
+                    <h3 class="t-op-nextlvl">joe</h3>
+                    <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                    <h3 class="t-op-nextlvl">2 march 2024</h3>
+                    <h3 class="t-op-nextlvl">X-Ray</h3>
+                    <h3 class="t-op-nextlvl label-tag">View</h3>
+                </div>
+                <div class="item1">
+                    <h3 class="t-op-nextlvl">joe</h3>
+                    <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
+                    <h3 class="t-op-nextlvl">12 march 2024</h3>
+                    <h3 class="t-op-nextlvl">Blood-test</h3>
+                    <h3 class="t-op-nextlvl">Soon</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 {% endblock body %}

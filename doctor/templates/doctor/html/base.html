@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %} | Treat Now</title>
+    <link rel="stylesheet" href="{% static "doctor/css/home_navbar.css" %}"> 
+    <link rel="stylesheet" href="{% static "doctor/css/home_responsive.css" %}">
+    <link rel="website icon" type="png" href="{% static "doctor/images/logo.png" %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <div class="logo logoShowOnResponsive">
+        <img src="{% static "doctor/images/logo.png" %}" alt="logo">
+        <div class="webNameBar">
+            <div class="webName">Treat Now</div>
+            <div class="nearMe">
+                <button id="mapOpenButton1" class="btn">
+                    <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="flex navbar ">
+        <div class="logo  logoHideOnResponsive">
+            <img src="{% static "doctor/images/logo.png" %}" alt="logo">
+            <div class="webNameBar">
+                <div class="webName">Treat Now</div>
+                <div class="nearMe">
+                    <button id="mapOpenButton" class="btn">
+                        <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span> Near Me
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ul class="flex">
+            <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
+            <li><a href="#abou">About</a></li>
+            <li><a href="#depart">Departments</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Pages
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#./html/department.html">Department</a>
+                    <a href="{% url "login" %}">Login/signUp</a>
+                    <a href="#./html/department.html">Get Appointment</a>
+                    <a href="#./html/about.html">About Us(Admin)</a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+<br>
+     {% block body %}{% endblock body %}
+     <script src="{% static "doctor/javascript/responsive.js" %}"></script>
+     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
