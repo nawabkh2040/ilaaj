@@ -1,0 +1,141 @@
+{% extends "doctor/html/user_base.html" %}
+{% block title %}Doctor Profile {% endblock title %}
+
+{% block body %}
+
+<section class="profile">
+     <!-- profile card  for doctor:  -->
+     <div class="card">
+         <div class="profile-card-body">
+             <h4 id="basic-info-title" class="profile-card-title title">Basic Information</h4>
+             <div class="row profileFormRow">
+                 <div class="uploadImage">
+                     <div class="form-group profile-avatar">
+                         <div class="profile-img-container">
+                             <img id="user-image"
+                                 src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small_2x/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg"
+                                 alt="User Image">
+                         </div>
+                         <div class="upload-img">
+                             <div class="changePhotoBtn">
+                                 <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                 <input id="uploadPhoto" type="file" class="upload">
+                             </div>
+                             <small class="form-text textMuted">Allowed JPG, GIF or PNG. Max size of
+                                 2MB</small>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="username">Username <span class="text-danger">*</span></label>
+                         <input id="username" type="text" class="form-control" readonly="">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="email">Email <span class="text-danger">*</span></label>
+                         <input id="email" type="email" class="form-control" readonly="">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="first-name">First Name <span class="text-danger">*</span></label>
+                         <input id="first-name" type="text" class="form-control">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="last-name">Last Name <span class="text-danger">*</span></label>
+                         <input id="last-name" type="text" class="form-control">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="phone">Phone Number</label>
+                         <input id="phone" type="text" class="form-control">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group">
+                         <label for="gender">Gender</label>
+                         <select id="gender" class="form-control select select2-hidden-accessible"
+                             tabindex="-1" aria-hidden="true">
+                             <option value="">Select</option>
+                             <option value="male">Male</option>
+                             <option value="female">Female</option>
+                         </select>
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group mb-0">
+                         <label for="dob">Date of Birth</label>
+                         <input id="dob" type="text" class="form-control">
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="form-group mb-0">
+                         <label for="Specalities">Specalities</label>
+                         <input id="Specalities" type="text" class="form-control">
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <!-- profile card  for doctor ends here:  -->
+
+     <!-- contact Information -->
+     <div class="card">
+         <div class="contact-card">
+             <div class="contact-card-body">
+                 <h4 id="contact-details-title" class="contact-card-title title">Contact Details</h4>
+                 <div class="row contact-form-row">
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="address-line1">Address Line 1</label>
+                             <input id="address-line1" type="text" class="form-control">
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="address-line2">Address Line 2</label>
+                             <input id="address-line2" type="text" class="form-control">
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="city">City</label>
+                             <input id="city" type="text" class="form-control">
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="state-province">State / Province</label>
+                             <input id="state-province" type="text" class="form-control">
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="country">Country</label>
+                             <input id="country" type="text" class="form-control">
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <label for="postal-code">Postal Code</label>
+                             <input id="postal-code" type="text" class="form-control">
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <!-- contact information ends here -->
+
+     <div class="button">
+         <button type="submit" class="btn">Save Details</button>
+     </div>
+ </section>
+
+
+{% endblock body %}

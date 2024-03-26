@@ -1,0 +1,243 @@
+.card {
+     min-height: 300px;
+     max-width: 1200px;
+     margin: 70px auto 0px auto;
+     background-color: #ffffff;
+     border-radius: 30px;
+     box-shadow: 3px 3px 10px rgb(188, 188, 188);
+     padding: 0px 20px 20px 20px;
+ }
+ 
+ .row {
+     display: flex;
+     flex-wrap: wrap;
+ }
+ 
+ .uploadImage {
+     width: 100%;
+     padding: 0px 34px;
+ }
+ 
+ .textMuted {
+     color: #4e4e4e;
+     font-size: 0.7rem;
+ }
+ 
+ .col {
+     padding-right: 5px;
+     padding-left: 5px;
+     width: 45%;
+     margin: 2px auto;
+ }
+ 
+ #gender {
+     color: #272b41;
+     font-size: 15px;
+     background: white;
+     height: 48px;
+     cursor: pointer;
+ }
+ 
+ .profile-card-body {
+     padding: 0;
+ }
+ 
+ .title {
+     font-size: 2.5rem;
+     margin-bottom: 20px;
+     text-align: center;
+ }
+ 
+ .profile-form-row {
+     margin: 0 -10px;
+ }
+ 
+ .profile-form-row .col-md-6 {
+     padding: 0 10px;
+ }
+ 
+ .profile-avatar {
+     display: flex;
+     align-items: center;
+     margin-bottom: 20px;
+ }
+ 
+ .profile-img-container {
+     width: 80px;
+     height: 80px;
+     overflow: hidden;
+     border-radius: 50%;
+ }
+ 
+ .profile-img-container img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+ }
+ 
+ .upload-img {
+     margin-left: 20px;
+ }
+ 
+ .changePhotoBtn,
+ .btn {
+     display: flex;
+     flex-direction: column;
+     border-radius: 10px;
+     color: #fff;
+     cursor: pointer;
+     display: block;
+     font-size: 18px;
+     font-weight: 600;
+     margin: 0 auto;
+     padding: 10px 0px;
+     position: relative;
+     transition: .3s;
+     text-align: center;
+     width: 155px;
+     background: #1ab64f;
+     border: 2px solid #1ab64f;
+     transition: all 0.2s ease;
+ }
+ 
+ .changePhotoBtn:hover,
+ .btn:hover {
+     background: white;
+     color: #1ab64f;
+ }
+ 
+ .btn {
+     margin-top: 32px;
+     width: 25%;
+ }
+ 
+ .changePhotoBtn span {
+     cursor: pointer;
+     color: #1f1f1f;
+ }
+ 
+ #uploadPhoto {
+     bottom: 0;
+     cursor: pointer;
+     filter: alpha(opacity=0);
+     left: 0;
+     margin: 0;
+     opacity: 0;
+     padding: 0;
+     position: absolute;
+     right: 0;
+     top: 0;
+     width: 150px;
+ }
+ 
+ #clinicImage {
+     /* opacity: 0; */
+     background-color: red;
+     cursor: pointer;
+ }
+ 
+ .form-group {
+     margin-bottom: 20px;
+ }
+ 
+ .form-group label {
+     font-weight: 500;
+ }
+ 
+ .form-control {
+     width: 93%;
+     height: 40px;
+     padding: 5px 10px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     min-width: 300px;
+ }
+ 
+ .select2-hidden-accessible option:hover {
+     background-color: rgba(102, 242, 102, 0.716);
+ }
+ 
+ .text-danger {
+     color: #dc3545;
+ }
+ 
+ .changePhotoBtn {
+     width: 275px;
+ }
+ 
+ @media only screen and (max-width: 730px) {
+     .row {
+         flex-direction: column;
+     }
+ 
+     .changePhotoBtn {
+         width: 250px;
+     }
+ 
+     .changePhotoBtn span {
+         font-size: 0.9rem;
+     }
+ 
+     .col {
+         width: 100%;
+     }
+ 
+     .navclose {
+         z-index: 99;
+     }
+ }
+ 
+ 
+ @media only screen and (max-width: 350px) {
+     .form-control {
+         min-width: 222px;
+     }
+  
+     .changePhotoBtn span {
+         font-size: 0.7rem;
+     }
+ 
+     .changePhotoBtn {
+         width: 200px;
+         padding: 7px 0px;
+         margin: 0;
+     }
+ 
+     .textMuted {
+         padding-right: 40px;
+         font-size: 0.6rem;
+     }
+ 
+     .btn {
+         width: 92%;
+     }
+ 
+     .profile-avatar {
+         flex-direction: column;
+     }
+ 
+     .uploadImage {
+         padding: 5px;
+     }
+ 
+ 
+     .title {
+         font-size: 1.5rem;
+     }
+ 
+     .main {
+         padding: 10px;
+     }
+ 
+     .report-container,
+     .card {
+         min-height: auto;
+         margin: 35px auto 0px auto;
+         padding: 0px 4px 15px 5px;
+         border-radius: 10px !important;
+     }
+ 
+     .btn {
+         width: 75%;
+     }
+ }

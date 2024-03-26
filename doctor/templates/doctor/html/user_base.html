@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %} | Treat Now</title>
+    <link rel="stylesheet" href="{% static "doctor/css/dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "doctor/css/profile.css" %}">
+    <link rel="stylesheet" href="../css/map.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+
+        <div class="logosec">
+            <div class="logo">Treat Now</div>
+            <i class="fa-solid fa-bars fa-2x" id="menuicn" class="menuicn icn" style="cursor: pointer;"></i>
+
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search">
+            <div class="searchbtn">
+                <i class="fa-solid fa-magnifying-glass fa-2x" style="color: white;"></i>
+            </div>
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <i class="fa-solid fa-bell fa-2x"></i>
+            <div class="dp">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" alt="dp">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+
+        <!-- navbar start here -->
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <a href="{% url "Doctor-Dashboard" %}">
+                        <div class="nav-option option1 active">
+                            <i class="fa-brands fa-square-xing fa-2x"></i>
+                            <h3> Dashboard</h3>
+                        </div>
+                    </a>
+                    <a href="{% url "Doctor-Profile" %}">
+                        <div class="nav-option option2">
+                            <i class="fa-solid fa-user-doctor fa-2x"></i>
+                            <h3> Profile</h3>
+                        </div>
+                    </a>
+                    <a href="doctorHospital.html">
+                        <div class="nav-option option3">
+                            <i class="fa-solid fa-hospital fa-2x"></i>
+                            <h3> Hospital</h3>
+                        </div>
+                    </a>
+                    
+                    <div class="nav-option option4">
+                        <i class="fa-solid fa-gear fa-2x"></i>
+                        <h3> Settings</h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <i class="fa-solid fa-right-from-bracket fa-flip-horizontal fa-2x"></i>
+                        <a href="{% url "logout" %}" style="text-decoration: none;" ><h3>Logout</h3></a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <!-- navbar ends here -->
+
+        <!-- main container of page -->
+        <div class="main">
+          {% block body %}{% endblock body %}
+          </div>
+    <script src="{% static "doctor/javascript/dashboard.js" %}"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static "doctor/javascript/map.js" %}"></script>
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
