@@ -15,11 +15,15 @@ urlpatterns = [
      path('Book-Appointment/', views.book_appointment, name='Book-Appointment'),
      path('Appointment/', views.appointment, name='Appointment'),
      path('more-details/', views.more_details, name='More-Details'),
+     path('search-services/', views.search_services, name='search-services'),
+    path('activate-user/<str:uidb64>/<str:token>/',views.activate_user,name="activate-user"),
+
+
 
      path('User-Dashboard/', views.user_dashboard, name='User-Dashboard'),
      path('user-profile/', views.user_profile, name='user-profile'),
      path('user-appointment/', views.user_appointment, name='user-appointment'),
-     path('user-report/', views.user_report, name='user-report'),
+     path('user-report/<int:id>/', views.user_report, name='user-report'),
 
 # For adding the data to the
      path('payment/<int:appointment_id>/',views.payment, name='payment'),

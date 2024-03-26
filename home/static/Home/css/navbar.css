@@ -1,4 +1,3 @@
-/* Loading section */
 #loading {
     height: 100vh;
     background: url('https://cdn.svgator.com/images/2023/06/hearthbeat-svg-loader-animation.svg') no-repeat center;
@@ -7,9 +6,11 @@
     background-size: 400%;
 }
 
-/* Navbar designing */
+/* Navbar designing  */
 .logoShowOnResponsive {
     display: none !important;
+    background: #052124 !important;
+    color: white;
 }
 
 .hamburger {
@@ -22,9 +23,6 @@
     transition: all 0.3s ease;
 }
 
-.heroSection {
-    height: 100vh;
-}
 
 .flex i {
     margin: 0px 6px;
@@ -37,10 +35,11 @@
     position: sticky;
     top: 0;
     left: 0;
-    box-shadow: 0 5px 19px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 19px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    background: #ffffff;
+    background: #062327 !important;
     backdrop-filter: blur(10px);
+    color: white;
 }
 
 .navbar * {
@@ -57,7 +56,7 @@
     display: flex;
     align-items: center;
     position: sticky;
-    margin: 0px 40px;
+    padding: 3px 40px;
     transition: all 0.3s ease;
 }
 
@@ -89,10 +88,10 @@ ul li {
 
 ul li a {
     padding: .5em .8em;
-    color: rgba(0, 0, 0, 0.88);
     position: relative;
     text-decoration: none;
     font-size: 22px;
+    color: white;
 }
 
 .navbar a::before,
@@ -109,8 +108,8 @@ ul li a {
     content: '';
     right: 0;
     top: 0;
-    border-top: 3px solid #3E8914;
-    border-right: 3px solid #2E640F;
+    border-top: 3px solid #043d44;
+    border-right: 3px solid #028fa2;
     transform: translate(-100%, 50%);
 }
 
@@ -118,9 +117,9 @@ ul li a {
     content: '';
     left: 0;
     bottom: 0;
-    border-bottom: 3px solid #2E640F;
-    border-left: 3px solid #3E8914;
-    transform: translate(100%, -50%);
+    border-bottom: 3px solid #028fa2;
+    border-left: 3px solid #043d44;
+    transform: translate(100%, -50%)
 }
 
 .navbar a:hover:before,
@@ -130,10 +129,10 @@ ul li a {
 }
 
 .navbar a:hover {
-    color: #07f853;
+    color: #03bed7;
 }
 
-/* Hero text */
+
 .heroText {
     font-size: 3rem;
     line-height: 3.8rem;
@@ -142,7 +141,7 @@ ul li a {
     margin-bottom: 15px;
 }
 
-/* Near me styling */
+/* Near me styling here */
 .nearMe {
     justify-content: center;
     background: transparent;
@@ -153,9 +152,7 @@ ul li a {
     transition: all 0.3s ease;
 }
 
-.searchButton {
-    width: 12%;
-}
+
 
 .dropdown {
     float: left;
@@ -166,13 +163,16 @@ ul li a {
     font-size: 22px;
     border: none;
     outline: none;
-    color: black;
+    color: white;
     background-color: inherit;
     margin: 0;
-    padding: .5em .8em;
+    padding: .3em .8em;
     cursor: pointer;
     font-family: Open Sans;
+
 }
+
+
 
 .dropdown-content {
     display: none;
@@ -193,12 +193,27 @@ ul li a {
     text-align: left;
 }
 
+
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Map open button */
-#mapOpenButton,
+#mapOpenButton {
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    color: white;
+    padding: 0;
+}
+
+#mapOpenButton:hover {
+    font-size: 1.2rem;
+}
+
 #mapOpenButton1 {
     background: transparent;
     cursor: pointer;
@@ -206,16 +221,14 @@ ul li a {
     border: none;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    color: black;
     padding: 0;
+    color: white;
 }
 
-#mapOpenButton:hover,
 #mapOpenButton1:hover {
     font-size: 1.2rem;
 }
 
-/* User image */
 .userImage {
     width: 50px;
     height: 50px;
@@ -228,42 +241,10 @@ ul li a {
     cursor: pointer;
 }
 
-/* User profile */
 .userProfile {
     display: none;
 }
 
 .flex {
     display: flex;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .logoShowOnResponsive {
-        display: block !important;
-    }
-
-    .logo {
-        margin: 0;
-    }
-
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .navbar li {
-        display: block;
-        margin: 0;
-        padding: 10px 0;
-    }
-
-    .navbar a::before,
-    .navbar a::after {
-        display: none; /* Hide the pseudo elements on small screens */
-    }
-
-    .hamburger {
-        display: block; /* Show hamburger icon on small screens */
-    }
 }

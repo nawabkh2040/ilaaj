@@ -71,7 +71,7 @@
         
     </main>
 <br>
-    <footer class="footer">
+    {% comment %} <footer class="footer">
         <div class="departRow footerRow">
             <div class="box">
                 <div class="details footerReachAt">
@@ -137,11 +137,11 @@
                 </div>
             </div>
             <hr class="footerBoxLine">
-        </div>
+        </div> {% endcomment %}
         <div class="rights">
-            <p style="margin: 0px;">© 2024 All Rights Reserved </p>
+            {% comment %} <p style="margin: 0px;">© 2024 All Rights Reserved </p> {% endcomment %}
         </div>
-    </footer>
+    {% comment %} </footer> {% endcomment %}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var menuToggle = document.querySelector('.menu-toggle');

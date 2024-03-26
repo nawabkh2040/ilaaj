@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404
 from django.urls import reverse
 import requests
 from django.http import JsonResponse
@@ -189,8 +189,12 @@ def appointment_details(request,id):
                if request.method == 'POST':
                     new_status = request.POST.get('status')
                     new_done = request.POST.get('done')
+                    report_file = request.FILES.get('report')
+                    print(report_file)
                     appointment.status = new_status
                     appointment.done = new_done
+                    if report_file:  
+                         appointment.report = report_file
                     appointment.save()
                     context = {
                          'appointment':appointment,

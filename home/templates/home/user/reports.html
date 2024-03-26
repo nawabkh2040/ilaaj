@@ -1,44 +1,99 @@
 {% extends "Home/user/base.html" %}
-{% block title %}Reports{% endblock title %}
-{% block body %}
-<main class="main">
-    <div class="report-container report">
-        <div class="report-header">
-            <h1 class="recent-Articles">Report</h1>
-        </div>
+{% block title %}Appointment Details {% endblock title %}
 
-        <div class="report-body">
-            <div class="t-op">Your Report</div>
-            <div class="items reportDetails">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et ipsum praesentium totam cum, optio
-                similique. Ad dignissimos, neque aspernatur quos tempora deleniti sint ab veniam, ex ipsum
-                voluptates nisi quasi iure earum. Dolor iste cumque aut a accusamus rem esse quis deleniti sit
-                vitae.
+{% block body %}
+    <main class="main">
+        <style>
+            td, th {
+                text-align: center;
+                border: 1px solid #dddddd;
+                padding: 5px;
+            }
+    
+            th {
+                border: 1px solid #dddddd;
+                padding: 5px;
+            }
+    
+            .report-table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+    
+            @media screen and (max-width: 600px) {
+                .report-table th, .report-table td {
+                    padding: 8px;
+                }
+            }
+            .report{
+                background-color:#fff;
+                border-radius: 15px;
+            }
+            a{
+                text-align: left;
+            }
+            table{
+                text-align: center;
+            }
+        </style>
+        <div class="report" >
+            {% if success_message %}
+            <br>
+            <h3 style="margin: 5px; color: rgb(82, 216, 82);">{{success_message}}</h3>
+            <br/>
+            {% endif %}
+            <div class="report-header">
+                <h1 class="recent-Articles">Report</h1>
+                <button class="view">{{ appointment.patient.name }}</button>
             </div>
-            <div class="report-topic-heading">
-                <h3 class="t-op">Name</h3>
-                <h3 class="t-op">Number</h3>
-                <h3 class="t-op">Date</h3>
-                <h3 class="t-op">Test</h3>
-                <h3 class="t-op">Print Report</h3>
-            </div>
-            <div class="items">
-                <div class="item1">
-                    <h3 class="t-op-nextlvl">joe</h3>
-                    <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
-                    <h3 class="t-op-nextlvl">2 march 2024</h3>
-                    <h3 class="t-op-nextlvl">X-Ray</h3>
-                    <h3 class="t-op-nextlvl label-tag">View</h3>
-                </div>
-                <div class="item1">
-                    <h3 class="t-op-nextlvl">joe</h3>
-                    <h3 class="t-op-nextlvl" style="text-align: center;">458547545</h3>
-                    <h3 class="t-op-nextlvl">12 march 2024</h3>
-                    <h3 class="t-op-nextlvl">Blood-test</h3>
-                    <h3 class="t-op-nextlvl">Soon</h3>
-                </div>
+
+            <div class="report-body" >
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th class="t-op" >Appointment-ID</th>
+                                <th>Patient Name</th>
+                                <th>Date</th>
+                                <th>Test</th>
+                                <th>Status</th>
+                                <th>View Report</th>
+                                <th>Download Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if appointment %}
+                            <tr>
+                                <td>AP-{{ appointment.id }}</td>
+                                <td>{{ appointment.patient.name }}</td>
+                                <td>{{ appointment.Appointment_date }}</td>
+                                <td>{{ appointment.service }}</td>
+                                <td>{{ appointment.status }}</td>
+                            {% if appointment.report %}
+                            <td style="border: 1px solid #dddddd; padding: 8px;">
+                                <a href="{{ appointment.report.url }}" target="_blank" style="text-decoration: none; padding: 8px 12px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    View Report
+                                </a>
+                            </td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">
+                                <a href="{{ appointment.report.url }}" download style="text-decoration: none; padding: 8px 12px; background-color: #ff0000; color: #ffffff; border: none; border-radius: 5px; cursor: pointer; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    Download Report
+                                </a>
+                            </td>
+                            {% else %}
+                                <td>Not available</td>
+                                <td>Not available</td>
+                            {% endif %}
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                <br>
+                <a href="{% url 'User-Dashboard' %}" style="text-decoration: none;">
+                    <button style="padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
+                        Back
+                    </button>
+                </a>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 {% endblock body %}

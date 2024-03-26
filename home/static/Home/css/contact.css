@@ -1,11 +1,9 @@
-
-
 .section-header {
     text-align: center;
     margin: 0 auto;
     padding: 40px 0;
     font-family: kanit;
-    color: #000000;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 6px;
     font-size: 3.5rem;
@@ -37,15 +35,15 @@
     font-size: 18px;
     font-weight: 600;
     outline: none;
-    border: 3px solid #046543;
+    border: 3px solid #02515c;
     background: transparent;
-    color: black;
+    color: rgb(255, 255, 255);
     border-radius: 7px 25px 0px 13px;
 }
 
 .form-control,
 textarea {
-    max-width: 349px;
+    max-width: 400px;
     background-color: #000;
     color: #fff;
     letter-spacing: 1px;
@@ -55,17 +53,16 @@ textarea {
     font-weight: 600;
     outline: none;
     border-radius: 7px 25px 0px 13px;
-    border: 3px solid #046543;
+    border: 3px solid #02515c;
     background: transparent;
-    color: black;
-}
+ }
 
 .send-button {
     margin-top: 15px;
-    width: 349px;
+    width: 430px;
     transition: all .3s ease;
-    background: #046242;
-    border: 2px solid #046242;
+    background: #062327;
+    border: 3px solid #02515c;
 }
 
 .alt-send-button {
@@ -147,7 +144,7 @@ textarea {
     line-height: 60px;
     border-radius: 50%;
     color: #fff;
-    background-color: rgb(27, 27, 27);
+    background-color: rgb(6, 35, 39);
     cursor: pointer;
     transition: all .2s ease-in-out;
 }
@@ -182,13 +179,18 @@ textarea {
 
 .copyright {
     font: 200 14px 'Oswald', sans-serif;
-    color: #555;
+    color: #bbb;
     letter-spacing: 1px;
     text-align: center;
 }
 
 hr {
-    border-color: rgba(255, 255, 255, .6);
+    border-color: #02515c;
+    margin: 0px;
+}
+
+#contact {
+    background: #073036;
 }
 
 /* Begin Media Queries*/

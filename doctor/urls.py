@@ -12,7 +12,7 @@ urlpatterns = [
     path('activate-doctor/<str:uidb64>/<str:token>/',views.activate_doctor,name="activate-doctor"),
     path('Doctor-Dashboard/', views.doctor_dashboard, name='Doctor-Dashboard'),
     path('Doctor-Profile/', views.doctor_profile, name='Doctor-Profile'),
-    path('Appointment-Details/<int:id>', views.appointment_details, name='Appointment-Details'),
+    path('Appointment-Details/<int:id>/', views.appointment_details, name='Appointment-Details'),
 
 
 

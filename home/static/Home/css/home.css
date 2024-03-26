@@ -12,13 +12,13 @@ html {
 
 
 /* Styling search bar  */
-
-
-.heroBox img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: -1;
+.heroSection {
+    background: url('../images/hero.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 700px;
+    backdrop-filter: brightness(3);
 }
 
 .mainBox {
@@ -27,21 +27,21 @@ html {
 
 .doctorSearchBar {
     display: flex;
-    flex-direction: row;
-    border: 2px solid #9ecec7;
-    width: 100%;
+    width: 70%;
 }
 
 .doctorSearchBar form {
     width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 .inputCondition,
 .inputLocation {
-    width: 45%;
+    width: 100%;
     display: flex;
     padding: 0px;
+    margin-bottom: 6px;
 }
 
 .mapSection .inputLocation input,
@@ -52,10 +52,52 @@ html {
     font-weight: 600;
     padding: 10px;
     border: none;
+    border-radius: 10px;
+}
+
+/* .searchButton styling */
+.searchButton button {
+    border-radius: 10px;
+    background: #35cf30;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.searchButton button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.searchButton button:after {
+    content: '🔎︎';
+    position: absolute;
+    opacity: 0;
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.searchButton button:hover {
+    padding-right: 24px;
+    padding-left: 8px;
+}
+
+.searchButton button:hover:after {
+    opacity: 1;
+    right: 10px;
 }
 
 
-
+.searchButton {
+    width: 25%;
+}
 
 /* Department styling  goes here */
 .department {
@@ -74,30 +116,41 @@ html {
 }
 
 .departRow {
-    width: 90%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin: 10px auto;
+    flex-wrap: wrap;
 }
 
-.box {
-    width: 21%;
+.department .box {
+    width: 35%;
     height: 270px;
-    /* border: 2px solid black; */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
     text-align: center;
+    border: 2px solid;
+    border-radius: 13px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+    box-shadow: 2px 8px 12px #00000073;
+    margin: 25px 0px;
+    transition: all 0.3s ease;
+}
+
+.department .box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .departRow .box .imgBox {
     width: 90px;
     height: 90px;
     margin-bottom: 15px;
-    background-color: #62d2a2;
+    background-color: #062327;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -116,18 +169,18 @@ html {
 
 .btn {
     padding: 12px 20px;
-    background: #62d2a2;
+    background: #062327;
     cursor: pointer;
     border-radius: 8px;
     outline: none;
-    border: 2px solid #62d2a2;
+    border: 2px solid #073036;
     font-size: 1rem;
     transition: all 0.3s ease;
     color: white;
 }
 
 .btn:hover {
-    color: #62d2a2;
+    color: #062327;
     background-color: white;
 }
 
@@ -136,6 +189,8 @@ html {
 /* About us Styling goes here */
 .aboutUs {
     padding: 60px;
+    background: #073036;
+    color: white;
 }
 
 .aboutUs h2 {
@@ -165,3 +220,9 @@ html {
     width: 55%;
 }
 
+.department {
+    width: 100%;
+    height: auto;
+    background: #073036;
+    color: white;
+}

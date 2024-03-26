@@ -120,8 +120,6 @@ class Doctor(models.Model):
         return self.name + " (" + self.specialization + ")"
 
 class Appointment(models.Model):
-    
-
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Link to logged-in user
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)  # Optional for pathology labs
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, blank=True, null=True)  # Optional for pathology labs
@@ -131,7 +129,10 @@ class Appointment(models.Model):
     Appointment_date = models.DateTimeField(default=datetime.now) # Appointment date and time
     status = models.CharField(max_length=100,  default="PENDING")  # Status of appointment: Pending, Cancelled, Accepted
     done = models.BooleanField(default=False)
+    online_payment = models.BooleanField(default=False)
+    payment_id = models.TextField(blank=True)
     note = models.TextField(blank=True)  # Optional note for the appointment
+    report = models.FileField(upload_to='appointment_reports/', blank=True, null=True)
 
     def __str__(self):
         return f"Appointment for {self.patient.username}"

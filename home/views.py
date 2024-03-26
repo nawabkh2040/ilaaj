@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404
 from django.urls import reverse
 import requests
 from django.http import JsonResponse
@@ -12,6 +12,19 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login , logout
 from django.views.decorators.csrf import csrf_exempt
 import razorpay
+from django.http import JsonResponse
+
+from django.conf import settings
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import * 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+import smtplib
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 
 from math import sin, cos, sqrt, atan2, radians
@@ -45,15 +58,35 @@ def get_coordinates(city):
     else:
         return None, None
 
+def search_services(request):
+    if request.method == 'GET' and request.is_ajax():
+        input_text = request.GET.get('input')
+        print(input_text)
+        if input_text:
+            services = Service.objects.filter(name__istartswith=input_text)
+            service_names = [service.name for service in services]
+            return JsonResponse({'services': service_names})
+        else:
+            return JsonResponse({'services': []})
+    else:
+        return JsonResponse({'error': 'Invalid request'})
 
 def home(request):
     if request.method == 'POST':
         city = request.POST.get('city')
         search = request.POST.get('search')
+        if city.lower() == "sagore":
+            city = "Sagor"
+        elif city.lower()  == "mhow":
+            city = "Mhow , pithampur"
         user_latitude, user_longitude = get_coordinates(city=city)
+      
+        if search:
+            search = search.rstrip()
+
 
         if user_latitude is not None and user_longitude is not None:
-            print(f"City: {city}, Search: {search}, Latitude: {user_latitude}, Longitude: {user_longitude}")
+            # print(f"City: {city}, Search: {search}, Latitude: {user_latitude}, Longitude: {user_longitude}")
 
             # Filter hospitals and pathology labs within 20 km range
             nearby_hospitals = Hospital.objects.filter(
@@ -240,25 +273,30 @@ def payment_process(request):
     return HttpResponse("Invalid payment option")
 
 def razorpay_success(request):
-    if request.method == 'POST':
-        # Capture the payment details from the POST request
-        payment_id = request.POST.get('razorpay_payment_id')
-        appointment_id = request.POST.get('appointment_id')
-        
-        # Retrieve the appointment instance
-        try:
-            appointment = Appointment.objects.get(id=appointment_id)
-        except Appointment.DoesNotExist:
-            return HttpResponse("Appointment not found")
-        
-        # Update the appointment status to 'Paid'
-        appointment.status = 'Paid'
-        appointment.save()
-        
-        # Redirect to a success page
-        return render(request, 'home/user/payment_success.html')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            # Capture the payment details from the POST request
+            payment_id = request.POST.get('razorpay_payment_id')
+            appointment_id = request.POST.get('appointment_id')
+            
+            # Retrieve the appointment instance
+            try:
+                appointment = Appointment.objects.get(id=appointment_id)
+            except Appointment.DoesNotExist:
+                return HttpResponse("Appointment not found")
+            
+            # Update the appointment status to 'Paid'
+            appointment.payment_id = payment_id
+            appointment.status = 'Online Paid'
+            appointment.online_payment =  True
+            appointment.save()
+            
+            # Redirect to a success page
+            return render(request, 'home/user/payment_success.html')
+        else:
+            return HttpResponseNotAllowed(['POST'])
     else:
-        return HttpResponseNotAllowed(['POST'])
+        return HttpResponse("Access denied")
 
 def initiate_payment(request):
     if request.method == "POST":
@@ -347,7 +385,7 @@ def near_me(request):
         # context = {
         #     'nearby_services': nearby_services,
         # }
-        return HttpResponse("Location is picked")
+        return HttpResponse("This Service Come Soon")
     return HttpResponse("Location is not picked please refresh the page ")
 
     
@@ -371,18 +409,53 @@ def sign_up(request):
                 'error_message':"Email Id already exists"
             }
             return render(request,"Home/sign-up.html",context)
-        new_hospital = CustomUser.objects.create_user(
+        new_user = CustomUser.objects.create_user(
             name=name,
             email=email,
             number=number,
             password=password,
         )
-        new_hospital.save()
-        context={
-            'success_message':"Please Verify Your Email. Go to You mail and Click the link Blow And Verify yourself",
+        new_user.is_active=False
+        new_user.save()
+        subject="Email Verification by Treat Now"
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [new_user.email]
+        current_site = get_current_site(request)
+        uidb64 = urlsafe_base64_encode(force_bytes(new_user.id))
+        token = default_token_generator.make_token(new_user)
+        context_email={
+            'name':new_user.name,
+            'domain':current_site.domain,
+            'uidb64': uidb64,
+            'token': token,
         }
-        return render(request,"Home/sign-up.html",context)
+        messages=render_to_string('Home/email_confirmation.html',context_email)
+        try:
+            send_mail(subject,messages,from_email,to_list,fail_silently=True)
+            context={
+                'success_message':"Please Verify Your Email. Go to You mail and Click the link Blow And Verify yourself",
+            }
+            return render(request,"Home/sign-up.html",context)
+        except Exception as e:
+            context= {
+                    'error': 'Your Account Create Successfully. There is a problem to sending E-mail in Back-end Our Team is Working on it please Contact us as soon as Possible :-) '
+                    }
+            return render(request,"Home/sign-up.html",context)
+                    
     return render(request,"Home/sign-up.html")
+def activate_user(request, uidb64, token):
+    try:
+        uidb64 = force_str(urlsafe_base64_decode(uidb64))
+        my_user = CustomUser.objects.get(id=uidb64)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        my_user = None
+    if my_user is not None and default_token_generator.check_token(my_user,token):
+        my_user.is_active = True
+        my_user.save()
+        login(request,my_user)
+        return redirect('home')
+    else:
+         return render(request,'Home/email_activation_failed.html')
 
 
 def login_user(request):
@@ -415,11 +488,13 @@ def user_dashboard(request):
     if request.user.is_authenticated:
         user=request.user
         if user.is_patient:
-            print(f"{request.user}")
+            # print(f"{request.user}")
+            appointments = Appointment.objects.filter(patient=user).order_by('Appointment_date')
             context={
                 'user':user,
+                'appointments':appointments,
             }
-            return render(request,"Home/user/profile.html",context)
+            return render(request,"Home/user/appointment.html",context)
         else:
             return HttpResponse("You Are Not User ")
     else:
@@ -457,16 +532,22 @@ def user_appointment(request):
     else:
         return redirect('/login/')
 
-def user_report(request):
+def user_report(request,id):
     
     if request.user.is_authenticated:
         user=request.user
         if user.is_patient:
-            print(f"{request.user}")
-            context={
-                'user':user,
-            }
-            return render(request,"Home/user/reports.html",context)
+            # print(f"{request.user}")
+            try:
+                appointment = get_object_or_404(Appointment, id=id)
+                if  appointment.patient != user :
+                    return HttpResponse("Its Not Your Report. Access Denied !")
+                context={
+                    'appointment':appointment,
+                }
+                return render(request,"Home/user/reports.html",context)
+            except Exception as e:
+                return HttpResponse(str(e)) 
         else:
             return HttpResponse("You Are Not User ")
     else:

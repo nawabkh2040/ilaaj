@@ -3,17 +3,21 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treat Now</title>
     <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
     <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
-    {% comment %} <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" /> {% endcomment %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
-    <link rel="stylesheet" href="{% static "Home/css/footer1.css" %}">
-    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/footer.css" %}">
     <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
-    <link rel="icon" type="image/png" href="{% static "Home/images/logo.png" %}">
-    <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
-
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
 </head>
+
 <body onload="myfunction()">
     <div id="loading"></div>
     <div class="hamburger">
@@ -64,10 +68,6 @@
         </ul>
     </nav>
     <div class="heroSection">
-        <div class="heroBox">
-            {% comment %} <img src="{% static "Home/images/hero-bg.png" %}" alt="hero-bg"> {% endcomment %}
-            <img src="https://advinhealthcare.com/wp-content/uploads/2022/12/Types-of-Hospitals-2.jpg" alt="hero-bg">
-        </div>
         <section class="mapSection">
             <div class="mapContainer">
                 <i id="mapClose" class="fa-solid fa-x fa-3x"></i>
@@ -82,8 +82,9 @@
                         </button>
                     </div>
                 </div>
-                <div id="map"></div>
-                <form id="locationForm" action="/submit_location" method="POST">
+                <div id="map" ></div>
+                <form id="locationForm" action="/near-me/" method="POST">
+                    {% csrf_token %}
                     <input type="hidden" id="latitude" name="latitude">
                     <input type="hidden" id="longitude" name="longitude">
                     <button type="submit" class="btn locationBtn">Submit</button>
@@ -92,28 +93,27 @@
         </section>
         <main class="mainBox">
             <div class="heroText">
-                Book your local doctor's appointment in
+                Book your local doctor's & Test's appointment in
                 <br>
                 just a few steps!
             </div>
             <div class="doctorSearchBar">
                 <form action="{% url 'home' %}" method="post">
-                    {% csrf_token %}
-                    <div class="inputCondition">
-                        <input type="text" name="search" placeholder="Enter condition or symptom...">
-                    </div>
-                    <span style="width: 1px;"></span>
-                    <div class="inputLocation">
-                        <input type="text" name="city" placeholder="Your location...">
-                    </div>
-                    <span style="width: 1px;"></span>
-                    <div class="searchButton">
-                        <button id="search">
-                            Search
-                        </button>
-                    </div>
+                  {% csrf_token %}
+                  <div class="inputCondition">
+                    <input type="text" id="searchInput" name="search" placeholder="Blood Test ...">
+                    <div id="searchOptions"></div> </div>
+                  <span style="width: 1px;"></span>
+                  <div class="inputLocation">
+                    <input type="text" id="cityInput" name="city" placeholder="Your location...">
+                    <div id="cityOptions" class="suggestions"></div> </div>
+                  <span style="width: 1px;"></span>
+                  <div class="searchButton">
+                    <button id="search">Search</button>
+                  </div>
                 </form>
-            </div>
+              </div>              
+            
         </main>
     </div>
     <hr class="departLine">
@@ -167,103 +167,100 @@
     <!-- Departments section end here -->
 
     <hr>
-    <section class="bgForAboutContact">
 
-        <!-- About us section start here -->
-        <section class="aboutUs" id="abou">
-            <h2>ABOUT US</h2>
-            <div class="aboutUsRow">
-                <div class="leftBox">
-                    <div class="img">
-                        <img src="{% static "Home/images/doctor.jpg" %}" alt="Doctor">
-                    </div>
+    <!-- About us section start here -->
+    <section class="aboutUs" id="abou">
+        <h2>ABOUT US</h2>
+        <div class="aboutUsRow">
+            <div class="leftBox">
+                <div class="img">
+                    <img src="{% static "Home/images/doctor.jpg" %}" alt="Doctor">
                 </div>
-                <div class="rightBox">
-                    <p>we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
-                        Committed
-                        to simplifying the patient journey, we leverage cutting-edge technology and strategic
-                        partnerships
-                        to redefine the way individuals access medical care. Our mission is to empower users with
-                        convenient
-                        tools for booking appointments, connecting with trusted healthcare providers, and promoting
-                        proactive wellness management. With a focus on user-centric design and a dedication to
-                        excellence,
-                        we aim to revolutionize healthcare access and elevate the standard of patient experience.</p>
-                    <div class="aboutBtn">
-                        <a href="#./html/about.html">
+            </div>
+            <div class="rightBox">
+                <p>we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
+                    Committed
+                    to simplifying the patient journey, we leverage cutting-edge technology and strategic
+                    partnerships
+                    to redefine the way individuals access medical care. Our mission is to empower users with
+                    convenient
+                    tools for booking appointments, connecting with trusted healthcare providers, and promoting
+                    proactive wellness management. With a focus on user-centric design and a dedication to
+                    excellence,
+                    we aim to revolutionize healthcare access and elevate the standard of patient experience.</p>
+                <div class="aboutBtn">
+                    <a href="./html/about.html">
                         <button class="btn">
-                                Read More
-                            </button>
-                        </a>
-                    </div>
+                            Read More
+                        </button>
+                    </a>
                 </div>
             </div>
-        </section>
-        <!-- About us section end here -->
-
-        <hr>
-
-        <!-- contact form section -->
-        <section id="contact">
-            <h1 class="section-header">Contact Us</h1>
-            <div class="contact-wrapper">
-                <!-- Left contact page -->
-                <form id="contact-form" class="form-horizontal" action="{% url "contact" %}" method="POST" role="form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value=""
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value=""
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" id="phone" placeholder="PHONE NO." name="phone" value=""
-                            required>
-                    </div>
-                    <textarea class="form-control" rows="8" placeholder="MESSAGE" name="message" required></textarea>
-                    <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">SEND</button>
-                </form>
-                <!-- Right contact page -->
-                <div class="direct-contact-container">
-                    <ul class="contact-list">
-                        <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place"><a
-                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
-
-                        <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a
-                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
-                        </li>
-
-                        <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a
-                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
-                    </ul>
-                    <hr>
-                    <ul class="social-media-list">
-                        <li><a href="#" target="_blank" class="contact-icon">
-                                <i class="fa fa-github" aria-hidden="true"></i></a>
-                        </li>
-                        <li><a href="#" target="_blank" class="contact-icon">
-                                <i class="fa fa-codepen" aria-hidden="true"></i></a>
-                        </li>
-                        <li><a href="#" target="_blank" class="contact-icon">
-                                <i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </li>
-                        <li><a href="#" target="_blank" class="contact-icon">
-                                <i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                    <hr>
-                    <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
-                </div>
-            </div>
-        </section>
-        <!-- contact form section ends here-->
-
+        </div>
     </section>
+    <!-- About us section end here -->
+
+    <hr>
+
+    <!-- contact form section -->
+    <section id="contact">
+        <h1 class="section-header">Contact Us</h1>
+        <div class="contact-wrapper">
+            <!-- Left contact page -->
+            <form id="contact-form" class="form-horizontal" action="{% url "contact" %}" method="POST" role="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value="" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value=""
+                        required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" id="phone" placeholder="PHONE NO." name="number" value=""
+                        required>
+                </div>
+                <textarea class="form-control" rows="8" placeholder="MESSAGE" name="message" required></textarea>
+                <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">SEND</button>
+            </form>
+            <!-- Right contact page -->
+            <div class="direct-contact-container">
+                <ul class="contact-list">
+                    <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place"><a
+                                    href="Indore , India" title="Find me">Indore/India</a></span></i></li>
+
+                    <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a
+                                    href="tel:1-212-555-5555" title="Give me a call">+91 8962507486</a></span></i>
+                    </li>
+
+                    <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a
+                                    href="mailto:#" title="Send me an email">treatnow24x7@gmail.com</a></span></i></li>
+                </ul>
+                <hr>
+                <ul class="social-media-list">
+                    <li><a href="#" target="_blank" class="contact-icon">
+                            <i class="fa fa-github" aria-hidden="true"></i></a>
+                    </li>
+                    <li><a href="#" target="_blank" class="contact-icon">
+                            <i class="fa fa-codepen" aria-hidden="true"></i></a>
+                    </li>
+                    <li><a href="#" target="_blank" class="contact-icon">
+                            <i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    </li>
+                    <li><a href="#" target="_blank" class="contact-icon">
+                            <i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+            </div>
+        </div>
+    </section>
+    <!-- contact form section ends here-->
+
 
     <!-- foorter section start here -->
-    <footer class="footer">
+    {% comment %} <footer class="footer">
         <div class="departRow footerRow">
             <div class="box">
                 <div class="details footerReachAt">
@@ -332,7 +329,7 @@
         </div>
 
         </div>
-    </footer>
+    </footer> {% endcomment %}
     <!-- foorter section end here -->
 
     <script src="{% static "Home/javascript/home.js" %}"></script>
@@ -340,8 +337,10 @@
     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{% static "Home/javascript/map.js" %}"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
-
+    <script src="{% static "Home/javascript/search_service.js" %}"></script>
+    <script src="{% static "Home/javascript/search_map.js" %}"></script>
+    
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
 </body>
 
 </html>

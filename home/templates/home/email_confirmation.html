@@ -1,0 +1,14 @@
+{% autoescape off %}
+Welcome to Treat Now
+
+ Hello  {{ name }} !!
+        
+ Thank you for registering with Treat Now. Please click on the link below to confirm your email address and activate your account:
+        
+ 
+ http://{{ domain }}{% url 'activate-user' uidb64=uidb64 token=token %}
+        
+ 
+ If you did not register on Treat Now, you can ignore this email.
+
+{% endautoescape %}

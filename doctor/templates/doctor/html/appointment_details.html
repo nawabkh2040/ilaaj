@@ -3,29 +3,32 @@
 
 {% block body %}
 <div class="container">
-     <style>
-          td{
-               text-align: center;
-               border: 1px solid #dddddd; padding: 5px;
-          }
-          th{
-               border: 1px solid #dddddd; padding: 5px;
+    <style>
+        td {
+            text-align: center;
+            border: 1px solid #dddddd;
+            padding: 5px;
+        }
 
-          }
-      </style>
-     <div class="report-container">
-          {% if success_message %}
-               <br><h3 style="margin: 5px; color: rgb(82, 216, 82);" >{{success_message}}</h3><br/>
-          {% endif %}
-          <div class="report-header">
-              <h1 class="recent-Articles">Appointment Details</h1>
+        th {
+            border: 1px solid #dddddd;
+            padding: 5px;
+        }
+    </style>
+    <div class="report-container">
+        {% if success_message %}
+        <br>
+        <h3 style="margin: 5px; color: rgb(82, 216, 82);">{{success_message}}</h3>
+        <br/>
+        {% endif %}
+        <div class="report-header">
+            <h1 class="recent-Articles">Appointment Details</h1>
+            <button class="view">View All</button>
+        </div>
 
-              <button class="view">View All</button>
-          </div>
-      
-          <div class="report-body">
-              <div class="report-topic-heading">
-               <table style="border-collapse: collapse; width: 100%;">
+        <div class="report-body">
+            <div class="report-topic-heading">
+                <table style="border-collapse: collapse; width: 100%;">
                     <thead>
                         <tr>
                             <th>AP-id</th>
@@ -38,48 +41,70 @@
                             <th>Status</th>
                             <th>Update Status</th>
                             <th>Appointment Done</th>
+                            <th>Upload Report</th>
+                            {% if appointment.report %}
+                              <th>View Report</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% if appointment %}
                         <tr>
-                              <td>AP-{{ appointment.id }}</td>
-                              <td>{{ appointment.patient.name }}</td>
-                              <td>{{ appointment.patient.number }}</td>
-                              <td>{{ appointment.Appointment_date }}</td>
-                              <td>{{ appointment.service }}</td>
-                              <td>{{ appointment.service.actual_price }}</td>
-                              <td>{{ appointment.service.discounted_price }}</td>
-                              <td>{{ appointment.status }}</td>
-                              <td>
-                              <form action="{% url 'Appointment-Details' appointment.id %}" method="post">
-                                   {% csrf_token %}
-                                   <select name="status" style="padding: 5px; border-radius: 5px;">
-                                        <option style="background-color: rgb(36, 177, 36);" value="Paid" {% if appointment.status == "Paid" %} selected {% endif %}>Paid</option>
-                                        <option style="background-color: rgb(206, 10, 10);" value="Cancel" {% if appointment.status == "Cancel" %} selected {% endif %}>Cancel</option>
-                                        <option style="background-color: rgb(189, 224, 14);" value="Pending" {% if appointment.status == "Pending" %} selected {% endif %}>Pending</option>
-                                   </select>
-                              </td>
-                              <td style="border: 1px solid #dddddd; padding: 8px;">
-                                   <select name="done" style="padding: 5px; border-radius: 5px;">
-                                        <option style="color: red;" value="False" {% if not appointment.done %} selected {% endif %}>&#10008;</option>
-                                        <option style="color: rgb(36, 177, 36);" value="True" {% if appointment.done %} selected {% endif %}>&#10004;</option>
-                                   </select>
-                              </td>
-                         </tr>
-                         {% endif %}
+                            <td>AP-{{ appointment.id }}</td>
+                            <td>{{ appointment.patient.name }}</td>
+                            <td>{{ appointment.patient.number }}</td>
+                            <td>{{ appointment.Appointment_date }}</td>
+                            <td>{{ appointment.service }}</td>
+                            <td>₹{{ appointment.service.actual_price }}</td>
+                            <td>₹{{ appointment.service.discounted_price }}</td>
+                            <td>{{ appointment.status }}</td>
+                            <td>
+                                <form action="{% url 'Appointment-Details' appointment.id %}" enctype="multipart/form-data" method="post">
+                                    {% csrf_token %}
+                                    <select name="status" style="padding: 5px; border-radius: 5px;">
+                                        <option style="background-color: rgb(36, 177, 36);" value="Paid"
+                                            {% if appointment.status == "Paid" %} selected {% endif %}>Paid</option>
+                                        <option style="background-color: rgb(206, 10, 10);" value="Cancel"
+                                            {% if appointment.status == "Cancel" %} selected {% endif %}>Cancel</option>
+                                        <option style="background-color: rgb(189, 224, 14);" value="Pending"
+                                            {% if appointment.status == "Pending" %} selected {% endif %}>Pending</option>
+                                    </select>
+                            </td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">
+                                <select name="done" style="padding: 5px; border-radius: 5px;">
+                                    <option style="color: red;" value="False" {% if not appointment.done %} selected {% endif %}>&#10008;</option>
+                                    <option style="color: rgb(36, 177, 36);" value="True" {% if appointment.done %} selected {% endif %}>&#10004;</option>
+                                </select>
+                            </td>
+                            <td style="border: 1px solid #dddddd; padding: 8px; overflow: hidden;">
+                              <input type="file" name="report" accept=".pdf, .jpg, .jpeg, .png" style="display: none;" id="reportUpload" onchange="document.getElementById('selectedFile').innerHTML = this.files[0].name">
+                              <label for="reportUpload" style="padding: 8px 16px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                  Upload Report
+                              </label>
+                              <span id="selectedFile"></span>
+                          </td>
+                          {% if appointment.report %}
+                          <td style="border: 1px solid #dddddd; padding: 8px;">
+                              <a href="{{ appointment.report.url }}" target="_blank" style="text-decoration: none; padding: 8px 12px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                  View Report
+                              </a>
+                          </td>
+                          
+                          {% endif %}
+                        </tr>
+                        {% endif %}
                     </tbody>
-               </table>      
-          </div>
-          <br>
-               <button type="submit" style="padding: 10px 10px; margin: 5px; border-radius: 5px; background-color: #007bff; color: #ffffff; border: none; cursor: pointer;">Update</button>
-               </form>
-               <a href="{% url 'Doctor-Dashboard' %}" style="text-decoration: none;">
-                    <button style="padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
-                        Back
-                    </button>
-                </a>
-                
-     </div>
-</div>
-{% endblock body %}
+                </table>
+            </div>
+            <br>
+            <button type="submit" style="padding: 10px 10px; margin: 5px; border-radius: 5px; background-color: #007bff; color: #ffffff; border: none; cursor: pointer;">Update</button>
+            </form>
+            <a href="{% url 'Doctor-Dashboard' %}" style="text-decoration: none;">
+                <button style="padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
+                    Back
+                </button>
+            </a>
+
+        </div>
+    </div>
+    {% endblock body %}

@@ -18,6 +18,7 @@
 
     .hamburger {
         display: block !important;
+        color: white;
     }
 
     .flex {
@@ -27,11 +28,11 @@
     }
 
     .mainBox {
-        padding: 25px 30px 155px 30px;
+        padding: 155px 30px 155px 30px;
     }
 
     .heroText {
-        font-size: 2.8rem !important;
+        font-size: 2.2rem !important;
         line-height: 3.4rem !important;
     }
 
@@ -52,7 +53,7 @@
     }
 
     .departRow {
-        width: 88%;
+        width: 90%;
     }
 
     .aboutUs {
@@ -149,9 +150,11 @@
         text-align: center;
     }
 
-    .box {
-        width: 42%;
+    .department .box {
+        width: 65%;
         height: auto;
+        min-height: 300px;
+        padding: 40px;
     }
 
     #footerEmail {
@@ -167,7 +170,7 @@
 @media only screen and (max-width: 770px) {
 
     .departRow {
-        width: auto;
+        width: 80%;
         flex-direction: column;
     }
 
@@ -208,6 +211,10 @@
     .mapSection .mapContainer {
         width: 90% !important;
     }
+
+    .doctorSearchBar {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 460px) {
@@ -226,7 +233,7 @@
     }
 
     .mainBox {
-        padding: 20px 6px 70px 25px;
+        padding: 125px 10px 70px 14px;
     }
 
     .aboutUsRow .rightBox {
@@ -253,6 +260,8 @@
         background-size: 170%;
         background-position: top;
     }
+
+
 }
 
 @media only screen and (max-width: 400px) {
@@ -278,7 +287,7 @@
     }
 
     .heroBox img {
-        height: 50%;
+        height: 38%;
     }
 
     .section-header {
@@ -290,7 +299,7 @@
     }
 
     .heroSection {
-        height: 50vh !important;
+        height: 40vh !important;
     }
 
     .department {
@@ -317,6 +326,25 @@
     .locationContainer {
         width: 100% !important;
     }
+
+    .mainBox {
+        padding: 80px 10px 0px 14px;
+    }
+
+    .searchButton button {
+        padding: 8px 0px;
+    }
+
+
+    .department .box {
+        width: 90%;
+        min-height: 285px;
+        padding: 0px;
+    }
+
+    #contact {
+        padding: 20px 0px;
+    }
 }
 
 @media only screen and (max-width: 360px) {
@@ -334,7 +362,7 @@
     }
 
     .mainBox {
-        padding: 30px 6px 0px 25px !important;
+        padding: 90px 10px 0px 10px !important;
     }
 
     .department {
@@ -365,6 +393,7 @@
     .mapSection .mapContainer {
         width: 97% !important;
     }
+
 }
 
 @media only screen and (max-height: 460px) {
@@ -399,24 +428,4 @@
 
 #cross {
     display: none;
-}
-@media only screen and (max-width: 1000px) {
-    .booking-details {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .items {
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 300px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .t-op-nextlvl {
-        margin-bottom: 5px;
-    }
 }

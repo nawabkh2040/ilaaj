@@ -73,45 +73,6 @@
     border: none;
 }
 
-/* .searchButton styling */
-.searchButton button {
-    border-radius: 4px;
-    background: #1ab64f;
-    border: none;
-    color: #fff;
-    text-align: center;
-    font-size: 18px;
-    padding: 14px 0;
-    width: 100%;
-    transition: all 0.5s;
-    cursor: pointer;
-}
-
-.searchButton button {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-
-.searchButton button:after {
-    content: '🔎︎';
-    position: absolute;
-    opacity: 0;
-    top: 14px;
-    right: -20px;
-    transition: 0.5s;
-}
-
-.searchButton button:hover {
-    padding-right: 24px;
-    padding-left: 8px;
-}
-
-.searchButton button:hover:after {
-    opacity: 1;
-    right: 10px;
-}
 
 .doctorMap .searchButton button {
     padding: 10px 0px;

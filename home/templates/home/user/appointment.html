@@ -22,6 +22,12 @@
         .report-body .t-op-nextlvl {
             border-right: 1px solid #ddd; /* Add border to right of each cell */
         }
+        th{
+            text-align: center;
+        }
+        td{
+            text-align: center;
+        }
     </style>
     
     <div class="report-container appointment">
@@ -41,12 +47,14 @@
                         <th class="t-op">Test or Service</th>
                         <th class="t-op">Appointment Done</th>
                         <th class="t-op">Payment Status</th>
+                        <th class="t-op">View Report</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     {% for appointment in appointments %}
                     <tr>
-                        <td class="t-op-nextlvl">AP-{{ appointment.id }}</td>
+                        <td style="text-align: left;" class="t-op-nextlvl">AP-{{ appointment.id }}</td>
                         <td class="t-op-nextlvl">{{ appointment.patient.name }}</td>
                         <td class="t-op-nextlvl">
                             {% if appointment.hospital %}
@@ -67,7 +75,13 @@
                         <td class="t-op-nextlvl label-tag" style="{% if appointment.status == 'Pending' %} background-color: orange; {% elif appointment.status == 'PAID' %} background-color: green; {% elif appointment.status == 'CANCELLED' %} background-color: red; {% elif appointment.status == 'Cancelled' %} background-color: red;{% elif appointment.status == 'Pay at Place' %} background-color: yellow; color: red;{% endif %}">
                             {{ appointment.status }}
                         </td>
-                        
+                        <td style="border: 1px solid #dddddd; padding: 8px;">
+                            <a href="{% url 'user-report' id=appointment.id %}" style="text-decoration: none;">
+                                <button style="padding: 8px 16px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
+                                    View
+                                </button>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
