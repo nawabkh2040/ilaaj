@@ -1,0 +1,78 @@
+{% extends "doctor/html/user_base.html" %}
+{% block title %}Doctor Services {% endblock title %}
+
+{% block body %}
+
+
+ <br>
+ {% if hospital %}
+ <h1 style="text-align: center;" class="topic-heading">{{hospital}} </h1>
+{% elif pathology %}
+ <h1 style="text-align: center;" class="topic-heading">{{pathology}}</h1>
+{% endif %}
+<style>
+     th{
+          border: 1px solid #dddddd; padding: 8px; text-align: left;
+     }
+</style>
+ <section class="dashboard">
+     <div class="report-container">
+        <div class="report-header">
+            <h1 class="recent-Articles">Services</h1>
+            <a href="{% url "Add-Services" %}"><button style="width: auto; padding:8px;" class="view">Add Service</button></a>
+        </div>
+        {% if services %}
+        <div class="report-body">
+            <div class="report-topic-heading">
+                <table style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Service Description</th>
+                            <th>Service Image</th>
+                            <th>Service Price</th>
+                            <th>Discounted Price</th> 
+                            <th>Website Cost</th>
+                            <th>Discounted Precentage</th>
+                        </tr>
+                    </thead>
+                    {% for service in services %}
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.id}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.name}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.description}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">
+                                {% if service.image  %}
+                                    <a href="{{service.image.url}}">View</a>
+                                {% else %}
+                                    No Image Available!
+                                {% endif %}
+                            </td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.price}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.discounted_price}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.actual_price}}</td>
+                            <td style="border: 1px solid #dddddd; padding: 8px;">{{service.off_percentage}}%</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                        No Appointments Today!
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+     <!-- today appointment section ends here -->
+
+     <!-- appointment request start here -->
+     
+     <!-- appointment request ends here -->
+
+     <!-- Report Section -->
+ </section>
+
+{% endblock body %}

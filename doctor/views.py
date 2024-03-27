@@ -11,6 +11,8 @@ from home.models import *
 from datetime import datetime
 from django.contrib.auth import authenticate, login , logout
 from home.models import *
+from django.utils import timezone
+from datetime import date
 
 
 # for mail 
@@ -143,16 +145,18 @@ def doctor_dashboard(request):
                 pathology = PathologyLab.objects.get(user=user)
             except PathologyLab.DoesNotExist:
                 pathology = None
-
+            today = date.today()
             appointments = []
             if hospital:
                 try:
                     appointments = Appointment.objects.filter(hospital=hospital)
+                    today_appointments = Appointment.objects.filter(hospital=hospital,Appointment_date=today)
                 except Appointment.DoesNotExist:
                     pass
             elif pathology:
                 try:
                     appointments = Appointment.objects.filter(pathology_lab=pathology)
+                    today_appointments = Appointment.objects.filter(pathology_lab=pathology,Appointment_date=today)
                 except Appointment.DoesNotExist:
                     pass
 
@@ -160,6 +164,7 @@ def doctor_dashboard(request):
                 'hospital': hospital,
                 'pathology': pathology,
                 'appointments': appointments,
+                'today_appointments':today_appointments,
             }
             return render(request, "doctor/html/dashboard.html", context)
         else:
@@ -172,7 +177,88 @@ def doctor_profile(request):
           user = request.user
           if user.is_hospital or user.is_pathology:
                # return HttpResponse("Doctor Dashboard")
-               return render(request,"doctor/html/profile.html")
+               try:
+                    hospital = Hospital.objects.get(user=user)
+               except Hospital.DoesNotExist:
+                    hospital = None
+               try:
+                    pathology = PathologyLab.objects.get(user=user)
+               except PathologyLab.DoesNotExist:
+                    pathology = None
+               context = {
+                    'user':user,
+                    'hospital':hospital,
+                    'pathology':pathology
+               }
+               return render(request,"doctor/html/profile.html",context)
+
+          else:
+               return HttpResponse("You Are Not Doctor")
+     else:
+          return redirect('doctor-login')
+def doctor_place(request):
+     if request.user.is_authenticated:
+          user = request.user
+          if user.is_hospital or user.is_pathology:
+               try:
+                    hospital = Hospital.objects.get(user=user)
+               except Hospital.DoesNotExist:
+                    hospital = None
+               try:
+                    pathology = PathologyLab.objects.get(user=user)
+               except PathologyLab.DoesNotExist:
+                    pathology = None
+               if request.method == "POST":
+                    Hospitals_name = request.POST.get('Hospitals_name')
+                    pathology_name = request.POST.get('pathology_name')
+                    address = request.POST.get('address')
+                    location = request.POST.get('location')
+                    zipcode = request.POST.get('zip_code')
+                    image1 = request.FILES.get('image1')
+                    image2 = request.FILES.get('image2')
+                    latitude = request.POST.get('latitude')
+                    longitude = request.POST.get('longitude')
+                    if hospital is not None:
+                         context ={
+                              'user' : user,
+                              'error_message':"You Already have a Hospital"
+                         }
+                         return render(request,"doctor/html/place.html",context)
+                    if pathology is not None:
+                         context ={
+                              'user' : user,
+                              'error_message':"You Already have a Pathology"
+                         }
+                         return render(request,"doctor/html/place.html",context)
+                    if user.is_hospital:
+                         new_hospital = Hospital.objects.create(
+                              Hospitals_name=Hospitals_name,address=address,zipcode=zipcode,location=location,latitude=latitude,longitude=longitude,image1=image1,image2=image2,user=user
+                         )
+                         new_hospital.save()
+                         context = {
+                              'user':user,
+                              'new_hospital':new_hospital,
+                              'success_message':"Hospital add  Successfully!"
+                         }
+                         return render(request,"doctor/html/place.html",context)
+                    elif user.is_pathology:
+                         new_pathology = PathologyLab.objects.create(
+                              Hospitals_name=Hospitals_name,address=address,zipcode=zipcode,location=location,latitude=latitude,longitude=longitude,image1=image1,image2=image2,user=user
+                         )
+                         new_pathology.save()
+                         context = {
+                              'user':user,
+                              'new_pathology':new_pathology,
+                              'success_message':"Pathology add  Successfully!"
+                         }
+                         return render(request,"doctor/html/place.html",context)
+
+               context = {
+                    'user':user,
+                    'hospital':hospital,
+                    'pathology':pathology
+               }
+               return render(request,"doctor/html/place.html",context)
 
           else:
                return HttpResponse("You Are Not Doctor")
@@ -190,7 +276,7 @@ def appointment_details(request,id):
                     new_status = request.POST.get('status')
                     new_done = request.POST.get('done')
                     report_file = request.FILES.get('report')
-                    print(report_file)
+                    # print(report_file)
                     appointment.status = new_status
                     appointment.done = new_done
                     if report_file:  
@@ -210,3 +296,89 @@ def appointment_details(request,id):
                return HttpResponse("You Are Not Doctor")
      else:
           return redirect('doctor-login')
+
+def doctor_services(request):
+    if request.user.is_authenticated:
+        user = request.user
+        if user.is_hospital or user.is_pathology:
+            hospital = None
+            pathology = None
+            services = []
+
+            if user.is_hospital:
+                try:
+                    hospital = Hospital.objects.get(user=user)
+                    hospital_services = Service.objects.filter(hospitals=hospital)
+                    services.extend(hospital_services)
+                except Hospital.DoesNotExist:
+                    pass
+
+            if user.is_pathology:
+                try:
+                    pathology = PathologyLab.objects.get(user=user)
+                    pathology_services = Service.objects.filter(pathology_labs=pathology)
+                    services.extend(pathology_services)
+                except PathologyLab.DoesNotExist:
+                    pass
+
+            context = {
+                'user': user,
+                'hospital': hospital,
+                'pathology': pathology,
+                'services': services,
+            }
+            return render(request, "doctor/html/service.html", context)
+        else:
+            return HttpResponse("You Are Not a Doctor")
+    else:
+        return redirect('doctor-login')
+def add_services(request):
+     if request.user.is_authenticated:
+          user = request.user
+          if user.is_hospital or user.is_pathology:
+               try:
+                    hospital = Hospital.objects.get(user=user)
+                    services = Service.objects.filter(hospitals=hospital).order_by('id')
+                    # print(services)
+               except Hospital.DoesNotExist:
+                    hospital = None
+                    services = None
+               try:
+                    pathology = PathologyLab.objects.get(user=user)
+                    services = Service.objects.filter(pathology_labs=pathology).order_by('id')
+
+               except PathologyLab.DoesNotExist:
+                    pathology = None
+                    services = None
+               if request.method == "POST":
+                    name = request.POST.get('name')
+                    description = request.POST.get('description')
+                    price = request.POST.get('price')
+                    off_percentage = request.POST.get('off_percentage')
+                    actual_price = request.POST.get('actual_price')
+                    discounted_price = request.POST.get('discounted_price')
+                    image = request.FILES.get('image')
+                    new_service = Service.objects.create(
+                         name=name,description=description,price=int(price),
+                         off_percentage=int(off_percentage),actual_price=int(actual_price),
+                         discounted_price=int(discounted_price),image=image,
+                    )
+                    if hospital:
+                         new_service.hospitals.add(hospital)
+                    elif pathology:
+                         new_service.pathology_labs.add(pathology)
+                    new_service.save()
+                    return redirect('Doctor-Services')
+               context = {
+                    'user':user,
+                    'hospital':hospital,
+                    'pathology':pathology,
+                    'services':services,
+               }
+               return render(request,"doctor/html/add-service.html",context)
+
+          else:
+               return HttpResponse("You Are Not Doctor")
+     else:
+          return redirect('doctor-login')
+

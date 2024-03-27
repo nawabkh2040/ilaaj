@@ -1,4 +1,5 @@
 {% extends "Home/base.html" %}
+{% load static %}
 {% block title %}Sign Up{% endblock title %}
 {% block body %}
 <style>
@@ -91,36 +92,37 @@
        }
    </style>
    <div class="container">
-       <div class="registration">
-           <header>User Registration</header>
-           {% if success_message %}
-           <p style="color:green; font-size: 14px;margin: 10px;">{{success_message}}</p>
-           {% endif %}
-           {% if error %}
-              <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error}}</p>
-           {% endif %}
-           <form action="{% url 'sign-up' %}" method="post"
-               oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
-               {% csrf_token %}
-               <input type="text" name="name" placeholder="Enter your Full Name">
-               <input type="number" name="number" placeholder="Enter your Phone Number">
-               <input type="email" name="email" placeholder="Enter your email">
-               <input type="password" id="password" name="password" placeholder="Create a password">
-               <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
-               {% if next %}
-                    <input type="hidden" name="next" value="{{ next }}">
-                {% endif %}
-               <input type="submit" class="button" value="Signup">
-           </form>
-           <br>
-           <div class="login" style="text-align: center;">
-               <span class="signup">Already have an account?
-                   <a href="{% url "login" %}" style="text-decoration: none;"><label for="check">Login</label></a>
-                   <br>
-               </span>
-               <br>
-               <a style="color: #00796b; text-decoration: none;" href="{% url "doctor-sign-up" %}">Are you a Doctor?</a>
-           </div>
-       </div>
-   </div>
+    <div class="registration">
+        <header>User Registration</header>
+        {% if success_message %}
+            <p style="color:green; font-size: 14px;margin: 10px;">{{success_message}}</p>
+        {% endif %}
+        {% if error %}
+            <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error}}</p>
+        {% endif %}
+        <form action="{% url 'sign-up' %}" method="post" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter your Full Name">
+            <input type="number" name="number" placeholder="Enter your Phone Number">
+            <input type="email" name="email" placeholder="Enter your email">
+            <input type="password" id="password" name="password" placeholder="Create a password">
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+            <input type="submit" class="button" value="Signup">
+        </form>
+        <br>
+        <div class="login" style="text-align: center;">
+            <span class="signup">Already have an account?
+                <a href="{% url "login" %}" style="text-decoration: none;"><label for="check">Login</label></a>
+                <br>
+            </span>
+            <br>
+            <a style="color: #00796b; text-decoration: none;" href="{% url "doctor-sign-up" %}">Are you a Doctor?</a>
+            <br><br>
+        </div>
+    </div>
+</div>
+
 {% endblock body %}

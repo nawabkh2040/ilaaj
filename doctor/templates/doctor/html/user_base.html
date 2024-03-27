@@ -9,7 +9,8 @@
     <title>{% block title %}{% endblock title %} | Treat Now</title>
     <link rel="stylesheet" href="{% static "doctor/css/dashboard.css" %}">
     <link rel="stylesheet" href="{% static "doctor/css/profile.css" %}">
-    <link rel="stylesheet" href="../css/map.css">
+    {% comment %} <link rel="stylesheet" href="{% static "doctor/css/map.css" %}"> {% endcomment %}
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 </head>
@@ -60,17 +61,19 @@
                             <h3> Profile</h3>
                         </div>
                     </a>
-                    <a href="doctorHospital.html">
+                    <a href="{% url "Doctor-Place" %}">
                         <div class="nav-option option3">
                             <i class="fa-solid fa-hospital fa-2x"></i>
-                            <h3> Hospital</h3>
+                            <h3> Hospital or Pathology</h3>
                         </div>
                     </a>
-                    
-                    <div class="nav-option option4">
-                        <i class="fa-solid fa-gear fa-2x"></i>
-                        <h3> Settings</h3>
-                    </div>
+
+                    <a href="{% url "Doctor-Services" %}">
+                        <div class="nav-option option4">
+                            <i class="fa-solid fa-gear fa-2x"></i>
+                            <h3>Services</h3>
+                        </div>
+                    </a>
 
                     <div class="nav-option logout">
                         <i class="fa-solid fa-right-from-bracket fa-flip-horizontal fa-2x"></i>
@@ -89,6 +92,7 @@
     <script src="{% static "doctor/javascript/dashboard.js" %}"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{% static "doctor/javascript/map.js" %}"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
 </body>
 

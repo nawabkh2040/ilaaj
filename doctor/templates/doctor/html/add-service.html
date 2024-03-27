@@ -1,0 +1,54 @@
+{% extends "doctor/html/user_base.html" %}
+{% block title %}Add Services{% endblock title %}
+
+{% block body %}
+<br>
+{% if hospital %}
+<h1 style="text-align: center;" class="topic-heading">{{ hospital }}</h1>
+{% elif pathology %}
+<h1 style="text-align: center;" class="topic-heading">{{ pathology }}</h1>
+{% endif %}
+<section class="dashboard">
+    <div class="report-container" style="display: flex; justify-content: center;">
+        <div style="max-width: 600px;">
+            <br>
+            <h1 style="text-align: center;">Add Service</h1>
+            <form method="POST" action="{% url "Add-Services" %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Service Name</label>
+                    <input id="name" type="text" name="name" placeholder="ex: Blood Test with hemoglobin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input id="image" type="file" name="image" required accept="image/*" class="form-control-file">
+                </div>
+                <div class="form-group">
+                    <label for="off_percentage">Price </label>(ex:<span style="text-decoration: line-through;" > ₹1500</span>)
+                    <input id="off_percentage" type="number" required name="price" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="off_percentage">Discount Percentage</label>(ex:<span> 33% off</span>)
+                    <input id="off_percentage" type="number" required name="off_percentage"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="actual_price">Website Price</label>(ex:<span> ₹900</span>)
+                    <input id="actual_price" type="number" required name="actual_price" min="0" step="0.01" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="discounted_price">Discounted Price</label>(ex:<span> ₹1100</span> User Pay )
+                    <input id="discounted_price" type="number"required name="discounted_price"  class="form-control">
+                </div>
+                <div style="text-align: center;">
+                    <button type="submit" style="width: auto;padding: 8px;" class="btn btn-primary">Submit</button>
+                    <a href="{% url "Doctor-Services" %}" style="text-decoration: none;"><button type="button" style="width: auto;padding: 8px;" class="btn success">Back</button></a>
+                </div>               
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock body %}

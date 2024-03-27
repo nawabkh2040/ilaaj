@@ -26,7 +26,6 @@ import smtplib
 from django.shortcuts import render, get_object_or_404, redirect
 
 
-
 from math import sin, cos, sqrt, atan2, radians
 
 def calculate_distance(lat1, lon1, lat2, lon2):
@@ -61,7 +60,7 @@ def get_coordinates(city):
 def search_services(request):
     if request.method == 'GET' and request.is_ajax():
         input_text = request.GET.get('input')
-        print(input_text)
+        # print(input_text)
         if input_text:
             services = Service.objects.filter(name__istartswith=input_text)
             service_names = [service.name for service in services]
@@ -258,6 +257,7 @@ def payment_process(request):
             return redirect('user-appointment')
 
         elif payment_option == 'pay_now':
+            return HttpResponse("This Service is not Available  Now !  Try Again Later or Go to pay at place.")
             appointment = Appointment.objects.get(id=appointment_id)
             amount = appointment.service.discounted_price
             
@@ -268,7 +268,7 @@ def payment_process(request):
                 appointment=appointment, amount=amount, payment_method='razorpay'
             )
 
-            return render(request, 'home/user/razorpay_payment.html', {'payment': payment})
+            # return render(request, 'home/user/razorpay_payment.html', {'payment': payment})
 
     return HttpResponse("Invalid payment option")
 
@@ -370,7 +370,7 @@ def near_me(request):
         longitude = request.POST.get('longitude')
         # latitude = float(latitude)
         # longitude = float(longitude)
-        print(f"{longitude} and {latitude}")
+        # print(f"{longitude} and {latitude}")
         # return render(request,"home/")
         # search ="blood test"
         # nearby_services = [] 
@@ -466,7 +466,7 @@ def login_user(request):
         user = authenticate(request, email=email, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            print(next_url)
+            # print(next_url)
             if next_url:
                 return redirect(next_url)  # Redirect to the next URL if it exists
             else:
@@ -505,7 +505,7 @@ def user_profile(request):
     if request.user.is_authenticated:
         user=request.user
         if user.is_patient:
-            print(f"{request.user}")
+            # print(f"{request.user}")
             context={
                 'user':user,
             }
@@ -520,7 +520,8 @@ def user_appointment(request):
     if request.user.is_authenticated:
         user=request.user
         if user.is_patient:
-            print(f"{request.user}")
+            # print(f"{request.user}")
+
             appointments = Appointment.objects.filter(patient=user).order_by('Appointment_date')
             context={
                 'user':user,

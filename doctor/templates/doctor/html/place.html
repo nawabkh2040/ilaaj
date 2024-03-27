@@ -1,0 +1,167 @@
+{% extends "doctor/html/user_base.html" %}
+{% load static %}
+{% block title %}{% if user.is_hospital %}Hospital Details{% elif user.is_pathology %}Pathology Details{% endif %}{% endblock title %}
+{% block body %} 
+<section class="hospital">
+    <div class="card">
+        <div class="contact-card">
+            <div class="contact-card-body">
+                <h4 id="contact-details-title" class="contact-card-title title">
+                    {% if user.is_hospital %}
+                        Hospital Details
+                    {% elif user.is_pathology %}
+                        Pathology Details
+                    {% endif %} 
+                </h4>
+                {% if success_message %}
+                    <p style="color: rgb(43, 207, 43);" >{{success_message}}</p>
+                {% endif %}
+                {% if error_message %}
+                    <p style="color: rgb(227, 13, 41);" >{{error_message}}</p>
+                {% endif %}
+                <div class="row contact-form-row">
+                    <div class="col">
+                        <form action="{% url "Doctor-Place" %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="address-line1">
+                                    {% if user.is_hospital %}
+                                        Hospital Name
+                                    {% elif user.is_pathology %}
+                                        Pathology Name
+                                    {% endif %} 
+                                </label>
+                                <input id="address-line1" required {% if user.is_hospital %}name="Hospitals_name"{% elif user.is_pathology %}name="pathology_name"{% endif %} 
+                                {% if hospital.Hospitals_name %}
+                                    placeholder="{{hospital.Hospitals_name}}"
+                                {% elif  pathology.Pathology_name %}
+                                    placeholder="{{pathology.Pathology_name}}"
+                                {% endif %}
+                                type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-line2">Address</label>
+                                <input id="address-line2" required name="address" 
+                                {% if hospital.address %}
+                                    placeholder="{{hospital.address}}"
+                                {% elif  pathology.address %}
+                                    placeholder="{{pathology.address}}"
+                                {% endif %}
+                                type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input id="city" type="text" required name="location"
+                                {% if hospital.location %}
+                                    placeholder="{{hospital.location}}"
+                                {% elif  pathology.location %}
+                                    placeholder="{{pathology.location}}"
+                                {% endif %}
+                                class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="postal-code">Zip Code</label>
+                                <input id="postal-code" required name="zip_code" 
+                                {% if hospital.zipcode %}
+                                    placeholder="{{hospital.zipcode}}"
+                                {% elif  pathology.zipcode %}
+                                    placeholder="{{pathology.zipcode}}"
+                                {% endif %}
+                                type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="image1">Hospital Image 1<span>(.jpg, .webp, .jpeg, .png format)</span></label>
+                                <input id="image1" required name="image1" type="file" accept=".jpg, .webp, .jpeg, .png" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="image2">Hospital Image 2<span>(Max Size 2 Mb)</span></label>
+                                <input id="image2" required name="image2" type="file" accept=".jpg, .webp, .jpeg, .png" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="searchInput">Search Location</label>
+                                <input id="searchInput" type="text" class="form-control" placeholder="Enter a location">
+                                <button type="button" style="width: auto;padding: 10px;" onclick="searchLocation()" class="btn btn-primary">Search</button>
+                                <button type="submit" style="width: auto;padding: 10px;" class="btn btn-success">Submit</button>
+                            </div>   
+                    </div>
+                    <div class="col">
+                        <div id="map" style="height: 400px; margin-top: 20px;"></div>
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+                    </div>
+                    
+               </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+<script>
+    let map;
+    let marker;
+
+    function initMap() {
+        mapboxgl.accessToken = 'pk.eyJ1IjoibmF3YWJraDIwNDAiLCJhIjoiY2x0aWwydmY2MGRhYzJxbzBnb3ZkZGFwYyJ9.pOki1d8O8P4SW9xX9BrPXA'; // Replace with your Mapbox access token
+        map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [
+            {% if hospital.latitude %}
+                {{hospital.longitude}},{{hospital.latitude}}
+            {% elif  pathology.latitude %}
+                {{pathology.longitude}},{{pathology.latitude}}
+            {% else %}
+                75.86471723208145, 22.722357081788935
+            {% endif %}],
+            zoom: 9
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+        map.on('load', function () {
+            marker = new mapboxgl.Marker({
+                draggable: true
+            })
+                .setLngLat([75.86471723208145, 22.722357081788935])
+                .addTo(map);
+
+            marker.on('dragend', function () {
+                const lngLat = marker.getLngLat();
+                document.getElementById("latitude").value = lngLat.lat;
+                document.getElementById("longitude").value = lngLat.lng;
+            });
+        });
+    }
+
+    function searchLocation() {
+     const address = document.getElementById("searchInput").value;
+ 
+     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?country=in&access_token=pk.eyJ1IjoibmF3YWJraDIwNDAiLCJhIjoiY2x0aWwydmY2MGRhYzJxbzBnb3ZkZGFwYyJ9.pOki1d8O8P4SW9xX9BrPXA`)
+         .then(response => response.json())
+         .then(data => {
+             const coordinates = data.features[0].center;
+             const lat = coordinates[1];
+             const lon = coordinates[0];
+ 
+             // Update latitude and longitude input fields
+             document.getElementById("latitude").value = lat;
+             document.getElementById("longitude").value = lon;
+ 
+             // Update map focus
+             map.flyTo({
+                 center: [lon, lat],
+                 zoom: 12
+             });
+ 
+             // Update marker position
+             marker.setLngLat([lon, lat]);
+         })
+         .catch(error => console.error('Error:', error));
+ }
+
+    initMap();
+</script>
+{% endblock body %}

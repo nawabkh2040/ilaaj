@@ -1,126 +1,130 @@
 {% extends "doctor/html/user_base.html" %}
-{% block title %}Doctor Dashboard {% endblock title %}
+{% block title %}Doctor Dashboard{% endblock title %}
 
 {% block body %}
 
 <div class="searchbar2">
-     <input type="text" name="" id="" placeholder="Search">
-     <div class="searchbtn">
-         <i class="fa-solid fa-magnifying-glass fa-2x" style="color: white;"></i>
-     </div>
- </div>
+    <input type="text" name="" id="" placeholder="Search">
+    <div class="searchbtn">
+        <i class="fa-solid fa-magnifying-glass fa-2x" style="color: white;"></i>
+    </div>
+</div>
 
- <!-- comment like are here -->
- {% comment %} <div class="box-container">
+<br>
 
-     <div class="box box1">
-         <div class="text">
-             <h2 class="topic-heading">60.5k</h2>
-             <h2 class="topic">Patients Views</h2>
-         </div>
-
-         <i class="fa-solid fa-eye fa-3x" style="color: white;"></i>
-     </div>
-
-     <div class="box box2">
-         <div class="text">
-             <h2 class="topic-heading">150</h2>
-             <h2 class="topic">Likes</h2>
-         </div>
-
-         <i class="fa-solid fa-thumbs-up fa-3x" style="color: white;"></i>
-     </div>
-
-     <div class="box box3">
-         <div class="text">
-             <h2 class="topic-heading">320</h2>
-             <h2 class="topic">Comments</h2>
-         </div>
-
-         <i class="fa-solid fa-comment fa-3x" style="color: white;"></i>
-     </div>
-
-     <div class="box box4">
-         <div class="text">
-             <h2 class="topic-heading">70</h2>
-             <h2 class="topic">Recover</h2>
-         </div>
-
-         <i class="fa-solid fa-circle-check fa-3x" style="color: white;"></i>
-     </div>
- </div> {% endcomment %}
- <!-- comment like are end here -->
- <br>
- {% if hospital %}
- <h1 style="text-align: center;" class="topic-heading">{{hospital}} </h1>
+{% if hospital %}
+    <h1 style="text-align: center;" class="topic-heading">{{ hospital }}</h1>
 {% elif pathology %}
- <h1 style="text-align: center;" class="topic-heading">{{pathology}}</h1>
+    <h1 style="text-align: center;" class="topic-heading">{{ pathology }}</h1>
 {% endif %}
 
- <section class="dashboard">
-     <!--today Appointment  Section -->
-     <div class="report-container">
+<section class="dashboard">
+    <div class="report-container">
         <div class="report-header">
-            <h1 class="recent-Articles">Appointments</h1>
+            <h1 class="recent-Articles">Today's Appointments</h1>
             <button class="view">All</button>
         </div>
-        {% if appointments %}
-        <div class="report-body">
-            <div class="report-topic-heading">
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment ID</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Patient Name</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment Date</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Test  Name</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Payment Status</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Check up Done or not</th>
-                            <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">More Details</th>
-                        </tr>
-                    </thead>
-                    
-                    {% for appointment in appointments %}
-                    <tbody>
-                        <tr>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">AP-{{appointment.id}}</td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">{{appointment.patient.name}}</td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">{{appointment.Appointment_date}}</td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">{{appointment.service}}</td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">{{appointment.status}}</td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">
-                                {% if appointment.done %}
-                                    <span style="color: green;">&#10004;</span>
-                                {% else %}
-                                    <span style="color: red;">&#10008;</span>
-                                {% endif %}
-                            </td>
-                            <td style="border: 1px solid #dddddd; padding: 8px;">
-                                <a href="{% url 'Appointment-Details' id=appointment.id %}" style="text-decoration: none;">
-                                    <button style="padding: 8px 16px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
-                                        View
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    {% endfor %}
-                    {% else %}
-                        No Appointments Today!
-                    {% endif %}
-                </table>
+
+        {% if today_appointments %}
+            <div class="report-body">
+                <div class="report-topic-heading">
+                    <table style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment ID</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Patient Name</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment Date</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Test Name</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Payment Status</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Checkup Done</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">More Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in today_appointments %}
+                                <tr>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">AP-{{ appointment.id }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.patient.name }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{appointment.Appointment_date}}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.service }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.status }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">
+                                        {% if appointment.done %}
+                                            <span style="color: green;">&#10004;</span>
+                                        {% else %}
+                                            <span style="color: red;">&#10008;</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">
+                                        <a href="{% url 'Appointment-Details' id=appointment.id %}" style="text-decoration: none;">
+                                            <button style="padding: 8px 16px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
+                                                View
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        {% else %}
+            <div class="report-body">
+                <p>No Appointments Today!</p>
+            </div>
+        {% endif %}
+
+        <div class="report-header">
+            <h1 class="recent-Articles">All Appointments</h1>
+            <button class="view">All</button>
         </div>
-    </div>
-    
-    
-     <!-- today appointment section ends here -->
 
-     <!-- appointment request start here -->
-     
-     <!-- appointment request ends here -->
-
-     <!-- Report Section -->
- </section>
-
-{% endblock body %}
+        {% if appointments %}
+            <div class="report-body">
+                <div class="report-topic-heading">
+                    <table style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment ID</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Patient Name</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Appointment Date</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Test Name</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Payment Status</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Checkup Done</th>
+                                <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">More Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                                <tr>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">AP-{{ appointment.id }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.patient.name }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.Appointment_date }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.service }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">{{ appointment.status }}</td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">
+                                        {% if appointment.done %}
+                                            <span style="color: green;">&#10004;</span>
+                                        {% else %}
+                                            <span style="color: red;">&#10008;</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="border: 1px solid #dddddd; padding: 8px;">
+                                        <a href="{% url 'Appointment-Details' id=appointment.id %}" style="text-decoration: none;">
+                                            <button style="padding: 8px 16px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;">
+                                                View
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="report-body">
+                <p>No Appointments </p>
+            </div>
+        {% endif %}
+{% endblock body%}
