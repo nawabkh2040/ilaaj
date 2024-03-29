@@ -102,11 +102,11 @@
             <form action="{% url 'doctor-sign-up' %}" method="post"
                 oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
                 {% csrf_token %}
-                <input type="text" name="name" placeholder="Enter your Full Name">
-                <input type="number" name="number" placeholder="Enter your Phone Number">
-                <input type="email" name="email" placeholder="Enter your email">
-                <input type="password" id="password" name="password" placeholder="Create a password">
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+                <input type="text" required name="name" placeholder="Enter your Full Name">
+                <input type="number" required name="number" placeholder="Enter your Phone Number">
+                <input type="email" required name="email" placeholder="Enter your email">
+                <input type="password" required id="password" name="password" placeholder="Create a password">
+                <input type="password" required id="confirm_password" name="confirm_password" placeholder="Confirm your password">
                 <label><input type="radio" name="is_hospital" value="hospital"> Hospital</label>
                 <label><input type="radio" name="is_pathology" value="pathology"> Pathology</label>
 

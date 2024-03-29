@@ -6,21 +6,23 @@
     {% if error_message %}
         <p class="error-message">{{ error_message }}</p>
     {% endif %}
-    {% if nearby_services %}
+   
         <div class="departHead">
-            <h1 class="departHeading">{{ search }} Services Near You </h1>
+            <h1 class="departHeading">{{ search }} Services Near You</h1>
         </div>
+        
         <hr class="departLine">
+        {% if nearby_services %}
         <div class="departmentRow">
             <div class="blog-slider">
-                {% for service, hospital_name, distance in nearby_services %}
-                    <div class="blog-slider__wrp swiper-wrapper">
+                <div class="blog-slider__wrp swiper-wrapper">
+                    {% for service, hospital_name, distance in nearby_services %}
                         <div class="blog-slider__item swiper-slide">
                             <div class="blog-slider__img">
                                 <img src="{{ service.image.url }}" alt="">
                             </div>
                             <div class="blog-slider__content">
-                                <span class="blog-slider__code fa fa-map-marker" style="margin-bottom: 5px;" ><b style="font-family:'Times, serif; color: rgb(17, 16, 16); "> {{ distance|floatformat:"1" }} KM From Your Location</b></span>
+                                <span class="blog-slider__code fa fa-map-marker" style="margin-bottom: 5px;"><b>{{ distance|floatformat:"1" }} KM From Your Location</b></span>
                                 <div class="blog-slider__title" style="margin-bottom: 9px;">{{ hospital_name }}</div>
                                 <div class="blog-slider__title" style="margin-bottom: 9px;">{{ service.name }}</div>
                                 <div class="blog-slider__text" style="margin-bottom: 12px;">
@@ -33,48 +35,45 @@
                                         {% endwith %}
                                     {% endif %}
                                 </div>
-                                <div class="blog-slider__text fa fa-map-marker" style="margin-bottom: 5px;"><b style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;" > {{ hospital_name.address }}</b></div>
-
+                                <div class="blog-slider__text fa fa-map-marker" style="margin-bottom: 5px;"><b>{{ hospital_name.address }}</b></div>
                                 <div class="blog-slider__title" style="margin-bottom: 7px;" id="price">
-                                    <div class="discountPrice">Cost ₹ {{ service.discounted_price}}</div>
+                                    <div class="discountPrice">Cost ₹ {{ service.discounted_price }}</div>
                                     <div class="originalPrice" style="display: flex;">
                                         <div class="actualPrice">₹ {{ service.price|floatformat:"-2" }}</div>
                                         {% if service.off_percentage %}
-                                            <div class="discount">{{service.off_percentage}}% Off</div>
+                                            <div class="discount">{{ service.off_percentage }}% Off</div>
                                         {% endif %}
                                     </div>
                                 </div> 
                                 <div class="more-details" style="margin: 10px;">
                                     <a href="{% url 'More-Details' %}?service_id={{ service.id }}" class="blog-slider__button">More Details</a>
                                 </div> 
-                                </div>
                                 <div class="book-now" style="margin: 10px;">
                                     <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                        <br>
+                        <br>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    {% else %}
-        <p class="error-message">No nearby services found matching your search.</p>
     {% endif %}
-    <br>
     {% if nearby_services_pathology %}
-        {% comment %} <hr class="departLine"> {% endcomment %}
+        <hr class="departLine">
         <div class="departmentRow">
             <div class="blog-slider">
-                {% for service, PathologyLab, distance in nearby_services_pathology %}
-                    <div class="blog-slider__wrp swiper-wrapper">
+                <div class="blog-slider__wrp swiper-wrapper">
+                    {% for service, PathologyLab, distance in nearby_services_pathology %}
                         <div class="blog-slider__item swiper-slide">
                             <div class="blog-slider__img">
                                 <img src="{{ service.image.url }}" alt="">
                             </div>
                             <div class="blog-slider__content">
-                                <span class="blog-slider__code fa fa-map-marker" style="margin-bottom: 5px;" ><b style="font-family:'Times, serif; color: rgb(17, 16, 16); "> {{ distance|floatformat:"1" }} KM From Your Location</b></span>
+                                <span class="blog-slider__code fa fa-map-marker" style="margin-bottom: 5px;"><b>{{ distance|floatformat:"1" }} KM From Your Location</b></span>
                                 <div class="blog-slider__title" style="margin-bottom: 8px;">{{ PathologyLab }}</div>
-                                <div class="blog-slider__title"style="margin-bottom: 8px;">{{ service.name }}</div>
+                                <div class="blog-slider__title" style="margin-bottom: 8px;">{{ service.name }}</div>
                                 <div class="blog-slider__text" style="margin-bottom: 12px;">
                                     {% if service.description %}
                                         {% with description_words=service.description.split|slice:":20" %}
@@ -85,29 +84,27 @@
                                         {% endwith %}
                                     {% endif %}
                                 </div>
-                                <div class="blog-slider__text fa fa-map-marker" style="margin-bottom: 5px;"><b style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;" > {{ PathologyLab.address }}</b></div>
-
+                                <div class="blog-slider__text fa fa-map-marker" style="margin-bottom: 5px;"><b>{{ PathologyLab.address }}</b></div>
                                 <div class="blog-slider__title" style="margin-bottom: 7px;" id="price">
-                                    <div class="discountPrice">Cost ₹ {{ service.discounted_price}}</div>
+                                    <div class="discountPrice">Cost ₹ {{ service.discounted_price }}</div>
                                     <br>
                                     <div class="originalPrice" style="display: flex;">
                                         <div class="actualPrice">₹ {{ service.price|floatformat:"-2" }}</div>
                                         {% if service.off_percentage %}
-                                            <div class="discount">{{service.off_percentage}}% Off</div>
+                                            <div class="discount">{{ service.off_percentage }}% Off</div>
                                         {% endif %}
                                     </div>
                                 </div> 
                                 <div class="more-details" style="margin: 10px;">
                                     <a href="{% url 'More-Details' %}?service_id={{ service.id }}" class="blog-slider__button">More Details</a>
                                 </div> 
-                                </div>
                                 <div class="book-now" style="margin: 10px;">
                                     <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% endif %}

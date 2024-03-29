@@ -102,11 +102,11 @@
         {% endif %}
         <form action="{% url 'sign-up' %}" method="post" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Enter your Full Name">
-            <input type="number" name="number" placeholder="Enter your Phone Number">
-            <input type="email" name="email" placeholder="Enter your email">
-            <input type="password" id="password" name="password" placeholder="Create a password">
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+            <input type="text" name="name" required placeholder="Enter your Full Name">
+            <input type="number" name="number" required placeholder="Enter your Phone Number">
+            <input type="email" name="email" required placeholder="Enter your email">
+            <input type="password" id="password" required name="password" placeholder="Create a password">
+            <input type="password" id="confirm_password" required name="confirm_password" placeholder="Confirm your password">
             {% if next %}
                 <input type="hidden" name="next" value="{{ next }}">
             {% endif %}

@@ -12,8 +12,9 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login , logout
 from home.models import *
 from django.utils import timezone
-from datetime import date
+import datetime 
 
+from token_values.token import *
 
 # for mail 
 # form ilaaj.settings import *
@@ -35,6 +36,8 @@ def home(request):
      return HttpResponse("Doctors Page")
 
 def login_doctor(request):
+     if request.user.is_authenticated:
+          return redirect('Doctor-Dashboard')
      if request.method == "POST" or  request.method == "post":
           email = request.POST.get('email')
           password = request.POST.get('password')
@@ -128,7 +131,7 @@ def activate_doctor(request, uidb64, token):
         my_user.is_active = True
         my_user.save()
         login(request,my_user)
-        return redirect('Doctor-Dashboard')
+        return redirect('Doctor-Place')
     else:
          return render(request,'doctor/email_activation_failed.html')
      
@@ -145,18 +148,19 @@ def doctor_dashboard(request):
                 pathology = PathologyLab.objects.get(user=user)
             except PathologyLab.DoesNotExist:
                 pathology = None
-            today = date.today()
+            today = datetime.date.today()
             appointments = []
+            today_appointments = []
             if hospital:
                 try:
                     appointments = Appointment.objects.filter(hospital=hospital)
-                    today_appointments = Appointment.objects.filter(hospital=hospital,Appointment_date=today)
+                    today_appointments = appointments.filter(Appointment_date__date=today)
                 except Appointment.DoesNotExist:
                     pass
             elif pathology:
                 try:
                     appointments = Appointment.objects.filter(pathology_lab=pathology)
-                    today_appointments = Appointment.objects.filter(pathology_lab=pathology,Appointment_date=today)
+                    today_appointments = appointments.filter(Appointment_date__date=today)
                 except Appointment.DoesNotExist:
                     pass
 
@@ -196,6 +200,19 @@ def doctor_profile(request):
                return HttpResponse("You Are Not Doctor")
      else:
           return redirect('doctor-login')
+
+def get_coordinates(city):
+    access_token = token_key  
+    url = f'https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?country=in&access_token={access_token}'
+    response = requests.get(url)
+    data = response.json()
+    if 'features' in data and data['features']:
+        latitude = data['features'][0]['center'][1]
+        longitude = data['features'][0]['center'][0]
+        return latitude, longitude
+    else:
+        return None, None
+
 def doctor_place(request):
      if request.user.is_authenticated:
           user = request.user
@@ -218,6 +235,10 @@ def doctor_place(request):
                     image2 = request.FILES.get('image2')
                     latitude = request.POST.get('latitude')
                     longitude = request.POST.get('longitude')
+                    if location.lower() == "sagore":
+                         location = "Sagor"
+                    if latitude and longitude is None:
+                         latitude ,longitude = get_coordinates(city = location)
                     if hospital is not None:
                          context ={
                               'user' : user,
@@ -243,7 +264,7 @@ def doctor_place(request):
                          return render(request,"doctor/html/place.html",context)
                     elif user.is_pathology:
                          new_pathology = PathologyLab.objects.create(
-                              Hospitals_name=Hospitals_name,address=address,zipcode=zipcode,location=location,latitude=latitude,longitude=longitude,image1=image1,image2=image2,user=user
+                              Pathology_name=pathology_name,address=address,zipcode=zipcode,location=location,latitude=latitude,longitude=longitude,image1=image1,image2=image2,user=user
                          )
                          new_pathology.save()
                          context = {

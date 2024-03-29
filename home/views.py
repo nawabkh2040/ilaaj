@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.views.decorators.csrf import csrf_exempt
 import razorpay
 from django.http import JsonResponse
-
+from datetime import datetime
 from django.conf import settings
 from django.core.mail import send_mail
 from django.conf import settings
@@ -24,7 +24,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 import smtplib
 from django.shortcuts import render, get_object_or_404, redirect
-
+from twilio.rest import Client
+from token_values.token import *
 
 from math import sin, cos, sqrt, atan2, radians
 
@@ -125,7 +126,7 @@ def home(request):
                 'search': search,
             }
             # print(f"City: {city}, Search: {search}, Latitude: {user_latitude}, Longitude: {user_longitude}")
-            return render(request, "home/hospitals.html", context)
+            return render(request, "home/search.html", context)
         else:
             error_message = 'Unable to retrieve coordinates for the specified city.'
             return render(request, "home/home.html", {'error_message': error_message})
@@ -414,9 +415,16 @@ def sign_up(request):
             email=email,
             number=number,
             password=password,
+            date=datetime.datetime.now()
         )
         new_user.is_active=False
         new_user.save()
+        # otp_code = generate_otp()
+        # send_otp_via_sms(number, otp_code)
+        # request.session['otp_code'] = otp_code
+        # request.session['user_id'] = new_user.id
+        # return redirect('verify-otp')
+    
         subject="Email Verification by Treat Now"
         from_email=settings.EMAIL_HOST_USER
         to_list = [new_user.email]
@@ -433,7 +441,7 @@ def sign_up(request):
         try:
             send_mail(subject,messages,from_email,to_list,fail_silently=True)
             context={
-                'success_message':"Please Verify Your Email. Go to You mail and Click the link Blow And Verify yourself",
+                'success_message':"Please Verify Your Email. Go to mail and Click the link Blow And Verify yourself",
             }
             return render(request,"Home/sign-up.html",context)
         except Exception as e:
@@ -441,8 +449,84 @@ def sign_up(request):
                     'error': 'Your Account Create Successfully. There is a problem to sending E-mail in Back-end Our Team is Working on it please Contact us as soon as Possible :-) '
                     }
             return render(request,"Home/sign-up.html",context)
-                    
+        
+      
     return render(request,"Home/sign-up.html")
+from django.contrib import messages
+
+def verify_otp(request):
+    max_wrong_attempts = 4
+    if request.method == "POST":
+        otp_entered = request.POST.get('otp')
+        otp_code = request.session.get('otp_code')
+        user_id = request.session.get('user_id')
+
+        wrong_attempts = request.session.get('wrong_attempts', 0)
+
+        if wrong_attempts >= max_wrong_attempts:
+            # Too many wrong attempts, render an error message
+            messages.error(request, "You have exceeded the maximum number of wrong attempts.")
+            return redirect('home')  # Redirect to the home page or any appropriate page
+
+        if otp_entered == otp_code:
+            # Activate the user account
+            user = CustomUser.objects.get(id=user_id)
+            user.is_active = True
+            user.save()
+
+            # Clear the OTP-related session data and wrong attempts counter
+            del request.session['otp_code']
+            del request.session['user_id']
+            request.session.pop('wrong_attempts', None)
+
+            messages.success(request, "Email verified successfully. Now You Can Login")
+            return redirect('home')  # Redirect to the home page or any appropriate page
+
+        else:
+            # Increment the wrong attempts counter
+            request.session['wrong_attempts'] = wrong_attempts + 1
+
+            context = {
+                'error': "Invalid OTP. Please try again."
+            }
+            return render(request, "Home/verify-otp.html", context)
+
+    return render(request, "Home/verify-otp.html")
+
+
+import random
+def generate_otp():
+    # Generate a random 6-digit OTP
+    
+    return ''.join(random.choices('0123456789', k=6))
+
+
+def send_otp_via_sms(phone_number, otp_code):
+    # Replace these placeholders with your Twilio credentials
+    account_sid = n_account_sid
+    auth_token = n_auth_token
+    from_number = my_number
+
+    client = Client(account_sid, auth_token)
+
+    try:
+        message = client.messages.create(
+            body=f"Your OTP for verification is: {otp_code}",
+            from_=from_number,
+            to=phone_number
+        )
+        print("OTP sent successfully via Twilio")
+    except Exception as e:
+        print(f"Error sending OTP via Twilio: {e}")
+
+
+def render_with_message(request, message):
+    context = {'message': message}
+    return render(request, "Home/login.html", context)
+
+
+
+
 def activate_user(request, uidb64, token):
     try:
         uidb64 = force_str(urlsafe_base64_decode(uidb64))

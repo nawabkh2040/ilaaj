@@ -1,209 +1,115 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends "Home/base.html" %}
+{% block title %}Search Services {% endblock title %}
 
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>ilaaj</title>
-     <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
-     <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
-     <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
-     <link rel="stylesheet" href="{% static "Home/css/department.css" %}">
-     <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
-     <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
- </head>
-<style>
-    a{
-        text-decoration:None;
-    }
-</style>
-<body>
-    <div class="logo">
-        <a href="{% url "home" %}">
-            <img src="{% static "Home/images/logo.png" %}" alt="logo">
-            <div class="webNameBar">
-                <div class="webName">ilaaj</div>
-                <div class="nearMe">
-                    <span class="icon"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </span> Near Me
-                </div>
-        </a>
-    </div>
-    </div>
-    <nav class="flex navbar " style="background-color: rgba(0, 0, 0, 0.345); display: flex;">
-        <ul class="flex" style="display: flex;">
-            <li><a class="departPageCss" href="{% url "home" %}"><i class="fa-solid fa-arrow-rotate-left"></i>Back to
-                    Home</a></li>
-        </ul>
-    </nav>
+{% block body %}
 
-    <section id="depart" style="padding: 34px;">
-     {% if error_message %}
-            <p class="error-message">{{ error_message }}</p>
-        {% endif %}
-        {% if nearby_services %}
-        <div class="departHead">
-            <h1 class="departHeading">{{ search }} Services Near You </h1>
-        </div>
-        <hr class="departLine">
-        <div class="departmentRow">
-            <div class="blog-slider">
-               {% for service, hospital_name, distance in nearby_services %}
-                <div class="blog-slider__wrp swiper-wrapper">
-                    <div class="blog-slider__item swiper-slide">
-                        <div class="blog-slider__img">
-                            <img src="{{ service.image.url }}"
-                                alt="">
+<section id="depart" style="padding: 34px;">
+    <div class="departHead">
+        <h1 class="departHeading">{{ search }} Services Near You</h1>
+        <p class="departPara">List of the  nearest services to your location.</p>
+    </div>
+
+    <hr class="departLine">
+    {% if nearby_services %}
+    {% for service, hospital_name, distance in nearby_services %}
+    <div class="departmentRow">
+        <div class="blog-slider">
+            <div class="blog-slider__wrp swiper-wrapper">
+                <div class="blog-slider__item swiper-slide">
+                    <div class="blog-slider__img">
+                        <img src="{{ service.image.url }}"
+                            alt="Service Images">
+                    </div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM From Your Location</span>
+                        <div style="margin-bottom: 20px;" class="blog-slider__title">{{ hospital_name }}</div>
+                        <div style="margin-bottom: 20px;" class="blog-slider__title">{{ service.name }}</div>
+                        <div style="margin-bottom: 15px;" class="blog-slider__text">
+                            {% if service.description %}
+                                {% with description_words=service.description.split|slice:":20" %}
+                                    {{ description_words|join:" " }}
+                                        {% if service.description|wordcount > 20 %}
+                                            ...
+                                        {% endif %}
+                                {% endwith %}
+                            {% endif %}
                         </div>
-                        <div class="blog-slider__content">
-                            <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM</span>
-                            <div class="blog-slider__title">{{ hospital_name }}</div>
-                            <div class="blog-slider__title">{{ service.name }}</div>
-                            <div class="blog-slider__text">{{ service.description }}
+                        <div style="margin-bottom: 10px; color: black;" class="blog-slider__text">Address: {{ hospital_name.address }}</div>
+                        <div class="blog-slider__title" id="price">
+                            <div class="discountPrice">
+                                Cost ₹ {{ service.discounted_price }}
                             </div>
-                            <div class="blog-slider__text">{{ hospital_name.address }}
-                         </div>
-                            <div class="blog-slider__title" id="price">
-                                <div class="discountPrice">
-                                   {{service.price}}
+                            <div class="originalPrice" style="display: flex;">
+                                <div class="actualPrice">
+                                    ₹ {{ service.price|floatformat:"-2" }}
                                 </div>
-                                <div class="originalPrice" style="display: flex;">
-                                    <div class="actualPrice">
-                                        ₹ 1800
-                                    </div>
-                                    <div class="discount">
-                                        33% Off
-                                    </div>
+                                <div class="discount">
+                                    {{ service.off_percentage }}% Off
                                 </div>
                             </div>
-                            <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
                         </div>
+                        <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" id="bookNow" class="blog-slider__button">Book Now</a>
+                        <a href="{% url 'More-Details' %}?service_id={{ service.id }}" id="viewDetails" class="blog-slider__button">View
+                            Details</a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-            {% else %}
-            <p class="error-message">No nearby services found matching your search.</p>
-        {% endif %}
         </div>
-    </section>
+    </div>
+    <br>
+    <hr class="departLine">
+    {% endfor %}
+    {% endif %}
     {% if nearby_services_pathology %}
-        <hr class="departLine">
-        <div class="departmentRow">
-            <div class="blog-slider">
-               {% for service, PathologyLab, distance in nearby_services_pathology %}
-                <div class="blog-slider__wrp swiper-wrapper">
-                    <div class="blog-slider__item swiper-slide">
-                        <div class="blog-slider__img">
-                            <img src="{{ service.image.url }}"
-                                alt="">
+    {% for service, PathologyLab, distance in nearby_services_pathology %}
+    <div class="departmentRow">
+        <div class="blog-slider">
+            <div class="blog-slider__wrp swiper-wrapper">
+                <div class="blog-slider__item swiper-slide">
+                    <div class="blog-slider__img">
+                        <img src="{{ service.image.url }}"
+                            alt="Service Images">
+                    </div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM From Your Location</span>
+                        <div style="margin-bottom: 20px;" class="blog-slider__title">{{ PathologyLab }}</div>
+                        <div style="margin-bottom: 20px;" class="blog-slider__title">{{ service.name }}</div>
+                        <div  style="margin-bottom: 15px;"class="blog-slider__text">
+                        {% if service.description %}
+                            {% with description_words=service.description.split|slice:":20" %}
+                                {{ description_words|join:" " }}
+                                {% if service.description|wordcount > 20 %}
+                                     ...
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
                         </div>
-                        <div class="blog-slider__content">
-                            <span class="blog-slider__code">{{ distance|floatformat:"1" }} KM</span>
-                            <div class="blog-slider__title">{{ PathologyLab }}</div>
-                            <div class="blog-slider__title">{{ service.name }}</div>
-                            <div class="blog-slider__text">{{ service.description }}
+                        <div style="margin-bottom: 10px; color: black;"class="blog-slider__text">{{ PathologyLab.address }}</div>
+
+                        <div class="blog-slider__title" id="price">
+                            <div class="discountPrice">
+                                Cost ₹ {{ service.discounted_price }}
                             </div>
-                            <div class="blog-slider__text">{{ PathologyLab.address }}
-                         </div>
-                            <div class="blog-slider__title" id="price">
-                                <div class="discountPrice">
-                                   {{service.price}}
+                            <div class="originalPrice" style="display: flex;">
+                                <div class="actualPrice">
+                                    ₹ {{ service.price|floatformat:"-2" }}
                                 </div>
-                                <div class="originalPrice" style="display: flex;">
-                                    <div class="actualPrice">
-                                        ₹ 1800
-                                    </div>
-                                    <div class="discount">
-                                        33% Off
-                                    </div>
+                                <div class="discount">
+                                    {{ service.off_percentage }} % Off
                                 </div>
                             </div>
-                            <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" class="blog-slider__button">Book Now</a>
                         </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            {% comment %} <p class="error-message">No nearby services found matching your search.</p> {% endcomment %}
-        {% endif %}
-        </div>
-    </section>
-    <footer class="footer">
-        <div class="departRow footerRow">
-            <div class="box">
-                <div class="details footerReachAt">
-                    <h3 style=" padding: 0px 12px;">Reach At..</h3>
-                    <ul class="contact-list">
-                        <li class="list-item"><i class="fa fa-map-marker"><span class="contact-text place"><a
-                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
-
-                        <li class="list-item"><i class="fa fa-phone"><span class="contact-text phone"><a
-                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
-                        </li>
-
-                        <li class="list-item"><i class="fa fa-envelope"><span class="contact-text gmail"><a
-                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
-                    </ul>
-                    <div class="footerSocial">
-                        <a href="">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
+                        <a href="{% url 'Book-Appointment' %}?service_id={{ service.id }}" id="bookNow" class="blog-slider__button">Book Now</a>
+                        <a href="{% url 'More-Details' %}?service_id={{ service.id }}" id="viewDetails" class="blog-slider__button">View
+                            Details</a>
                     </div>
                 </div>
             </div>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details">
-                    <h3 style="padding: 0px 6px;">About</h3>
-                    <p> we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
-                        Committed to simplifying the patient journey.</p>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details" id="quickLinks">
-                    <h3>Links</h3>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">LogIn</a></li>
-                    <li><a href="#">SignUp</a></li>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details">
-                    <h3>Newsletter</h3>
-                    <div class=" form-group " style="text-align: center;">
-                        <input type="text" id="footerEmail" class="form-control" id="email" placeholder="Enter Email"
-                            value="" required>
-                        <button class="btn send-button" id="footerBtn" type="submit" value="SEND">SUSCRIBE</button>
-                    </div>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
         </div>
-        <div class="rights">
-            <p style="margin: 0px;">© 2024 All Rights Reserved </p>
-        </div>
-
-        </div>
-    </footer>
-    <script src="{% static "Home/javascript/home.js" %}"></script>
-    <script src="{% static "Home/javascript/responsive.js" %}"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="{% static "Home/javascript/map.js" %}"></script>
-    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
-</body>
-
-</html>
+    </div>
+    <br>
+    <hr class="departLine">
+    {% endfor %}
+    {% endif %}
+</section>
+{% endblock body %}
