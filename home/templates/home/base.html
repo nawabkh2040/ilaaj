@@ -18,6 +18,7 @@
     <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% block extra_css %}{% endblock extra_css %}
 
 </head>
 <body>
@@ -58,7 +59,7 @@
                 <div class="dropdown-content">
                     <a href="{% url "home" %}#depart">Department</a>
                     <a href="{% url "login" %}">Login/signUp</a>
-                    <a href="#./html/department.html">Get Appointment</a>
+                    <a href="/Doctor/sign-up/">Connect with us</a>
                     <a href="{% url "home" %}#abou">About Us(Admin)</a>
                 </div>
             </div>
@@ -71,94 +72,24 @@
         
     </main>
 <br>
-    {% comment %} <footer class="footer">
-        <div class="departRow footerRow">
-            <div class="box">
-                <div class="details footerReachAt">
-                    <h3 style=" padding: 0px 12px;">Reach At..</h3>
-                    <ul class="contact-list">
-                        <li class="list-item"><i class="fa fa-map-marker"><span class="contact-text place"><a
-                                        href="Indore , India" title="Find me">Indore/India</a></span></i></li>
-                                        <br>
-
-                        <li class="list-item"><i class="fa fa-phone"><span class="contact-text phone"><a
-                                        href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i>
-                                        
-                        </li>
-                        <br>
-                        <li class="list-item"><i class="fa fa-envelope"><span class="contact-text gmail"><a
-                                        href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
-                                        <br>
-                                        
-                    </ul>
-                    <div class="footerSocial">
-                        <a href="">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details">
-                    <h3 style="padding: 0px 6px;">About</h3>
-                    <p> we're proud to introduce our platform as a pioneering solution in healthcare accessibility.
-                        Committed to simplifying the patient journey.</p>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details" id="quickLinks">
-                    <h3>Links</h3>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">LogIn</a></li>
-                    <li><a href="#">SignUp</a></li>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
-            <div class="box">
-                <div class="details">
-                    <h3>Newsletter</h3>
-                    <div class=" form-group " style="text-align: center;">
-                        <input type="text" id="footerEmail" class="form-control" id="email" placeholder="Enter Email"
-                            value="" required>
-                        <button class="btn send-button" id="footerBtn" type="submit" value="SEND">SUSCRIBE</button>
-                    </div>
-                </div>
-            </div>
-            <hr class="footerBoxLine">
-        </div> {% endcomment %}
-        <div class="rights">
-            {% comment %} <p style="margin: 0px;">© 2024 All Rights Reserved </p> {% endcomment %}
-        </div>
-    {% comment %} </footer> {% endcomment %}
-    <script>
+    {% comment %} <script>
         document.addEventListener('DOMContentLoaded', function() {
             var menuToggle = document.querySelector('.menu-toggle');
             var menuList = document.querySelector('.menu');
-    
-            // Add event listener to toggle button
             menuToggle.addEventListener('click', function() {
                 menuList.classList.toggle('show-menu');
             });
         });
-    </script>
-    <script src="{% static "Home/javascript/home.js" %}"></script>
-    <script src="{% static "Home/javascript/responsive.js" %}"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="{% static "Home/javascript/map.js" %}"></script>
-    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+    </script>  {% endcomment %}
 
+    {% comment %} <script src="{% static "Home/javascript/home.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="{% static "Home/javascript/responsive.js" %}"></script> {% endcomment %}
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    {% comment %} <script src="{% static "Home/javascript/map.js" %}"></script> {% endcomment %}
+    
+
+
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

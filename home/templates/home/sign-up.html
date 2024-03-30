@@ -99,6 +99,9 @@
         {% endif %}
         {% if error %}
             <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error}}</p>
+        {% elif error_message %}
+            <p style="color:rgb(254, 9, 42); font-size: 14px;margin: 10px;">{{error_message}}</p>
+
         {% endif %}
         <form action="{% url 'sign-up' %}" method="post" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
             {% csrf_token %}
@@ -121,8 +124,38 @@
             <br>
             <a style="color: #00796b; text-decoration: none;" href="{% url "doctor-sign-up" %}">Are you a Doctor?</a>
             <br><br>
+            OR
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("reset-form").addEventListener("submit", function() {
+        // Disable the button to prevent multiple clicks
+        document.getElementById("reset-btn").disabled = true;
+    });
+</script>
+<div id="pheIncludedContent"></div>
+<script src="https://auth.phone.email/login_automated_v1_3.js"></script>
+<script>
+    // Get the "next" URL from the query string
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    var nextUrl = urlParams.get('next');
+
+    // Configure the login request JSON
+    var reqJson = {
+        "client_id": "16373631537064049441",  // Your client ID
+        "button_text": "Sign in with Phone",  // Text to display on the login button
+        "email_icon_position": "left",  // Position of the email icon
+        "redirect_url": "/Success-user" + (nextUrl ? '?next=' + encodeURIComponent(nextUrl) : '')  // Redirect URL after successful login
+    };
+
+    // Convert the JSON to a string
+    var reqJsonString = JSON.stringify(reqJson);
+
+    // Call the login_with_phone function with the request JSON
+    log_in_with_phone(reqJsonString);
+</script>
+
 
 {% endblock body %}

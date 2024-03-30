@@ -68,6 +68,72 @@ def logout_doctor(request):
     logout(request)
     return redirect('home')
 
+def reset_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+            send_success = send_reset_link(request, user)
+            if send_success:
+                context = {
+                    'success_message': "Password Reset Link has been sent to your email. Please check your inbox."
+                }
+            else:
+                context = {
+                    'error_message': "There was a problem sending the email. Please try again later or contact us."
+                }
+            return render(request, "doctor/html/reset_password_email.html", context)
+            
+        except CustomUser.DoesNotExist:
+            context = {
+                'error_message': "Email is not registered. Please sign up."
+            }
+            return render(request, "doctor/html/reset_password_email.html", context)
+    return render(request, "doctor/html/reset_password_email.html")
+
+def send_reset_link(request, user):
+    subject = "Password Reset Link by Treat Now"
+    from_email = settings.EMAIL_HOST_USER
+    to_list = [user.email]
+    current_site = get_current_site(request)
+    uidb64 = urlsafe_base64_encode(force_bytes(user.id))
+    token = default_token_generator.make_token(user)
+    reset_link = f"http://{current_site.domain}/reset-password-user/{uidb64}/{token}/"
+    context_email = {
+        'name': user.name,
+        'reset_link': reset_link,
+    }
+    message = render_to_string('doctor/html/reset_confirmation.html', context_email)
+    try:
+        send_mail(subject, message, from_email, to_list, fail_silently=True)
+        return True
+    except Exception as e:
+        # print(e)  # Log the error for debugging purposes
+        return False  
+        
+    
+def reset_password_doctor(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        my_user = CustomUser.objects.get(id=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        my_user = None
+
+    if my_user is not None and default_token_generator.check_token(my_user, token):
+        if request.method == "POST":
+            new_password = request.POST.get('password')
+            my_user.set_password(new_password)
+            my_user.save()
+            login(request, my_user)
+            return redirect("home")
+        else:
+            context = {'uidb64': uidb64, 'token': token}
+            return render(request, "doctor/html/new_password.html", context)
+    else:
+        return render(request, 'Home/email_activation_failed.html')
+
+
+
 def sign_up(request):
      if request.method == "POST" or  request.method == "post":
           name = request.POST.get('name')

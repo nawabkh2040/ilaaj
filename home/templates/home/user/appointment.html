@@ -29,7 +29,11 @@
             text-align: center;
         }
     </style>
-    
+    <div class="report-header">
+        <h1 style="text-align: center;" class="recent-Articles">Hello {{user.name}} !</h1>
+        <a href="{% url "home" %}"><button style="padding: 1px; margin: auto;border-radius: 10px;background-color: #00361f;
+            color: white;" >Book Your Appointment</button></a>
+    </div>
     <div class="report-container appointment">
         <div class="report-header">
             <h1 class="recent-Articles">Appointments || Booking</h1>

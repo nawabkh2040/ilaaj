@@ -123,4 +123,10 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("reset-form").addEventListener("submit", function() {
+            // Disable the button to prevent multiple clicks
+            document.getElementById("reset-btn").disabled = true;
+        });
+    </script>
 {% endblock body %}

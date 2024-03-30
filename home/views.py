@@ -26,6 +26,8 @@ import smtplib
 from django.shortcuts import render, get_object_or_404, redirect
 from twilio.rest import Client
 from token_values.token import *
+from django.http import JsonResponse
+import datetime
 
 from math import sin, cos, sqrt, atan2, radians
 
@@ -395,6 +397,7 @@ def show_services(request,services):
 
 
 def sign_up(request):
+    service_id = request.GET.get('service_id')
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -415,7 +418,6 @@ def sign_up(request):
             email=email,
             number=number,
             password=password,
-            date=datetime.datetime.now()
         )
         new_user.is_active=False
         new_user.save()
@@ -449,9 +451,17 @@ def sign_up(request):
                     'error': 'Your Account Create Successfully. There is a problem to sending E-mail in Back-end Our Team is Working on it please Contact us as soon as Possible :-) '
                     }
             return render(request,"Home/sign-up.html",context)
-        
-      
-    return render(request,"Home/sign-up.html")
+    else:
+        next_url = reverse('Book-Appointment')  # URL to return to this view after signup
+        if service_id:
+            next_url += f'?service_id={service_id}'
+        context = {'next': next_url}
+        response= render(request,"Home/sign-up.html",context)
+        response['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups https://auth.phone.email' 
+        response.delete_cookie('ph_email_jwt')
+        return response
+
+
 from django.contrib import messages
 
 def verify_otp(request):
@@ -541,8 +551,92 @@ def activate_user(request, uidb64, token):
     else:
          return render(request,'Home/email_activation_failed.html')
 
+def user_sign_up(request):
+    access_token = request.GET.get('access_token')
+    next_url = request.GET.get('next')
+    url = "https://eapi.phone.email/getuser"
+    CLIENT_ID = '16373631537064049441'  # Replace with your client id
+
+    postData = {
+        'access_token': access_token,
+        'client_id': CLIENT_ID
+    }
+    try:
+        response = requests.post(url, data=postData, verify=True)  # Use verify=False to ignore SSL certificate verification (not recommended in production)
+        response.raise_for_status()  # Raise exception for non-200 status codes
+        json_data = response.json()
+
+        if json_data['status'] != 200:
+            context={
+                'error_message':"Error occurred while fetching user data"
+            }
+            response= render(request,"Home/sign-up.html",context)
+            response.delete_cookie('ph_email_jwt')
+            return  response
+
+        country_code = json_data['country_code']
+        phone_no = json_data['phone_no']
+        ph_email_jwt = json_data['ph_email_jwt']
+
+        user_info = {
+            'country_code': country_code,
+            'phone_no': phone_no,
+            'ph_email_jwt': ph_email_jwt,
+            'next_url':next_url
+        }
+
+        return render(request, 'Home/user_info.html',user_info)
+    except requests.RequestException as e:
+        context={
+                'error_message':str(e)
+            }
+        return render(request,"Home/sign-up.html",context)
+        # return JsonResponse({'error': str(e)})
+    
+def basic_info(request):
+    next_url = request.GET.get('next')
+    if request.method =="POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        number = request.POST.get('number')
+        password = request.POST.get('password')
+        next_url = request.POST.get('next')
+        if CustomUser.objects.filter(number=number):
+            context={
+                'error_message':"Number  Already Exists"
+            }
+            response= render(request,"Home/sign-up.html",context)
+            response.delete_cookie('ph_email_jwt')
+            return  response
+
+        elif CustomUser.objects.filter(email=email):
+            context={
+                'error_message':"Email Already Exists"
+            }
+            response= render(request,"Home/sign-up.html",context)
+            response.delete_cookie('ph_email_jwt')
+            return  response
+        else:
+            new_user = CustomUser.objects.create_user(
+                name=name,number=number,email=email,password=password,is_active=True
+            )
+            new_user.save()
+            if next_url:  # If "next" URL exists, redirect to it after successful signup
+                return redirect(next_url)
+            else:
+                context = {"success_message": "Registration Successful! Please Login to Continue."}
+                return render(request, "Home/login.html", context)
+    else:
+        context = {
+            'error_message':"Access Denied Continue From Here !"
+        }
+        response= render(request,"Home/sign-up.html",context)
+        response.delete_cookie('ph_email_jwt')
+        return  response
 
 def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('User-Dashboard')
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -559,12 +653,80 @@ def login_user(request):
             context = {'error_message': 'Invalid email or password'}
             return render(request, "Home/login.html", context)
     else:
-        return render(request, "Home/login.html")
+        
+        response = render(request, "Home/login.html")
+        response['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups https://auth.phone.email' 
+        return response
 
+def reset_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+            send_success = send_reset_link(request, user)
+            if send_success:
+                context = {
+                    'success_message': "Password Reset Link has been sent to your email. Please check your inbox."
+                }
+            else:
+                context = {
+                    'error_message': "There was a problem sending the email. Please try again later or contact us."
+                }
+            return render(request, "Home/reset_password_email.html", context)
+            
+        except CustomUser.DoesNotExist:
+            context = {
+                'error_message': "Email is not registered. Please sign up."
+            }
+            return render(request, "Home/reset_password_email.html", context)
+    return render(request, "Home/reset_password_email.html")
+
+def send_reset_link(request, user):
+    subject = "Password Reset Link by Treat Now"
+    from_email = settings.EMAIL_HOST_USER
+    to_list = [user.email]
+    current_site = get_current_site(request)
+    uidb64 = urlsafe_base64_encode(force_bytes(user.id))
+    token = default_token_generator.make_token(user)
+    reset_link = f"http://{current_site.domain}/reset-password-user/{uidb64}/{token}/"
+    context_email = {
+        'name': user.name,
+        'reset_link': reset_link,
+    }
+    message = render_to_string('Home/reset_confirmation.html', context_email)
+    try:
+        send_mail(subject, message, from_email, to_list, fail_silently=True)
+        return True
+    except Exception as e:
+        # print(e)  # Log the error for debugging purposes
+        return False  
+        
+    
+def reset_password_user(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        my_user = CustomUser.objects.get(id=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        my_user = None
+
+    if my_user is not None and default_token_generator.check_token(my_user, token):
+        if request.method == "POST":
+            new_password = request.POST.get('password')
+            my_user.set_password(new_password)
+            my_user.save()
+            login(request, my_user)
+            return redirect("home")
+        else:
+            context = {'uidb64': uidb64, 'token': token}
+            return render(request, "Home/new_password.html", context)
+    else:
+        return render(request, 'Home/email_activation_failed.html')
 
 def logout_user(request):
     logout(request)
-    return redirect('home')
+    response = redirect('home')
+    response.delete_cookie('ph_email_jwt')  # Delete the cookie named 'ph_email_jwt'
+    return response
 
 
 

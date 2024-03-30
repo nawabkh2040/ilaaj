@@ -15,6 +15,10 @@ urlpatterns = [
     path('Doctor-place/', views.doctor_place, name='Doctor-Place'),
     path('Doctor-Services/', views.doctor_services, name='Doctor-Services'),
     path('Add-Services/', views.add_services, name='Add-Services'),
+    path('reset-password-doctor/', views.reset_password, name='reset-password-doctor'),
+     path('reset-password-doctor/<str:uidb64>/<str:token>/',views.reset_password_doctor,name="reset-password-doctor"),
+
+
 
 
 

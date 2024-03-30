@@ -48,7 +48,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     number = models.CharField(unique=True,max_length=15)
     password = models.CharField(max_length=500)
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_hospital = models.BooleanField(default=False)

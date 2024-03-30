@@ -12,6 +12,17 @@ urlpatterns = [
      path('login/', views.login_user, name='login'),
      path('logout/', views.logout_user, name='logout'),
      path('sign-up/', views.sign_up, name='sign-up'),
+     path('Success-user/', views.user_sign_up, name='Success-user'),
+     path('basic-info/', views.basic_info, name='basic-info'),
+     path('reset-password/', views.reset_password, name='reset-password'),
+     # path('set-password/', views.set_password, name='set-password'),
+
+     path('reset-password-user/<str:uidb64>/<str:token>/',views.reset_password_user,name="reset-password-user"),
+     
+
+
+
+
      path('Book-Appointment/', views.book_appointment, name='Book-Appointment'),
      path('Appointment/', views.appointment, name='Appointment'),
      path('more-details/', views.more_details, name='More-Details'),
