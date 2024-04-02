@@ -1,0 +1,96 @@
+#mapOpenButton {
+     background: transparent;
+     cursor: pointer;
+     outline: none;
+     border: none;
+     font-size: 1.1rem;
+     transition: all 0.3s ease;
+     color: black;
+     padding: 0;
+ }
+ 
+ #mapOpenButton:hover {
+     font-size: 1.2rem;
+ }
+ 
+ #map,
+ #doctorMap {
+     width: 90%;
+     height: 450px;
+     margin: auto;
+ }
+ 
+ .mapSection {
+     display: flex;
+     justify-content: center;
+     text-align: end;
+ }
+ 
+ .mapContainer i {
+     display: block !important;
+     margin: 5px 15px !important;
+     cursor: pointer;
+     color: white;
+ }
+ 
+ .mapSection .mapContainer {
+     border: 2px solid;
+     width: 70%;
+     display: none;
+     backdrop-filter: blur(10px);
+     transition: all 0.3s ease-in;
+     height: auto;
+ }
+ 
+ .locationContainer {
+     display: flex;
+     width: 90%;
+     margin: 5px auto;
+ }
+ 
+ .locationContainer .inputLocation {
+     width: 90%;
+ }
+ 
+ .locationContainer .searchButton {
+     width: 40%;
+ }
+ 
+ .locationBtn {
+     width: 50%;
+     margin: 25px 0px 5px 0px;
+ }
+ 
+ #locationForm {
+     text-align: center;
+ }
+ 
+ .mapSection .inputLocation input {
+     width: 100%;
+     outline: none;
+     font-size: 18px;
+     font-weight: 600;
+     padding: 10px;
+     border: none;
+ }
+ 
+ 
+ .doctorMap .searchButton button {
+     padding: 10px 0px;
+ }
+ 
+ .doctorMap .locationBtn {
+     margin: 25px auto;
+ }
+ 
+ .doctorMap {
+     width: 100% !important;
+     border: 2px solid gray !important;
+     margin-top: 30px;
+     display: block !important;
+ }
+ 
+ .doctorMap h1 {
+     font-size: 2.2rem;
+     text-align: center;
+ }

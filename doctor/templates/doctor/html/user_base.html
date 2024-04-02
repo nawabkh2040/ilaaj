@@ -52,7 +52,7 @@
                 <div class="nav-upper-options">
                     <a href="{% url "Doctor-Dashboard" %}">
                         <div class="nav-option option1 active">
-                            <i class="fa-brands fa-square-xing fa-2x"></i>
+                            <i class="fa-solid fa-chart-line fa-2x"></i>
                             <h3> Dashboard</h3>
                         </div>
                     </a>
@@ -68,7 +68,12 @@
                             <h3> Hospital or Pathology</h3>
                         </div>
                     </a>
-
+                    <a href="{% url "doctor-kyc" %}">
+                        <div class="nav-option option3">
+                            <i class="fa-solid fa-address-card fa-2x"></i>
+                            <h3> KYC </h3>
+                        </div>
+                    </a>
                     <a href="{% url "Doctor-Services" %}">
                         <div class="nav-option option4">
                             <i class="fa-solid fa-gear fa-2x"></i>

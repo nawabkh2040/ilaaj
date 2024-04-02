@@ -75,6 +75,8 @@ class Hospital(models.Model):
      longitude = models.FloatField(blank=True, null=True)
      image1 = models.ImageField(upload_to='hospital_images/', blank=True, null=True)
      image2 = models.ImageField(upload_to='hospital_images/', blank=True, null=True)
+     verified = models.BooleanField(default=False)
+
      def __str__(self):
         return self.Hospitals_name
 
@@ -88,9 +90,28 @@ class PathologyLab(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     image1 = models.ImageField(upload_to='pathology_images/', blank=True, null=True)
     image2 = models.ImageField(upload_to='pathology_images/', blank=True, null=True)
+    verified = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.Pathology_name
+
+class Hospital_kyc(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, limit_choices_to={'is_hospital': True})
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+    owner_name = models.CharField(max_length=255)
+    id_proof = models.ImageField(upload_to='id_proofs/',blank=True, null=True)
+    id_proof_hospital = models.ImageField(upload_to='id_proofs_hospital/',blank=True, null=True)
+
+
+class PathologyLab_kyc(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True,limit_choices_to={'is_pathology': True})
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+    owner_name = models.CharField(max_length=255)
+    id_proof = models.ImageField(upload_to='id_proofs/',blank=True, null=True)
+    id_proof_pathology = models.ImageField(upload_to='id_proofs_pathology/',blank=True, null=True)
 
 
 class Service(models.Model):
@@ -159,4 +180,4 @@ class Contact(models.Model):
     email = models.EmailField()
     number = models.CharField(max_length=15)
     message = models.TextField(max_length=500)
-    date_time = models.DateTimeField(default=datetime.now) 
+    date_time = models.DateTimeField(default=timezone.now) 

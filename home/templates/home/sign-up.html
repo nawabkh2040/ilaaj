@@ -129,9 +129,9 @@
     </div>
 </div>
 <script>
-    document.getElementById("reset-form").addEventListener("submit", function() {
+    document.querySelector('form[action="{% url 'sign-up' %}"]').addEventListener("submit", function() {
         // Disable the button to prevent multiple clicks
-        document.getElementById("reset-btn").disabled = true;
+        document.querySelector('input[type="submit"]').disabled = true;
     });
 </script>
 <div id="pheIncludedContent"></div>

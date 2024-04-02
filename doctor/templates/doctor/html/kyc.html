@@ -1,0 +1,109 @@
+{% extends "doctor/html/user_base.html" %}
+{% load static %}
+{% block title %}{% if user.is_hospital %}Hospital Details{% elif user.is_pathology %}Pathology Details{% endif %}{% endblock title %}
+{% block body %} 
+<section class="hospital">
+    <div class="card">
+        <div class="contact-card">
+            <div class="contact-card-body">
+               {% if message %}
+               <br>
+                    <p style="text-align: center;color: blue;">{{message}}</p>
+               {% endif %}
+               <br>
+                <h4 id="contact-details-title" class="contact-card-title title">
+                    {% if user.is_hospital %}
+                        Hospital KYC
+                        {% if hospital.verified %}
+                         <br>
+                             <p style="color:green"> KYC Verification Success Full</p>
+                        {% endif %}
+                    {% elif user.is_pathology %}
+                        Pathology KYC
+                        {% if pathology.verified %}
+                              KYC Verification Success Full
+                              <br>
+                             <p style="color:green"> KYC Verification Success Full</p>
+                        {% endif %}
+                    {% endif %} 
+                </h4>
+                {% if success_message %}
+                    <p style="color: rgb(43, 207, 43);" >{{success_message}}</p>
+                {% endif %}
+                {% if error_message %}
+                    <p style="color: rgb(227, 13, 41);" >{{error_message}}</p>
+                {% endif %}
+                <div class="row contact-form-row">
+                    <div class="col" style="width: auto;">
+                        <form action="{% url "doctor-kyc" %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="address-line1">
+                                    {% if user.is_hospital %}
+                                        Hospital Name as per the Document
+                                    {% elif user.is_pathology %}
+                                        Pathology Name as per the Document
+                                    {% endif %} 
+                                </label>
+                                <input id="address-line1" required {% if user.is_hospital %}name="Hospitals_name"{% elif user.is_pathology %}name="pathology_name"{% endif %} 
+                                {% if kyc.name %}
+                                    placeholder="{{kyc.name}}"
+                                {% endif %}
+                                type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-line2">
+                                   {% if user.is_hospital %}
+                                        Hospital Address as per Document
+                                   {% elif user.is_pathology %}
+                                        Pathology Address as per Document
+                                   {% endif %}
+                                </label>
+                                <input id="address-line2" required name="address" 
+                                {% if kyc.address %}
+                                    placeholder="{{kyc.address}}"
+                                {% endif %}
+                                type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="address-line2">
+                                 {% if user.is_hospital %}
+                                      Hospital Owner Name
+                                 {% elif user.is_pathology %}
+                                      Pathology Owner Name
+                                 {% endif %}
+                              </label>
+                              <input id="address-line2" required name="owner_name" 
+                              {% if kyc.owner_name %}
+                                  placeholder="{{kyc.owner_name}}"
+                              {% endif %}
+                              type="text" class="form-control">
+                          </div>
+                          <div class="form-group">
+                              <label for="id-proof">ID Proof [Aadhar card, PAN, or other government ID (size 2MB Max)]</label>
+                              <input type="file" class="form-control" id="id-proof" name="id_proof" placeholder="Enter ID Proof details" required>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="id-proof">ID Proof of 
+                                  {% if user.is_hospital %}Hospital {% elif user.is_pathology %}Pathology {% endif %}
+                                  [Government Registration or other government ID (size 2MB Max)]</label>
+                              <input type="file" id="id-proof" class="form-control"
+                                  {% if user.is_hospital %}name="id_proof_hospital"{% elif user.is_pathology %}name="id_proof_pathology"{% endif %}
+                                  placeholder="Enter ID Proof details" required>
+                          </div>                          
+                          <button type="submit" name="submit "style="width: auto;padding: 10px;" class="btn btn-success">Submit</button>
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+<script>
+     document.querySelector('form[action="{% url 'doctor-kyc' %}"]').addEventListener("submit", function() {
+         // Disable the button to prevent multiple clicks
+         document.querySelector('input[type="submit"]').disabled = true;
+     });
+ </script>
+
+{% endblock body %}

@@ -59,6 +59,8 @@
     <br>
     <hr class="departLine">
     {% endfor %}
+    {% else  %}
+        <p style="text-align: center;">No Hospitals Near You For this service {{ search }} </p>
     {% endif %}
     {% if nearby_services_pathology %}
     {% for service, PathologyLab, distance in nearby_services_pathology %}
@@ -110,6 +112,8 @@
     <br>
     <hr class="departLine">
     {% endfor %}
+    {% else  %}
+        <p style="text-align: center;">No Pathology Near You For this service {{ search }} </p>
     {% endif %}
 </section>
 {% endblock body %}

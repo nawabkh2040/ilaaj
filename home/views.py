@@ -169,7 +169,7 @@ def book_appointment(request):
                         'user':user,
                         'instant_discount': instant_discount,
                     }
-                    return render(request, 'Home/user/confirm_appointment.html', context)
+                    return render(request, 'home/user/confirm_appointment.html', context)
                     # return HttpResponse("Booking Page")
                 except Service.DoesNotExist:
                     return render(request, 'error_page.html', {'error_message': 'Service not found'})
@@ -186,7 +186,7 @@ def book_appointment(request):
         context={
             'next': next_url,
         }
-        return render(request, "Home/login.html", context)
+        return render(request, "home/login.html", context)
 
 def appointment(request):
     try:
@@ -407,12 +407,12 @@ def sign_up(request):
             context={
                 'error_message':"Number  Already Exists"
             }
-            return render(request,"Home/sign-up.html",context)
+            return render(request,"home/sign-up.html",context)
         elif CustomUser.objects.filter(email=email):
             context={
                 'error_message':"Email Id already exists"
             }
-            return render(request,"Home/sign-up.html",context)
+            return render(request,"home/sign-up.html",context)
         new_user = CustomUser.objects.create_user(
             name=name,
             email=email,
@@ -439,24 +439,24 @@ def sign_up(request):
             'uidb64': uidb64,
             'token': token,
         }
-        messages=render_to_string('Home/email_confirmation.html',context_email)
+        messages=render_to_string('home/email_confirmation.html',context_email)
         try:
             send_mail(subject,messages,from_email,to_list,fail_silently=True)
             context={
                 'success_message':"Please Verify Your Email. Go to mail and Click the link Blow And Verify yourself",
             }
-            return render(request,"Home/sign-up.html",context)
+            return render(request,"home/sign-up.html",context)
         except Exception as e:
             context= {
                     'error': 'Your Account Create Successfully. There is a problem to sending E-mail in Back-end Our Team is Working on it please Contact us as soon as Possible :-) '
                     }
-            return render(request,"Home/sign-up.html",context)
+            return render(request,"home/sign-up.html",context)
     else:
         next_url = reverse('Book-Appointment')  # URL to return to this view after signup
         if service_id:
             next_url += f'?service_id={service_id}'
         context = {'next': next_url}
-        response= render(request,"Home/sign-up.html",context)
+        response= render(request,"home/sign-up.html",context)
         response['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups https://auth.phone.email' 
         response.delete_cookie('ph_email_jwt')
         return response
@@ -499,9 +499,9 @@ def verify_otp(request):
             context = {
                 'error': "Invalid OTP. Please try again."
             }
-            return render(request, "Home/verify-otp.html", context)
+            return render(request, "home/verify-otp.html", context)
 
-    return render(request, "Home/verify-otp.html")
+    return render(request, "home/verify-otp.html")
 
 
 import random
@@ -532,7 +532,7 @@ def send_otp_via_sms(phone_number, otp_code):
 
 def render_with_message(request, message):
     context = {'message': message}
-    return render(request, "Home/login.html", context)
+    return render(request, "home/login.html", context)
 
 
 
@@ -549,7 +549,7 @@ def activate_user(request, uidb64, token):
         login(request,my_user)
         return redirect('home')
     else:
-         return render(request,'Home/email_activation_failed.html')
+         return render(request,'home/email_activation_failed.html')
 
 def user_sign_up(request):
     access_token = request.GET.get('access_token')
@@ -570,7 +570,7 @@ def user_sign_up(request):
             context={
                 'error_message':"Error occurred while fetching user data"
             }
-            response= render(request,"Home/sign-up.html",context)
+            response= render(request,"home/sign-up.html",context)
             response.delete_cookie('ph_email_jwt')
             return  response
 
@@ -585,12 +585,12 @@ def user_sign_up(request):
             'next_url':next_url
         }
 
-        return render(request, 'Home/user_info.html',user_info)
+        return render(request, 'home/user_info.html',user_info)
     except requests.RequestException as e:
         context={
                 'error_message':str(e)
             }
-        return render(request,"Home/sign-up.html",context)
+        return render(request,"home/sign-up.html",context)
         # return JsonResponse({'error': str(e)})
     
 def basic_info(request):
@@ -605,7 +605,7 @@ def basic_info(request):
             context={
                 'error_message':"Number  Already Exists"
             }
-            response= render(request,"Home/sign-up.html",context)
+            response= render(request,"home/sign-up.html",context)
             response.delete_cookie('ph_email_jwt')
             return  response
 
@@ -613,7 +613,7 @@ def basic_info(request):
             context={
                 'error_message':"Email Already Exists"
             }
-            response= render(request,"Home/sign-up.html",context)
+            response= render(request,"home/sign-up.html",context)
             response.delete_cookie('ph_email_jwt')
             return  response
         else:
@@ -625,12 +625,12 @@ def basic_info(request):
                 return redirect(next_url)
             else:
                 context = {"success_message": "Registration Successful! Please Login to Continue."}
-                return render(request, "Home/login.html", context)
+                return render(request, "home/login.html", context)
     else:
         context = {
             'error_message':"Access Denied Continue From Here !"
         }
-        response= render(request,"Home/sign-up.html",context)
+        response= render(request,"home/sign-up.html",context)
         response.delete_cookie('ph_email_jwt')
         return  response
 
@@ -651,10 +651,10 @@ def login_user(request):
                 return redirect('User-Dashboard')  # Redirect to the dashboard if no next URL
         else:
             context = {'error_message': 'Invalid email or password'}
-            return render(request, "Home/login.html", context)
+            return render(request, "home/login.html", context)
     else:
         
-        response = render(request, "Home/login.html")
+        response = render(request, "home/login.html")
         response['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups https://auth.phone.email' 
         return response
 
@@ -672,14 +672,14 @@ def reset_password(request):
                 context = {
                     'error_message': "There was a problem sending the email. Please try again later or contact us."
                 }
-            return render(request, "Home/reset_password_email.html", context)
+            return render(request, "home/reset_password_email.html", context)
             
         except CustomUser.DoesNotExist:
             context = {
                 'error_message': "Email is not registered. Please sign up."
             }
-            return render(request, "Home/reset_password_email.html", context)
-    return render(request, "Home/reset_password_email.html")
+            return render(request, "home/reset_password_email.html", context)
+    return render(request, "home/reset_password_email.html")
 
 def send_reset_link(request, user):
     subject = "Password Reset Link by Treat Now"
@@ -693,7 +693,7 @@ def send_reset_link(request, user):
         'name': user.name,
         'reset_link': reset_link,
     }
-    message = render_to_string('Home/reset_confirmation.html', context_email)
+    message = render_to_string('home/reset_confirmation.html', context_email)
     try:
         send_mail(subject, message, from_email, to_list, fail_silently=True)
         return True
@@ -718,9 +718,9 @@ def reset_password_user(request, uidb64, token):
             return redirect("home")
         else:
             context = {'uidb64': uidb64, 'token': token}
-            return render(request, "Home/new_password.html", context)
+            return render(request, "home/new_password.html", context)
     else:
-        return render(request, 'Home/email_activation_failed.html')
+        return render(request, 'home/email_activation_failed.html')
 
 def logout_user(request):
     logout(request)
@@ -740,7 +740,7 @@ def user_dashboard(request):
                 'user':user,
                 'appointments':appointments,
             }
-            return render(request,"Home/user/appointment.html",context)
+            return render(request,"home/user/appointment.html",context)
         else:
             return HttpResponse("You Are Not User ")
     else:
@@ -755,7 +755,7 @@ def user_profile(request):
             context={
                 'user':user,
             }
-            return render(request,"Home/user/profile.html",context)
+            return render(request,"home/user/profile.html",context)
         else:
             return HttpResponse("You Are Not User ")
     else:
@@ -773,7 +773,7 @@ def user_appointment(request):
                 'user':user,
                 'appointments':appointments,
             }
-            return render(request,"Home/user/appointment.html",context)
+            return render(request,"home/user/appointment.html",context)
         else:
             return HttpResponse("You Are Not User ")
     else:
@@ -792,7 +792,7 @@ def user_report(request,id):
                 context={
                     'appointment':appointment,
                 }
-                return render(request,"Home/user/reports.html",context)
+                return render(request,"home/user/reports.html",context)
             except Exception as e:
                 return HttpResponse(str(e)) 
         else:
@@ -822,3 +822,4 @@ def contact(request):
             'error_message':'Your Information is not  Saved Please Try Again Later',
         }
         return render(request,"home/contact.html",content)
+#okk

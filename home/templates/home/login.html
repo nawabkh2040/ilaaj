@@ -128,8 +128,8 @@ body {
                 {% if success_message %}
                     <p style="color: rgb(10, 205, 75);">{{ success_message }}</p>
                 {% endif %}
-                <input type="text" name="email" placeholder="Enter your email">
-                <input type="password" name="password" placeholder="Enter your password">
+                <input type="text" required name="email" placeholder="Enter your email">
+                <input type="password" required name="password" placeholder="Enter your password">
                 {% if next %}
                     <input type="hidden" name="next" value="{{ next }}">
                 {% endif %}

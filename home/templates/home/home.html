@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treat Now</title>
+    <meta name="description" content="Book your local doctor's & Test's appointment in just a few steps! Treat Now offers seamless healthcare access through intuitive technology and strategic partnerships.">
+
     <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
     <link rel="stylesheet" href="{% static "Home/css/contact.css" %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -27,7 +29,7 @@
     <div class="logo logoShowOnResponsive">
         <img src="{% static "Home/images/logo.png" %}" alt="logo">
         <div class="webNameBar">
-            <div class="webName">Treat Now</div>
+            <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
             <div class="nearMe">
                 <button id="mapOpenButton1" class="btn">
                     <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -40,7 +42,7 @@
         <div class="logo  logoHideOnResponsive">
             <img src="{% static "Home/images/logo.png" %}" alt="logo">
             <div class="webNameBar">
-                <div class="webName">Treat Now</div>
+                <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
                 <div class="nearMe">
                     <button id="mapOpenButton" class="btn">
                         <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>

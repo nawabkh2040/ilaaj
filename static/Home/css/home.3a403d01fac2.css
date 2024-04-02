@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@300&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Styling search bar  */
+.heroSection {
+    background: url("../images/hero.3c31370393ea.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 700px;
+    backdrop-filter: brightness(3);
+}
+
+.mainBox {
+    padding: 155px;
+}
+
+.doctorSearchBar {
+    display: flex;
+    width: 70%;
+}
+
+.doctorSearchBar form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputCondition,
+.inputLocation {
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    margin-bottom: 6px;
+}
+
+.mapSection .inputLocation input,
+.doctorSearchBar input[type="text"] {
+    width: 100%;
+    outline: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* .searchButton styling */
+.searchButton button {
+    border-radius: 10px;
+    background: #35cf30;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.searchButton button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.searchButton button:after {
+    content: '🔎︎';
+    position: absolute;
+    opacity: 0;
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.searchButton button:hover {
+    padding-right: 24px;
+    padding-left: 8px;
+}
+
+.searchButton button:hover:after {
+    opacity: 1;
+    right: 10px;
+}
+
+
+.searchButton {
+    width: 25%;
+}
+
+/* Department styling  goes here */
+.department {
+    text-align: center;
+    padding: 90px 0px;
+}
+
+.departHead {
+    text-align: center;
+}
+
+.departHeading {
+    font-size: 2.3rem;
+    margin: 0;
+    font-family: Kanit;
+}
+
+.departRow {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px auto;
+    flex-wrap: wrap;
+}
+
+.department .box {
+    width: 35%;
+    height: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 13px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+    box-shadow: 2px 8px 12px #00000073;
+    margin: 25px 0px;
+    transition: all 0.3s ease;
+}
+
+.department .box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.departRow .box .imgBox {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 15px;
+    background-color: #062327;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.details h3 {
+    margin: 0;
+    font-family: Kanit;
+}
+
+.details p {
+    padding: 5px;
+    margin-top: 0;
+}
+
+.btn {
+    padding: 12px 20px;
+    background: #062327;
+    cursor: pointer;
+    border-radius: 8px;
+    outline: none;
+    border: 2px solid #073036;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn:hover {
+    color: #062327;
+    background-color: white;
+}
+
+/* Department Styling ends here */
+
+/* About us Styling goes here */
+.aboutUs {
+    padding: 60px;
+    background: #073036;
+    color: white;
+}
+
+.aboutUs h2 {
+    font-size: 3rem;
+    text-align: center;
+    font-family: Kanit;
+    margin: 0px;
+}
+
+.aboutUsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+}
+
+.aboutUsRow .leftBox {
+    width: 38%;
+}
+
+.aboutUsRow .leftBox img {
+    width: 100%;
+    border-radius: 25px;
+}
+
+.aboutUsRow .rightBox {
+    width: 55%;
+}
+
+.department {
+    width: 100%;
+    height: auto;
+    background: #073036;
+    color: white;
+}

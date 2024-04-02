@@ -1,0 +1,123 @@
+/* Navbar designing */
+.navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     position: sticky;
+     top: 0;
+     left: 0;
+     background-color: #ffffff; /* Adjust background color as needed */
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+     padding: 10px 30px; /* Adjust padding as needed */
+     z-index: 1000;
+ }
+ 
+ .logo img {
+     width: 50px; /* Adjust logo size as needed */
+     border-radius: 25px;
+     
+ }
+ 
+ .navbar .webName {
+     font-weight: 600;
+     font-size: 1.8rem; /* Adjust font size as needed */
+     color: #333333; /* Adjust font color as needed */
+ }
+ 
+ .navbar ul {
+     display: flex;
+     list-style: none;
+     margin: 0;
+     padding: 0; /* Remove default padding */
+ }
+ 
+ .navbar ul li {
+     margin: 0 15px; /* Adjust spacing between menu items */
+ }
+ 
+ .navbar ul li a {
+     text-decoration: none;
+     font-size: 18px; /* Adjust font size as needed */
+     color: #333333; /* Adjust font color as needed */
+     transition: color 0.3s ease;
+ }
+ 
+ .navbar ul li a:hover {
+     color: #07f853; /* Change color on hover */
+ }
+ 
+ .dropdown {
+     position: relative;
+ }
+ 
+ .dropdown .dropbtn {
+     font-size: 18px; /* Adjust font size as needed */
+     color: #333333; /* Adjust font color as needed */
+     background-color: transparent;
+     border: none;
+     cursor: pointer;
+     padding: 0;
+ }
+ 
+ .dropdown-content {
+     display: none;
+     position: absolute;
+     top: 100%;
+     background-color: #ffffff;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+     z-index: 100;
+ }
+ 
+ .dropdown-content a {
+     display: block;
+     padding: 10px 15px; /* Adjust padding as needed */
+     font-size: 16px; /* Adjust font size as needed */
+     color: #333333; /* Adjust font color as needed */
+     text-decoration: none;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .dropdown-content a:hover {
+     background-color: #f0f0f0; /* Change background color on hover */
+ }
+ 
+ .dropdown:hover .dropdown-content {
+     display: block;
+ }
+ 
+ .menu-toggle {
+     display: none; /* Hide the toggle button by default */
+ }
+ 
+ .show-menu {
+     display: none; /* Hide the menu items by default */
+ }
+ 
+ /* Media query for small screens */
+ @media only screen and (max-width: 768px) {
+     .menu-toggle {
+         display: block; /* Show the toggle button on small screens */
+         cursor: pointer;
+     }
+ 
+     .navbar ul {
+         display: none; /* Hide the menu items by default */
+         flex-direction: column;
+         position: absolute;
+         top: 100%;
+         left: 0;
+         background-color: #ffffff;
+         width: 100%;
+         padding: 10px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     }
+ 
+     .navbar ul.show-menu {
+         display: flex; /* Show the menu items when this class is applied */
+     }
+ 
+     .navbar ul li {
+         margin: 10px 0; /* Adjust spacing between menu items */
+     }
+ }
+ 

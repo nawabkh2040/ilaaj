@@ -42,6 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Preloader
-function myfunction() {
+function myfunction(){
    document.getElementById("loading").style.display = "none";
 }

@@ -16,19 +16,9 @@ urlpatterns = [
     path('Doctor-Services/', views.doctor_services, name='Doctor-Services'),
     path('Add-Services/', views.add_services, name='Add-Services'),
     path('reset-password-doctor/', views.reset_password, name='reset-password-doctor'),
-     path('reset-password-doctor/<str:uidb64>/<str:token>/',views.reset_password_doctor,name="reset-password-doctor"),
-
-
-
-
-
+    path('reset-password-doctor/<str:uidb64>/<str:token>/',views.reset_password_doctor,name="reset-password-doctor"),
+    path('Doctor-kyc/', views.kyc, name='doctor-kyc'),
     path('Appointment-Details/<int:id>/', views.appointment_details, name='Appointment-Details'),
-
-
-
-
-
-
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:

@@ -6,18 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %} | Treat Now</title>
-    <link rel="stylesheet" href="{% static "doctor/css/home_navbar.css" %}"> 
-    <link rel="stylesheet" href="{% static "doctor/css/home_responsive.css" %}">
-    <link rel="website icon" type="png" href="{% static "doctor/images/logo.png" %}">
+    <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
+
+    {% comment %} <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static "Home/css/map.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/footer.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/department.css" %}">
+    {% comment %} <link rel="stylesheet" href="{% static "Home/css/login.css" %}"> {% endcomment %}
+    <link rel="website icon" type="png" href="{% static "Home/images/logo.png" %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% block extra_css %}{% endblock extra_css %}
 
 </head>
 <body>
     <div class="logo logoShowOnResponsive">
-        <img src="{% static "doctor/images/logo.png" %}" alt="logo">
+        <img src="{% static "Home/images/logo.png" %}" alt="logo">
         <div class="webNameBar">
-            <div class="webName">Treat Now</div>
+            <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
             <div class="nearMe">
                 <button id="mapOpenButton1" class="btn">
                     <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -28,9 +36,9 @@
     </div>
     <nav class="flex navbar ">
         <div class="logo  logoHideOnResponsive">
-            <img src="{% static "doctor/images/logo.png" %}" alt="logo">
+            <img src="{% static "Home/images/logo.png" %}" alt="logo">
             <div class="webNameBar">
-                <div class="webName">Treat Now</div>
+                <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
                 <div class="nearMe">
                     <button id="mapOpenButton" class="btn">
                         <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -41,9 +49,9 @@
         </div>
         <ul class="flex">
             <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
-            <li><a href="#abou">About</a></li>
-            <li><a href="#depart">Departments</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="{% url "home" %}#abou">About</a></li>
+            <li><a href="{% url "home" %}#depart">Departments</a></li>
+            <li><a href="{% url "home" %}#contact">Contact</a></li>
             <div class="dropdown">
                 <button class="dropbtn">Pages
                     <i class="fa fa-caret-down"></i>
@@ -58,10 +66,30 @@
         </ul>
     </nav>
 <br>
-     {% block body %}{% endblock body %}
-     <script src="{% static "doctor/javascript/responsive.js" %}"></script>
-     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-     <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
+    <main>
+        
+        {% block body %}{% endblock body %}
+        
+    </main>
+<br>
+    {% comment %} <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var menuToggle = document.querySelector('.menu-toggle');
+            var menuList = document.querySelector('.menu');
+            menuToggle.addEventListener('click', function() {
+                menuList.classList.toggle('show-menu');
+            });
+        });
+    </script>  {% endcomment %}
+
+    {% comment %} <script src="{% static "Home/javascript/home.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="{% static "Home/javascript/responsive.js" %}"></script> {% endcomment %}
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    {% comment %} <script src="{% static "Home/javascript/map.js" %}"></script> 44{% endcomment %}
+    
+
+
+    <script src="https://kit.fontawesome.com/44b443cf5b.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

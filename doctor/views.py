@@ -419,20 +419,38 @@ def doctor_services(request):
             return HttpResponse("You Are Not a Doctor")
     else:
         return redirect('doctor-login')
+
+
 def add_services(request):
      if request.user.is_authenticated:
           user = request.user
           if user.is_hospital or user.is_pathology:
                try:
                     hospital = Hospital.objects.get(user=user)
-                    services = Service.objects.filter(hospitals=hospital).order_by('id')
+                    if hospital.verified:
+                         services = Service.objects.filter(hospitals=hospital).order_by('id')
+                    else:
+                         context = {
+                              'user': user,
+                              'hospital': hospital,
+                              'message':'Your account is not verified yet. You Can Wait or Contact us',
+                         }
+                         return render(request, "doctor/html/service.html", context)
                     # print(services)
                except Hospital.DoesNotExist:
                     hospital = None
                     services = None
                try:
                     pathology = PathologyLab.objects.get(user=user)
-                    services = Service.objects.filter(pathology_labs=pathology).order_by('id')
+                    if pathology.verified:
+                         services = Service.objects.filter(pathology_labs=pathology).order_by('id')
+                    else:
+                         context = {
+                              'user': user,
+                              'hospital': hospital,
+                              'message':'Your account is not verified yet. You Can Wait or Contact us',
+                         }
+                         return render(request, "doctor/html/service.html", context)
 
                except PathologyLab.DoesNotExist:
                     pathology = None
@@ -469,3 +487,93 @@ def add_services(request):
      else:
           return redirect('doctor-login')
 
+def kyc(request):
+    if request.user.is_authenticated:
+        user = request.user
+        if user.is_hospital:
+            hospital = []
+            try:
+                hospital = Hospital.objects.get(user=user)
+            except Hospital.DoesNotExist:
+                hospital = None
+            try:
+                kyc = Hospital_kyc.objects.get(user=user)
+            except  Hospital_kyc.DoesNotExist:
+                kyc = None
+            if request.method == "POST":
+               Hospitals_name = request.POST.get('Hospitals_name')
+               address = request.POST.get('address')
+               owner_name = request.POST.get('owner_name')
+               id_proof = request.FILES.get('id_proof')
+               id_proof_hospital = request.FILES.get('id_proof_hospital')
+               if Hospital_kyc.objects.get(user=user):
+                    context = {
+                         'hospital': hospital,
+                         'user':user,
+                         'kyc': kyc,
+                         'message':"KYC already submitted. Please Wait For  Approval.",
+                    }
+                    return render(request, "doctor/html/kyc.html", context)
+
+               new_kyc = Hospital_kyc.objects.create(
+                    user=user,name=Hospitals_name,address=address,owner_name=owner_name,id_proof=id_proof,id_proof_hospital=id_proof_hospital
+               )
+               new_kyc.save()
+               context = {
+                'user': user,
+                'hospital': hospital,
+                'kyc':kyc,
+                'message':"Data Submitted Success fully!. Please Wait For Approval. or Contact Our Support Team.",
+               }
+               return render(request, "doctor/html/kyc.html", context)
+          #   print(hospital)
+            context = {
+                'user': user,
+                'hospital': hospital,
+                'kyc':kyc,
+            }
+            return render(request, "doctor/html/kyc.html", context)
+        elif user.is_pathology:
+            try:
+                pathology = PathologyLab.objects.get(user=user)
+            except PathologyLab.DoesNotExist:
+                pathology = None
+            try:
+                kyc = PathologyLab_kyc.objects.get(user=user)
+            except  PathologyLab_kyc.DoesNotExist:
+                kyc = None
+            if request.method=="POST":
+               pathology_name = request.POST.get('pathology_name')
+               address = request.POST.get('address')
+               owner_name = request.POST.get('owner_name')
+               id_proof = request.FILES.get('id_proof')
+               id_proof_pathology = request.FILES.get('id_proof_pathology')
+               if PathologyLab_kyc.objects.get(user=user):
+                    context = {
+                         'user':user,
+                         'pathology': pathology,
+                         'kyc': kyc,
+                         'message':"KYC already submitted. Please Wait For  Approval.",
+                    }
+                    return render(request, "doctor/html/kyc.html", context)
+               new_kyc = PathologyLab_kyc.objects.create(
+                    user=user,name=pathology_name,address=address,owner_name=owner_name,id_proof=id_proof,id_proof_pathology=id_proof_pathology
+               )
+               new_kyc.save()
+               context = {
+                'user': user,
+                'pathology': pathology,
+                'kyc': kyc,
+                'message':"Data Submitted Success fully!. Please Wait For Approval. or Contact Our Support Team.",
+               }
+               return render(request, "doctor/html/kyc.html", context)
+            context = {
+                'user': user,
+                'pathology': pathology,
+                'kyc':kyc
+            }
+            return render(request, "doctor/html/kyc.html", context)
+        else:
+            return HttpResponse("You are not a doctor")
+    else:
+        return redirect('login')

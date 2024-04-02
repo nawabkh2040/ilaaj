@@ -1,0 +1,160 @@
+.footer {
+    background: #062327;
+    color: #ffffff;
+}
+
+.footerRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0px;
+    padding: 30px 0px;
+    flex-wrap: nowrap;
+}
+
+.footerRow h3 {
+    font-family: Open Sans;
+    font-size: 1.6rem;
+}
+
+.footerReachAt .contact-text a {
+    color: #fff;
+    transition-duration: 0.2s;
+    font-size: 1rem;
+}
+
+.footerReachAt .list-item {
+    line-height: 0;
+}
+
+.footerSocial {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footerSocial i {
+    color: white;
+    font-size: 1.6rem;
+}
+
+.footerSocial i:hover {
+    color: aqua;
+    font-size: 1.7rem;
+}
+
+.footerRow #quickLinks li {
+    list-style: none;
+    margin: 9px 0px;
+}
+
+.footerRow #quickLinks li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.footerRow #quickLinks li a:hover {
+    color: rgb(198, 193, 193);
+    font-size: 1.1rem;
+}
+
+#footerEmail {
+    width: 67%;
+    margin: 35px 0px 19px 0px;
+    background: white;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+#footerBtn {
+    margin-top: 10px;
+    width: 77%;
+    background: #062327;
+    border: 2px solid #02515c;
+}
+
+#footerBtn:hover {
+    background: white;
+}
+
+.footer .rights {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5rem;
+}
+
+
+.rights :nth-last-child(1) {
+    margin: 0px;
+    padding: 0px;
+    font-size: 0.8rem;
+}
+
+.footerBoxLine {
+    display: none;
+}
+
+.departLine {
+    display: none;
+}
+
+/* utility classes */
+.flex {
+    display: flex;
+}
+
+p {
+    font-family: 'Poppins';
+}
+
+
+.contact-list {
+    list-style-type: none;
+    margin-left: -30px;
+    padding-right: 20px;
+}
+
+.list-item {
+    line-height: 4;
+    color: white;
+}
+
+.place {
+    margin-left: 10px;
+}
+
+.contact-text {
+    font: 300 18px 'Lato', sans-serif;
+    letter-spacing: 1.9px;
+    color: #00162e;
+    font-size: 2rem;
+}
+
+.contact-text a {
+    color: #ffffff;
+    text-decoration: none;
+    transition-duration: 0.2s;
+    font-size: 1.4rem;
+}
+
+#footerEmail {
+    width: 67%;
+    margin: 35px 0px 19px 0px;
+    background: white;
+    border-radius: 7px;
+    font-size: 15px;
+    color: black;
+}
+
+.box {
+    width: 35%;
+    height: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+}

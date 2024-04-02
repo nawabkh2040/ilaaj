@@ -21,11 +21,13 @@
     {% block extra_css %}{% endblock extra_css %}
 
 </head>
-<body>
+<body onload="myfunction()">
+    <div id="loading"></div>
+
     <div class="logo logoShowOnResponsive">
         <img src="{% static "Home/images/logo.png" %}" alt="logo">
         <div class="webNameBar">
-            <div class="webName">Treat Now</div>
+            <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
             <div class="nearMe">
                 <button id="mapOpenButton1" class="btn">
                     <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -38,7 +40,7 @@
         <div class="logo  logoHideOnResponsive">
             <img src="{% static "Home/images/logo.png" %}" alt="logo">
             <div class="webNameBar">
-                <div class="webName">Treat Now</div>
+                <div class="webName"><a href="{% url "home" %}" style="text-decoration: none; color: white;">Treat Now</a></div>
                 <div class="nearMe">
                     <button id="mapOpenButton" class="btn">
                         <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -66,6 +68,8 @@
         </ul>
     </nav>
 <br>
+
+
     <main>
         
         {% block body %}{% endblock body %}
@@ -82,10 +86,10 @@
         });
     </script>  {% endcomment %}
 
-    {% comment %} <script src="{% static "Home/javascript/home.js" %}"></script> {% endcomment %}
+    <script src="{% static "Home/javascript/home.js" %}"></script>
     {% comment %} <script src="{% static "Home/javascript/responsive.js" %}"></script> {% endcomment %}
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    {% comment %} <script src="{% static "Home/javascript/map.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="{% static "Home/javascript/map.js" %}"></script> 44{% endcomment %}
     
 
 

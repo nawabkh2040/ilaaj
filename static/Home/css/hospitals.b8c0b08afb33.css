@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #5db7a9; /* Header background color */
+    color: #fff; /* Header text color */
+    text-align: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-size: 2em; /* Increase title size */
+    margin: 0;
+}
+
+.content {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin-bottom: 15px; /* Consistent margin for headings */
+}
+
+.services {
+    padding: 20px;
+}
+
+.service-card {
+    display: flex;
+    align-items: flex-start; /* Align service info and image vertically at the top */
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow items to wrap */
+}
+
+.service-info {
+    flex: 1; /* Allow text content to expand */
+    margin-right: 20px;
+    margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+.service-image {
+    flex: 1; /* Allow image to expand */
+    max-width: 50%; /* Adjust image width */
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden; /* Hide overflow */
+}
+
+.service-image img {
+    width: 100%; /* Ensure image fills container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.back-btn {
+    display: block;
+    width: 100px; /* Fixed width for back button */
+    margin: 0 auto; /* Center button horizontally */
+    padding: 10px 20px;
+    background-color: #5db7a9;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-top: 20px; /* Add margin at the top */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    .service-card {
+        flex-direction: column; /* Change flex direction to column on smaller screens */
+    }
+
+    .service-info, .service-image {
+        max-width: 100%; /* Set max width to 100% for smaller screens */
+    }
+}

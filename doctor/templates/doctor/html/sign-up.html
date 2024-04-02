@@ -110,7 +110,7 @@
                 <label><input type="radio" name="is_hospital" value="hospital"> Hospital</label>
                 <label><input type="radio" name="is_pathology" value="pathology"> Pathology</label>
 
-                <input type="submit" class="button" value="Signup">
+                <input type="submit" name="submit" class="button" value="Signup">
             </form>
             <br>
             <div class="login" style="text-align: center;">
@@ -124,9 +124,9 @@
         </div>
     </div>
     <script>
-        document.getElementById("reset-form").addEventListener("submit", function() {
+        document.querySelector('form[action="{% url 'doctor-sign-up' %}"]').addEventListener("submit", function() {
             // Disable the button to prevent multiple clicks
-            document.getElementById("reset-btn").disabled = true;
+            document.querySelector('input[type="submit"]').disabled = true;
         });
     </script>
 {% endblock body %}
