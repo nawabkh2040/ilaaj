@@ -463,17 +463,26 @@ def add_services(request):
                     actual_price = request.POST.get('actual_price')
                     discounted_price = request.POST.get('discounted_price')
                     image = request.FILES.get('image')
-                    new_service = Service.objects.create(
-                         name=name,description=description,price=int(price),
-                         off_percentage=int(off_percentage),actual_price=int(actual_price),
-                         discounted_price=int(discounted_price),image=image,
-                    )
-                    if hospital:
-                         new_service.hospitals.add(hospital)
-                    elif pathology:
-                         new_service.pathology_labs.add(pathology)
-                    new_service.save()
-                    return redirect('Doctor-Services')
+                    if Service.objects.filter(hospitals=hospital) or Service.objects.filter(pathology_labs=pathology):
+                         new_service = Service.objects.create(
+                              name=name,description=description,price=int(price),
+                              off_percentage=int(off_percentage),actual_price=int(actual_price),
+                              discounted_price=int(discounted_price),image=image,
+                         )
+                         if hospital:
+                              new_service.hospitals.add(hospital)
+                         elif pathology:
+                              new_service.pathology_labs.add(pathology)
+                         new_service.save()
+                         return redirect('Doctor-Services')
+                    context = {
+                         'user':user,
+                         'hospital':hospital,
+                         'pathology':pathology,
+                         'services':services,
+                         'message':"You Don't Have Pathology or Hospital Add Your Details First.",
+                    }
+                    return render(request, "doctor/html/service.html", context)
                context = {
                     'user':user,
                     'hospital':hospital,

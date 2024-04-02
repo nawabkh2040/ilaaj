@@ -1,6 +1,6 @@
 {% extends "doctor/html/user_base.html" %}
 {% load static %}
-{% block title %}{% if user.is_hospital %}Hospital Details{% elif user.is_pathology %}Pathology Details{% endif %}{% endblock title %}
+{% block title %}{% if user.is_hospital %}Hospital KYC{% elif user.is_pathology %}Pathology KYC{% endif %}{% endblock title %}
 {% block body %} 
 <section class="hospital">
     <div class="card">
