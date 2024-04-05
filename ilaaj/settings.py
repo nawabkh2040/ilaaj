@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-^a@7-t@147shi&pucvxnq7&%28x4#whk!y7ps*#h2ope7da763
 DEBUG = True
 
 
-CSRF_TRUSTED_ORIGINS = ['https://b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','http://localhost','http://192.168.39.194','http://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','http://localhost','http://192.168.39.194','http://127.0.0.1','http://192.168.97.194']
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','192.168.39.194']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','b625-2401-4900-55cb-409f-f146-c4bd-939e-ee9c.ngrok-free.app','192.168.39.194','192.168.97.194']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'doctor',
+
 ]
 
 MIDDLEWARE = [
@@ -152,5 +153,6 @@ EMAIL_HOST_USER = 'treatnow24x7@gmail.com'
 EMAIL_HOST_PASSWORD = gmail_key
 
 
-# sudo systemctl start gunicorn.socket
-# (myprojectenv) root@ip-172-31-35-12:/home/ubuntu/treat-now/ilaaj# sudo systemctl start nginx
+
+STRIPE_PUBLISHABLE_KEY = stripe_publish
+STRIPE_SECRET_KEY = stripe_key

@@ -29,7 +29,12 @@ from token_values.token import *
 from django.http import JsonResponse
 import datetime
 
+import stripe
+
+
 from math import sin, cos, sqrt, atan2, radians
+
+
 
 def calculate_distance(lat1, lon1, lat2, lon2):
     """
@@ -251,122 +256,45 @@ def payment_process(request):
         appointment_id = request.POST.get('appointment_id')
         payment_option = request.POST.get('payment_option')
 
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+        except Appointment.DoesNotExist:
+            return HttpResponse("Appointment does not exist", status=404)
+
         if payment_option == 'pay_at_place':
             # Handle payment at place option
-            # You can update the appointment status or perform any other action as needed
-            appointment = Appointment.objects.get(id=appointment_id)
             appointment.status = 'Pay at Place'
             appointment.save()
             return redirect('user-appointment')
 
         elif payment_option == 'pay_now':
-            return HttpResponse("This Service is not Available  Now !  Try Again Later or Go to pay at place.")
-            appointment = Appointment.objects.get(id=appointment_id)
             amount = appointment.service.discounted_price
-            
-            client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_API_SECRET))
-            payment = client.order.create({'amount': amount * 100, 'currency': 'INR', 'payment_capture': '1'})
+            return HttpResponse("This Service Come Soon! ")
+            stripe.api_key = settings.STRIPE_SECRET_KEY
 
-            payment_instance = Payment.objects.create(
-                appointment=appointment, amount=amount, payment_method='razorpay'
-            )
-
-            # return render(request, 'home/user/razorpay_payment.html', {'payment': payment})
+            try:
+                payment_intent = stripe.PaymentIntent.create(
+                    amount=int(amount * 100),  # amount in cents
+                    currency='INR',
+                    payment_method_types=['card'],
+                    description='Payment for appointment',
+                    metadata={'appointment_id': appointment_id}
+                )
+                payment_instance = Payment.objects.create(
+                    appointment=appointment, 
+                    amount=amount, 
+                    payment_method='stripe',
+                    payment_intent_id=payment_intent.id
+                )
+                return render(request, 'home/user/stripe_payment.html', {'client_secret': payment_intent.client_secret})
+            except stripe.error.StripeError as e:
+                # Handle Stripe errors
+                return HttpResponse(f"Stripe Error: {str(e)}", status=500)
 
     return HttpResponse("Invalid payment option")
 
-def razorpay_success(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            # Capture the payment details from the POST request
-            payment_id = request.POST.get('razorpay_payment_id')
-            appointment_id = request.POST.get('appointment_id')
-            
-            # Retrieve the appointment instance
-            try:
-                appointment = Appointment.objects.get(id=appointment_id)
-            except Appointment.DoesNotExist:
-                return HttpResponse("Appointment not found")
-            
-            # Update the appointment status to 'Paid'
-            appointment.payment_id = payment_id
-            appointment.status = 'Online Paid'
-            appointment.online_payment =  True
-            appointment.save()
-            
-            # Redirect to a success page
-            return render(request, 'home/user/payment_success.html')
-        else:
-            return HttpResponseNotAllowed(['POST'])
-    else:
-        return HttpResponse("Access denied")
-
-def initiate_payment(request):
-    if request.method == "POST":
-        appointment_id = request.POST.get('appointment_id')
-        amount = request.POST.get('amount')
-
-        try:
-            appointment = Appointment.objects.get(id=appointment_id)
-        except Appointment.DoesNotExist:
-            return JsonResponse({'error': 'Invalid appointment ID'}, status=400)
-
-        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        payment_data = {
-            'amount': int(float(amount) * 100),  # Convert to paisa
-            'currency': 'INR',
-            'receipt': 'appointment_payment_' + str(appointment_id),
-            'payment_capture': 1  # Auto capture payment after successful payment
-        }
-
-        try:
-            payment = client.order.create(data=payment_data)
-            return JsonResponse(payment)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    return HttpResponseBadRequest('Invalid request')
-
-@csrf_exempt
-def capture_payment(request):
-    if request.method == "POST":
-        data = request.POST
-        appointment_id = data['appointment_id']
-        razorpay_payment_id = data['razorpay_payment_id']
-        razorpay_order_id = data['razorpay_order_id']
-        razorpay_signature = data['razorpay_signature']
-
-        # Verify the payment signature
-        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        attributes = {
-            'razorpay_order_id': razorpay_order_id,
-            'razorpay_payment_id': razorpay_payment_id,
-            'razorpay_signature': razorpay_signature
-        }
-        try:
-            client.utility.verify_payment_signature(attributes)
-
-            # Update payment details
-            payment_method = data.get('payment_method')
-            payment_details = data.get('payment_details')
-
-            # Create Payment instance
-            payment = Payment.objects.create(
-                appointment_id=appointment_id,
-                amount=float(data.get('amount')),
-                payment_method=payment_method,
-                payment_details=payment_details
-            )
-
-            # Update appointment status to Paid or any other relevant action
-            appointment = Appointment.objects.get(id=appointment_id)
-            appointment.status = 'Paid'
-            appointment.save()
-
-            return HttpResponse("Payment successful")
-        except Exception as e:
-            return HttpResponse("Payment failed")
-
-
+def payment_success(request):
+    return HttpResponse("Payment Success")
 def near_me(request):
     if request.method == "POST":
         latitude = request.POST.get('latitude')

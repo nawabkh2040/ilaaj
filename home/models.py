@@ -162,17 +162,8 @@ class Appointment(models.Model):
 class Payment(models.Model):
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(max_length=50, choices=[
-        ('credit_card', 'Credit Card'),
-        ('debit_card', 'Debit Card'),
-        ('net_banking', 'Net Banking'),
-        ('wallet', 'Wallet'),
-        ('other', 'Other')
-    ])
-    payment_details = models.TextField(blank=True) 
-
-    def __str__(self):
-        return f"Payment of {self.amount} for appointment {self.appointment.id}"
+    payment_method = models.CharField(max_length=100)  # e.g., 'razorpay' or 'stripe'
+    payment_intent_id = models.CharField(max_length=100, blank=True, null=True)
 
 
 class Contact(models.Model):

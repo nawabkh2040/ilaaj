@@ -38,10 +38,9 @@ urlpatterns = [
 
 # For adding the data to the
      path('payment/<int:appointment_id>/',views.payment, name='payment'),
-     path('payment/success/', views.razorpay_success, name='payment_success'),
+     path('payment/success/', views.payment_success, name='payment_success'),
      path('payment-process/', views.payment_process, name='payment-process'),
-     path('initiate-payment/', views.initiate_payment, name='initiate_payment'),
-     path('capture-payment/', views.capture_payment, name='capture_payment'),
+   
 
 
 
