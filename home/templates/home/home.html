@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div id="map" ></div>
-                <form id="locationForm" action="/near-me/" method="POST">
+                <form id="locationForm" action="{% url "near-me" %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" id="latitude" name="latitude">
                     <input type="hidden" id="longitude" name="longitude">

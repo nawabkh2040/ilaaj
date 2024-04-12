@@ -65,36 +65,41 @@ def get_coordinates(city):
     else:
         return None, None
 
-def search_services(request):
-    if request.method == 'GET' and request.is_ajax():
-        input_text = request.GET.get('input')
-        # print(input_text)
-        if input_text:
-            services = Service.objects.filter(name__istartswith=input_text)
-            service_names = [service.name for service in services]
-            return JsonResponse({'services': service_names})
-        else:
-            return JsonResponse({'services': []})
-    else:
-        return JsonResponse({'error': 'Invalid request'})
+# def search_services(request):
+#     if request.method == 'GET' and request.is_ajax():
+#         input_text = request.GET.get('input')
+#         # print(input_text)
+#         if input_text:
+#             services = Service.objects.filter(name__istartswith=input_text)
+#             service_names = [service.name for service in services]
+#             return JsonResponse({'services': service_names})
+#         else:
+#             return JsonResponse({'services': []})
+#     else:
+#         return JsonResponse({'error': 'Invalid request'})
 
 def home(request):
     if request.method == 'POST':
         city = request.POST.get('city')
         search = request.POST.get('search')
-        if city.lower() == "sagore":
-            city = "Sagor"
-        elif city.lower()  == "mhow":
-            city = "Mhow , pithampur"
-        user_latitude, user_longitude = get_coordinates(city=city)
-      
+        if city is not None:
+            if city.lower() == "sagore":
+                city = "Sagor"
+            elif city.lower() == "mhow":
+                city = "Mhow , pithampur"
+        user_longitude = request.POST.get('longitude')
+        user_latitude = request.POST.get('latitude')
+        if user_longitude is not None and user_latitude is not None:
+            print(f"{user_latitude} and {user_longitude}")
+            user_latitude = float(user_latitude)  # Convert string to float
+            user_longitude = float(user_longitude)  # Convert string to float
+        if city is not None:
+            user_latitude, user_longitude = get_coordinates(city=city)
+
         if search:
             search = search.rstrip()
 
-
         if user_latitude is not None and user_longitude is not None:
-            # print(f"City: {city}, Search: {search}, Latitude: {user_latitude}, Longitude: {user_longitude}")
-
             # Filter hospitals and pathology labs within 20 km range
             nearby_hospitals = Hospital.objects.filter(
                 latitude__range=(user_latitude - 0.2, user_latitude + 0.2),
@@ -132,13 +137,13 @@ def home(request):
                 'nearby_services_pathology': nearby_services_pathology,
                 'search': search,
             }
-            # print(f"City: {city}, Search: {search}, Latitude: {user_latitude}, Longitude: {user_longitude}")
             return render(request, "home/search.html", context)
         else:
             error_message = 'Unable to retrieve coordinates for the specified city.'
             return render(request, "home/home.html", {'error_message': error_message})
 
     return render(request, "home/home.html")
+
 
 def more_details(request):
     if request.method =="GET":
@@ -299,24 +304,14 @@ def near_me(request):
     if request.method == "POST":
         latitude = request.POST.get('latitude')
         longitude = request.POST.get('longitude')
-        # latitude = float(latitude)
-        # longitude = float(longitude)
-        # print(f"{longitude} and {latitude}")
-        # return render(request,"home/")
-        # search ="blood test"
-        # nearby_services = [] 
-        # for hospital in Hospital.objects.all():
-        #         matching_services = hospital.services.filter(name__icontains=search)
-        #         if matching_services.exists():
-        #             distance_km = calculate_distance(latitude, longitude, hospital.latitude, hospital.longitude)
-        #             if distance_km <= 20:
-        #                 for service in matching_services:
-        #                     nearby_services.append((service, hospital, distance_km))  # Add service name, hospital name, and 
-        # nearby_services.sort(key=lambda x: x[2])  # Sort by distance (ascending)
-        # context = {
-        #     'nearby_services': nearby_services,
-        # }
-        return HttpResponse("This Service Come Soon")
+        request.session['latitude'] = latitude
+        request.session['longitude'] = longitude
+        context = {
+            'latitude':latitude,
+            'longitude':longitude,
+        }
+
+        return render(request,'home/Again_search.html',context)
     return HttpResponse("Location is not picked please refresh the page ")
 
     

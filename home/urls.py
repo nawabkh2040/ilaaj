@@ -25,7 +25,7 @@ urlpatterns = [
      path('Book-Appointment/', views.book_appointment, name='Book-Appointment'),
      path('Appointment/', views.appointment, name='Appointment'),
      path('more-details/', views.more_details, name='More-Details'),
-     path('search-services/', views.search_services, name='search-services'),
+     # path('search-services/', views.search_services, name='search-services'),
      path('activate-user/<str:uidb64>/<str:token>/',views.activate_user,name="activate-user"),
      path('verify-otp/', views.verify_otp, name='verify-otp'),
 

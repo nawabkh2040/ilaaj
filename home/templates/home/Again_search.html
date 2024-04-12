@@ -1,0 +1,93 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}Search Services{% endblock title %}
+{% block body %}
+
+<style>
+    body {
+        background-color: rgb(50 110 118);
+        
+    }
+    .div1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 55vh;
+        margin: 0;
+    }
+    .card-container {
+        background-color: rgba(255, 255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.5s ease;
+        padding: 20px;
+        max-width: 400px;
+        width: 90%;
+        
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+<div class="div1">
+<div class="card-container">
+    <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+        <label for="search">Search Services:</label>
+        <input type="text" id="search" placeholder="Blood test, MRI, CT-Scan etc." name="search">
+        {% if latitude %}
+            <input type="hidden" id="latitude" name="latitude" value="{{latitude}}">
+        {% endif %}
+        {% if longitude %}
+            <input type="hidden" id="longitude" name="longitude" value="{{longitude}}">
+        {% endif %}
+        
+        <input type="submit" value="Search">
+    </form>
+</div>
+</div>
+
+{% endblock body %}
