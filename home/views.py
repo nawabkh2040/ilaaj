@@ -65,18 +65,7 @@ def get_coordinates(city):
     else:
         return None, None
 
-# def search_services(request):
-#     if request.method == 'GET' and request.is_ajax():
-#         input_text = request.GET.get('input')
-#         # print(input_text)
-#         if input_text:
-#             services = Service.objects.filter(name__istartswith=input_text)
-#             service_names = [service.name for service in services]
-#             return JsonResponse({'services': service_names})
-#         else:
-#             return JsonResponse({'services': []})
-#     else:
-#         return JsonResponse({'error': 'Invalid request'})
+
 
 def home(request):
     if request.method == 'POST':
