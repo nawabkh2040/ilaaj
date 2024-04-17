@@ -152,6 +152,9 @@ def more_details(request):
     else:
         return HttpResponse("Invalid Service Id. Access Denied")
         
+def privacy_policy(request):
+    return render(request,'home/privacy_policy.html')
+
 
 def book_appointment(request):
     service_id = request.GET.get('service_id')

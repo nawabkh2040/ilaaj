@@ -14,6 +14,9 @@ urlpatterns = [
      path('sign-up/', views.sign_up, name='sign-up'),
      path('Success-user/', views.user_sign_up, name='Success-user'),
      path('basic-info/', views.basic_info, name='basic-info'),
+
+     path('Privacy-Policy/', views.privacy_policy, name='Privacy-Policy'),
+
      path('reset-password/', views.reset_password, name='reset-password'),
      # path('set-password/', views.set_password, name='set-password'),
 

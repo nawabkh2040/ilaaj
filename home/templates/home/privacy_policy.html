@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy and Terms & Conditions</title>
+    <link rel="stylesheet" href="{% static "Home/css/home.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/navbar.css" %}">
+    <link rel="stylesheet" href="{% static "Home/css/responsive.css" %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #073036;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            margin-top: 0px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: #073036;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #073036;
+        }
+
+        .list-item {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            font-style: italic;
+        }
+
+        .imageContent {
+            background: url('{% static "Home/images/privacyPolicy.jpg" %}');
+            width: 100%;
+            height: 250px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 4rem;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hamburger">
+        <i id="ham" class="fa-solid fa-bars fa-3x"></i>
+        <i id="cross" class="fa-solid fa-x fa-3x"></i>
+    </div>
+    <div class="logo logoShowOnResponsive">
+     <img src="{% static "Home/images/logo.png" %}" alt="logo">
+        <div class="webNameBar">
+            <div class="webName">Treat Now</div>
+            <div class="nearMe">
+                <button id="mapOpenButton1" class="btn">
+                    <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </span> Near Me
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="flex navbar ">
+        <div class="logo  logoHideOnResponsive">
+          <img src="{% static "Home/images/logo.png" %}" alt="logo">
+            <div class="webNameBar">
+                <div class="webName">Treat Now</div>
+                <div class="nearMe">
+                    <button id="mapOpenButton" class="btn">
+                        <span style="margin: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span> Near Me
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ul class="flex">
+          <li><a href="{% url "home" %}"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="{% url "home" %}#abou">About</a></li>
+          <li><a href="{% url "home" %}#depart">Departments</a></li>
+          <li><a href="{% url "home" %}#contact">Contact</a></li>
+          <div class="dropdown">
+              <button class="dropbtn">Pages
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="{% url "home" %}#depart">Department</a>
+                  <a href="{% url "login" %}">Login/signUp</a>
+                  <a href="/Doctor/sign-up/">Connect with us</a>
+                  <a href="{% url "home" %}#abou">About Us(Admin)</a>
+                  <a href="{% url "Privacy-Policy" %}">Privacy Policy</a>
+
+              </div>
+          </div>
+      </ul>
+    </nav>
+    <div class="imageContent"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Privacy Policy and Terms & Conditions</h1>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Privacy Policy</h2>
+            <p>We may collect and use the following types of information:</p>
+            <ul>
+                <li class="list-item">Personal Information such as your name, email address, phone number, and any other
+                    information you provide to us.</li>
+                <li class="list-item">Medical Information such as your medical history, current conditions, and any
+                    other health-related information you provide to us.</li>
+                <li class="list-item">Device Information such as your IP address, browser type, and operating system
+                    when you access our website.</li>
+                <li class="list-item">Usage Information such as the pages you visit, the links you click, and the time
+                    and date of your visits.</li>
+                <li class="list-item">Cookies and Tracking Technologies to improve your browsing experience and
+                    personalize content.</li>
+                <li class="list-item">Location Information if you choose to provide it or if we determine your location
+                    based on your IP address.</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="section">
+            <h2 class="section-title">Terms & Conditions</h2>
+            <p>Please read these terms and conditions carefully before using our website. By accessing or using our
+                website, you agree to be bound by these terms and conditions.</p>
+            <ol>
+                <li class="list-item">You must be at least 18 years old to use our services.</li>
+                <li class="list-item">You agree not to misuse or interfere with the website's operation.</li>
+                <li class="list-item">We reserve the right to modify or terminate the website and its services at any
+                    time.</li>
+                <li class="list-item">All content on the website is provided for informational purposes only.</li>
+                <li class="list-item">We are not liable for any damages resulting from the use of our website or
+                    services.</li>
+            </ol>
+        </div>
+
+        <p class="contact-info">If you have any questions or concerns about our Privacy Policy or Terms & Conditions,
+            please contact us at [treatnow24x7@gmail.com].</p>
+    </div>
+</body>
+
+</html>
